@@ -18,6 +18,7 @@ public class Application {
          System.out.println("test");
          System.out.println("han");
           System.out.println("hiep");
+          System.out.println("linh");
         new LoginForm().setVisible(true);
     }
 }
