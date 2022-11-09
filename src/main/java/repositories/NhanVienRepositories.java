@@ -1,0 +1,74 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package repositories;
+
+import domainmodels.NhanVien;
+import java.util.List;
+import javax.persistence.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import utilities.HibernateConfig;
+
+/**
+ *
+ * @author HANGOCHAN
+ */
+public class NhanVienRepositories {
+    
+    
+    public List<NhanVien> getALL(){
+        Session session = HibernateConfig.getFACTORY().openSession();
+        Query q = session.createQuery("From NhanVien");
+        List<NhanVien> list = q.getResultList();
+        return list;
+    }
+    public boolean add(NhanVien nhanVien){
+        Transaction transaction = null;
+        try(Session s = HibernateConfig.getFACTORY().openSession()){
+            transaction= s.beginTransaction();
+            s.save(nhanVien);
+            transaction.commit();
+            return true;
+        }catch(Exception e){
+            transaction.rollback();
+            return false;
+        }
+    }
+    public boolean update(NhanVien nhanVien){
+        Transaction transaction = null;
+        try(Session s = HibernateConfig.getFACTORY().openSession()){
+            transaction= s.beginTransaction();
+            s.update(nhanVien);
+            transaction.commit();
+            return true;
+        }catch(Exception e){
+            transaction.rollback();
+            return false;
+        }
+    }
+    public boolean delete(NhanVien nhanVien){
+        Transaction transaction = null;
+        try(Session s = HibernateConfig.getFACTORY().openSession()){
+            transaction= s.beginTransaction();
+            nhanVien.setTrangThai(1);
+            s.update(nhanVien);
+            transaction.commit();
+            return true;
+        }catch(Exception e){
+            transaction.rollback();
+            return false;
+        }
+    }
+    public NhanVien seachbyMa(String ma){
+        Session session = HibernateConfig.getFACTORY().openSession();
+        Query q = session.createQuery("From NhanVien where MaNV = :ma");
+        q.setParameter("ma", ma);
+        List<NhanVien> list = q.getResultList();
+        if (list.size() == 0) {
+            return null;
+        }
+        return list.get(0);
+    }
+}
