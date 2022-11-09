@@ -4,40 +4,12 @@
  */
 package views;
 
-import domainmodels.BoNhoTrong;
-import domainmodels.ChiTietSP;
-import domainmodels.MauSac;
-import domainmodels.SanPham;
-import java.awt.CardLayout;
-import java.awt.Image;
-import java.io.File;
-import java.math.BigDecimal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.ImageIcon;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import services.AnhService;
-import services.BoNhoTrongServices;
-import services.ChiTietSPServices;
-import services.IBoNhoTrongServices;
-import services.IChiTietSPServices;
-import services.IMauSacServices;
-import services.ISanPhamServices;
-import services.ImeiServices;
-import services.MauSacServices;
-import services.PhanQuyenServices;
-import services.SanPhamService;
-import viewmodels.ChiTietSPViewModels;
 
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+
+
+import services.PhanQuyenServices;
 /**
  *
  * @author HANGOCHAN
