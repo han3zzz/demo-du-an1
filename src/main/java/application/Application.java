@@ -13,7 +13,7 @@ import views.WelcomeForm;
  */
 public class Application {
     public static void main(String[] args) {
-        System.out.println("xin chào s?p truot roi do");
+        System.out.println("trung moi moi");
         new LoginForm().setVisible(true);
     }
 }
