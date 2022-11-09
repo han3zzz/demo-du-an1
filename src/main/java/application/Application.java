@@ -16,10 +16,7 @@ public class Application {
         System.out.println("trung moi moi");
         System.out.println("test");
          System.out.println("test");
-        
-        
-        
-        
+         System.out.println("han");
         new LoginForm().setVisible(true);
     }
 }
