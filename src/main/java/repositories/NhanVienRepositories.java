@@ -48,18 +48,20 @@ public class NhanVienRepositories {
             return false;
         }
     }
-    public boolean delete(NhanVien nhanVien){
+    public boolean delete(String ma){
         Transaction transaction = null;
         try(Session s = HibernateConfig.getFACTORY().openSession()){
+            NhanVien nv = s.get(NhanVien.class, ma);
+            nv.setTrangThai(1);
             transaction= s.beginTransaction();
-            nhanVien.setTrangThai(1);
-            s.update(nhanVien);
+            s.update(nv);
             transaction.commit();
             return true;
         }catch(Exception e){
             transaction.rollback();
             return false;
         }
+        
     }
     public NhanVien seachbyMa(String ma){
         Session session = HibernateConfig.getFACTORY().openSession();
@@ -69,6 +71,13 @@ public class NhanVienRepositories {
         if (list.size() == 0) {
             return null;
         }
+        return list.get(0);
+    }
+    public NhanVien fill(String maNV){
+        Session session = HibernateConfig.getFACTORY().openSession();
+        Query q = session.createQuery("From NhanVien where MaNV = :masp");
+        q.setParameter("masp", maNV);
+        List<NhanVien> list = q.getResultList();
         return list.get(0);
     }
 }
