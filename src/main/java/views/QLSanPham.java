@@ -49,21 +49,22 @@ public class QLSanPham extends javax.swing.JFrame {
     private IMauSacServices mauSacServices;
     private IBoNhoTrongServices boNhoTrongServices;
     private IChiTietSPServices chiTietSPServices;
+
     public QLSanPham() {
         initComponents();
-        
+
         sanPhamServices = new SanPhamService();
         mauSacServices = new MauSacServices();
         boNhoTrongServices = new BoNhoTrongServices();
         chiTietSPServices = new ChiTietSPServices();
-        
+
         cbbSanPham.removeAllItems();
         cbbMauSac.removeAllItems();
         cbbBoNhoTrong.removeAllItems();
         cbbImei.removeAllItems();
         List<SanPham> sanPhams = sanPhamServices.getALL();
         for (SanPham sanPham : sanPhams) {
-            if (sanPham.getTrangThai() ==0) {
+            if (sanPham.getTrangThai() == 0) {
                 cbbSanPham.addItem(sanPham.getTenSP());
             }
         }
@@ -77,11 +78,12 @@ public class QLSanPham extends javax.swing.JFrame {
         List<BoNhoTrong> bnts = boNhoTrongServices.getALL();
         for (BoNhoTrong bnt : bnts) {
             if (bnt.getTrangThai() == 0) {
-                 cbbBoNhoTrong.addItem(String.valueOf(bnt.getDungLuong()));
+                cbbBoNhoTrong.addItem(String.valueOf(bnt.getDungLuong()));
             }
         }
         hienThiSanPham();
     }
+
     public void hienThiSanPham() {
         DefaultTableModel model = (DefaultTableModel) tbSanPham.getModel();
         model.setRowCount(0);
@@ -106,7 +108,7 @@ public class QLSanPham extends javax.swing.JFrame {
                     c.getGiaBan()
                 };
                 model.addRow(data);
-        }
+            }
 //        List<ChiTietSPViewModels> list = chiTietSPServices.getALL();
 //        for (ChiTietSPViewModels c : list) {
 //            if (c.getTrangThai() == 0) {
@@ -127,7 +129,7 @@ public class QLSanPham extends javax.swing.JFrame {
 
         }
     }
-    
+
     public void fillSanPham() {
         int index = tbSanPham.getSelectedRow();
         String tenSP = tbSanPham.getValueAt(index, 0).toString();
@@ -147,10 +149,15 @@ public class QLSanPham extends javax.swing.JFrame {
             }
         }
         ChiTietSP c = chiTietSPServices.fill(maSP);
-        ImageIcon icon = new ImageIcon(c.getAnh());
-        Image image = icon.getImage().getScaledInstance(lbAnh.getWidth(), lbAnh.getHeight(), Image.SCALE_SMOOTH);
-        ImageIcon m = new ImageIcon(image);
-        lbAnh.setIcon(m);
+        if (c.getAnh() == null) {
+            lbAnh.setIcon(null);
+        } else {
+            ImageIcon icon = new ImageIcon(c.getAnh());
+            Image image = icon.getImage().getScaledInstance(lbAnh.getWidth(), lbAnh.getHeight(), Image.SCALE_SMOOTH);
+            ImageIcon m = new ImageIcon(image);
+            lbAnh.setIcon(m);
+        }
+
         cbbSanPham.setSelectedItem(tenSP);
         txtGiaNhap.setText(String.valueOf(c.getGiaNhap()));
         txtGiaBan.setText(String.valueOf(c.getGiaBan()));
@@ -171,13 +178,16 @@ public class QLSanPham extends javax.swing.JFrame {
         }
         if (c.getThoiGianBH() == 90) {
             ngayBh = "3 Tháng";
-        }if (c.getThoiGianBH() == 180) {
+        }
+        if (c.getThoiGianBH() == 180) {
             ngayBh = "6 Tháng";
-        } if (c.getThoiGianBH() == 360) {
+        }
+        if (c.getThoiGianBH() == 360) {
             ngayBh = "12 Tháng";
         }
         cbbTGBH.setSelectedItem(ngayBh);
     }
+
     public ChiTietSP layTTSanPham() throws ParseException {
         String Imei = "";
         for (int i = 0; i < cbbImei.getHeight(); i++) {
@@ -190,7 +200,7 @@ public class QLSanPham extends javax.swing.JFrame {
         String moTa = txtGhiChu.getText();
         Integer thoiGianBaoHanh = 0;
         String thoiGian = (String) cbbTGBH.getSelectedItem();
-        if(thoiGian.equals("1 Tháng")) {
+        if (thoiGian.equals("1 Tháng")) {
             thoiGianBaoHanh = 30;
         } else if (thoiGian.equals("3 Tháng")) {
             thoiGianBaoHanh = 90;
@@ -259,6 +269,114 @@ public class QLSanPham extends javax.swing.JFrame {
         return c;
 
     }
+    public ChiTietSP layTTSuaSanPham() throws ParseException {
+        String Imei = "";
+        for (int i = 0; i < cbbImei.getHeight(); i++) {
+            Imei = cbbImei.getItemAt(i);
+        }
+        double giaNhapdb = Double.parseDouble(txtGiaNhap.getText());
+        BigDecimal giaNhap = BigDecimal.valueOf(giaNhapdb);
+        double giaBandb = Double.parseDouble(txtGiaBan.getText());
+        BigDecimal giaBan = BigDecimal.valueOf(giaBandb);
+        String moTa = txtGhiChu.getText();
+        Integer thoiGianBaoHanh = 0;
+        String thoiGian = (String) cbbTGBH.getSelectedItem();
+        if (thoiGian.equals("1 Tháng")) {
+            thoiGianBaoHanh = 30;
+        } else if (thoiGian.equals("3 Tháng")) {
+            thoiGianBaoHanh = 90;
+        } else if (thoiGian.equals("6 tháng")) {
+            thoiGianBaoHanh = 180;
+        } else {
+            thoiGianBaoHanh = 360;
+        }
+        AnhService anhService = new AnhService();
+        String anh = anhService.getAnh();
+        String camera = (String) cbbCamera.getSelectedItem();
+        String heDieuHanh = (String) cbbHeDieuHanh.getSelectedItem();
+        String ramString = (String) cbbRam.getSelectedItem();
+        Integer ram = Integer.parseInt(ramString);
+        String cpu = txtCpu.getText();
+        String manHinh = txtManHinh.getText();
+        Integer pin = Integer.parseInt(txtPin.getText());
+        String xuatXu = txtXuatXu.getText();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+        ZonedDateTime now = ZonedDateTime.now();
+        String ngayTao = dtf.format(now);
+        Date date = new SimpleDateFormat("MM-dd-yyyy").parse(ngayTao);
+        SanPham sp = null;
+        String tenSP = (String) cbbSanPham.getSelectedItem();
+        List<SanPham> sanPhams = sanPhamServices.getALL();
+        String masp = "";
+        for (SanPham sanPham : sanPhams) {
+            if (tenSP.equals(sanPham.getTenSP())) {
+                sp = sanPham;
+                masp = sanPham.getMaSP();
+            }
+        }
+        MauSac mauSac = null;
+        String tenMauSac = (String) cbbMauSac.getSelectedItem();
+        List<MauSac> mauSacs = mauSacServices.getALL();
+        for (MauSac mauSac1 : mauSacs) {
+            if (tenMauSac.equals(mauSac1.getTenMauSac())) {
+                mauSac = mauSac1;
+            }
+        }
+        BoNhoTrong bnt = null;
+        String boNho = (String) cbbBoNhoTrong.getSelectedItem();
+        List<BoNhoTrong> boNhoTrongs = boNhoTrongServices.getALL();
+        for (BoNhoTrong boNhoTrong : boNhoTrongs) {
+            if (Integer.parseInt(boNho) == boNhoTrong.getDungLuong()) {
+                bnt = boNhoTrong;
+            }
+        }
+        ChiTietSP c = new ChiTietSP();
+        c.setMaImei(Imei);
+        c.setGiaNhap(giaNhap);
+        c.setGiaBan(giaBan);
+        c.setMoTa(moTa);
+        c.setThoiGianBH(thoiGianBaoHanh);
+        ChiTietSP spp = chiTietSPServices.fill(masp);
+        if (!spp.getAnh().equals(anh)) {
+            c.setAnh(anh);
+        } else {
+            c.setAnh(spp.getAnh());
+        }
+        c.setCamera(camera);
+        c.setHeDieuHanh(heDieuHanh);
+        c.setRam(ram);
+        c.setCpu(cpu);
+        c.setManHinh(manHinh);
+        c.setDungLuongPin(pin);
+        c.setXuatXu(xuatXu);
+        c.setNgaySua(date);
+        c.setTrangThai(0);
+        c.setSanPham(sp);
+        c.setMauSac(mauSac);
+        c.setBoNhoTrong(bnt);
+        return c;
+
+    }
+    public void clear(){
+        lbAnh.setIcon(null);
+        cbbSanPham.setSelectedIndex(0);
+        txtGiaNhap.setText("");
+        txtGiaBan.setText("");
+        cbbImei.removeAllItems();
+        txtSoLuongTon.setText("0");
+        txtGhiChu.setText("");
+        txtXuatXu.setText("");
+        txtCpu.setText("");
+        txtManHinh.setText("");
+        txtPin.setText("");
+        cbbRam.setSelectedIndex(0);
+        cbbBoNhoTrong.setSelectedIndex(0);
+        cbbHeDieuHanh.setSelectedIndex(0);
+        cbbMauSac.setSelectedIndex(0);
+        cbbCamera.setSelectedIndex(0);
+        cbbTGBH.setSelectedIndex(0);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -789,6 +907,15 @@ public class QLSanPham extends javax.swing.JFrame {
     private void btnAddMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMousePressed
         try {
             // TODO add your handling code here:
+            
+            if (txtGiaNhap.getText().trim().isEmpty() || txtGiaBan.getText().trim().isEmpty() || txtGhiChu.getText().trim().isEmpty() || txtCpu.getText().trim().isEmpty() || txtXuatXu.getText().trim().isEmpty() || txtManHinh.getText().trim().isEmpty()||txtManHinh.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Không được để trống !");
+                return;
+            }
+            if (lbAnh.getIcon() == null) {
+                JOptionPane.showMessageDialog(this, "Vui lòng tải ảnh sản phẩm lên !");
+                return;
+            }
             String Imei = "";
             for (int i = 0; i < cbbImei.getItemCount(); i++) {
                 Imei = cbbImei.getItemAt(i);
@@ -796,15 +923,17 @@ public class QLSanPham extends javax.swing.JFrame {
                 c.setMaImei(Imei);
                 chiTietSPServices.add(c);
             }
+            
             JOptionPane.showMessageDialog(this, "Thêm thành công !");
             hienThiSanPham();
+            clear();
 
             //            if (chiTietSPServices.add(c) == true) {
-                //                JOptionPane.showMessageDialog(this, "Thêm thành công !");
-                //                hienThiSanPham();
-                //            } else {
-                //                JOptionPane.showMessageDialog(this, "Thêm thất bại !");
-                //            }
+            //                JOptionPane.showMessageDialog(this, "Thêm thành công !");
+            //                hienThiSanPham();
+            //            } else {
+            //                JOptionPane.showMessageDialog(this, "Thêm thất bại !");
+            //            }
         } catch (ParseException ex) {
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -850,6 +979,7 @@ public class QLSanPham extends javax.swing.JFrame {
         }
         JOptionPane.showMessageDialog(this, "Xóa thành công !");
         hienThiSanPham();
+        clear();
     }//GEN-LAST:event_btnDeleteMousePressed
 
     private void btnUpdateMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateMousePressed
@@ -866,6 +996,14 @@ public class QLSanPham extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Bạn chỉ được chọn 1 bản ghi !");
                 return;
             }
+            if (txtGiaNhap.getText().trim().isEmpty() || txtGiaBan.getText().trim().isEmpty() || txtGhiChu.getText().trim().isEmpty() || txtCpu.getText().trim().isEmpty() || txtXuatXu.getText().trim().isEmpty() || txtManHinh.getText().trim().isEmpty()||txtManHinh.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Không được để trống !");
+                return;
+            }
+            if (lbAnh.getIcon() == null) {
+                JOptionPane.showMessageDialog(this, "Vui lòng tải ảnh sản phẩm lên !");
+                return;
+            }
             int check = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn sửa ?");
             if (check != JOptionPane.YES_OPTION) {
                 return;
@@ -874,7 +1012,7 @@ public class QLSanPham extends javax.swing.JFrame {
             String Imei = "";
             for (int i = 0; i < cbbImei.getItemCount(); i++) {
                 Imei = cbbImei.getItemAt(i);
-                ChiTietSP c = layTTSanPham();
+                ChiTietSP c = layTTSuaSanPham();
                 //                ChiTietSP sp = chiTietSPServices.fill(c.getSanPham().getMaSP());
                 //                c.setAnh(sp.getAnh());
 
@@ -883,13 +1021,14 @@ public class QLSanPham extends javax.swing.JFrame {
             }
             JOptionPane.showMessageDialog(this, "Sửa thành công !");
             hienThiSanPham();
+            clear();
 
             //            if (chiTietSPServices.add(c) == true) {
-                //                JOptionPane.showMessageDialog(this, "Thêm thành công !");
-                //                hienThiSanPham();
-                //            } else {
-                //                JOptionPane.showMessageDialog(this, "Thêm thất bại !");
-                //            }
+            //                JOptionPane.showMessageDialog(this, "Thêm thành công !");
+            //                hienThiSanPham();
+            //            } else {
+            //                JOptionPane.showMessageDialog(this, "Thêm thất bại !");
+            //            }
         } catch (ParseException ex) {
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -900,10 +1039,12 @@ public class QLSanPham extends javax.swing.JFrame {
         JFileChooser chooser = new JFileChooser("D:\\PRO1041");
         chooser.showOpenDialog(null);
         //        if (JFileChooser.CANCEL_OPTION == 1) {
-            //            return;
-            //        }
+        //            return;
+        //        }
         File s = chooser.getSelectedFile();
-
+        if (s == null) {
+           return;
+        }
         String fileName = s.getAbsolutePath();
         AnhService anhService = new AnhService();
         anhService.setAnh(fileName);

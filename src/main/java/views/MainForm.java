@@ -6,8 +6,10 @@ package views;
 
 
 import java.awt.CardLayout;
+import java.awt.LayoutManager;
+import java.util.List;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
-
 
 import services.PhanQuyenServices;
 /**
@@ -27,7 +29,7 @@ public class MainForm extends javax.swing.JFrame {
         initComponents();
         
         setTitle("Hệ Thống Bán Điện Thoại");
-       
+ 
       
         cardLayout = (CardLayout) giaodien.getLayout();
         PhanQuyenServices pqs = new PhanQuyenServices();
@@ -67,9 +69,9 @@ public class MainForm extends javax.swing.JFrame {
         kGradientPanel3 = new keeptoo.KGradientPanel();
         jLabel3 = new javax.swing.JLabel();
         kGradientPanel4 = new keeptoo.KGradientPanel();
-        jLabel4 = new javax.swing.JLabel();
+        btnQLSanPham = new javax.swing.JLabel();
         kGradientPanel12 = new keeptoo.KGradientPanel();
-        jLabel2 = new javax.swing.JLabel();
+        nhanvien = new javax.swing.JLabel();
         kGradientPanel14 = new keeptoo.KGradientPanel();
         jLabel5 = new javax.swing.JLabel();
         kGradientPanel15 = new keeptoo.KGradientPanel();
@@ -132,14 +134,14 @@ public class MainForm extends javax.swing.JFrame {
         kGradientPanel4.setkGradientFocus(300);
         kGradientPanel4.setkStartColor(new java.awt.Color(204, 204, 0));
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_product_30px_1.png"))); // NOI18N
-        jLabel4.setText("Quản Lý Sản Phẩm");
-        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnQLSanPham.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnQLSanPham.setForeground(new java.awt.Color(255, 255, 255));
+        btnQLSanPham.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnQLSanPham.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_product_30px_1.png"))); // NOI18N
+        btnQLSanPham.setText("Quản Lý Sản Phẩm");
+        btnQLSanPham.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel4MousePressed(evt);
+                btnQLSanPhamMousePressed(evt);
             }
         });
 
@@ -147,32 +149,37 @@ public class MainForm extends javax.swing.JFrame {
         kGradientPanel4.setLayout(kGradientPanel4Layout);
         kGradientPanel4Layout.setHorizontalGroup(
             kGradientPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnQLSanPham, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         kGradientPanel4Layout.setVerticalGroup(
             kGradientPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+            .addComponent(btnQLSanPham, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
         );
 
         kGradientPanel12.setkEndColor(new java.awt.Color(204, 102, 0));
         kGradientPanel12.setkGradientFocus(300);
         kGradientPanel12.setkStartColor(new java.awt.Color(204, 204, 0));
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_add_user_group_man_man_30px.png"))); // NOI18N
-        jLabel2.setText("Quản Lý Nhân Viên");
+        nhanvien.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        nhanvien.setForeground(new java.awt.Color(255, 255, 255));
+        nhanvien.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        nhanvien.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_add_user_group_man_man_30px.png"))); // NOI18N
+        nhanvien.setText("Quản Lý Nhân Viên");
+        nhanvien.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                nhanvienMousePressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout kGradientPanel12Layout = new javax.swing.GroupLayout(kGradientPanel12);
         kGradientPanel12.setLayout(kGradientPanel12Layout);
         kGradientPanel12Layout.setHorizontalGroup(
             kGradientPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(nhanvien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         kGradientPanel12Layout.setVerticalGroup(
             kGradientPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+            .addComponent(nhanvien, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
         );
 
         kGradientPanel14.setkEndColor(new java.awt.Color(204, 102, 0));
@@ -463,16 +470,20 @@ public class MainForm extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnDangXuatMouseClicked
 
-    private void jLabel4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MousePressed
+    private void btnQLSanPhamMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQLSanPhamMousePressed
         // TODO add your handling code here:
-        cardLayout.show(giaodien, "sanpham");
        
-    }//GEN-LAST:event_jLabel4MousePressed
+       
+    }//GEN-LAST:event_btnQLSanPhamMousePressed
 
     private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
         // TODO add your handling code here:
        
     }//GEN-LAST:event_jPanel1MousePressed
+
+    private void nhanvienMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_nhanvienMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nhanvienMousePressed
 
     /**
      * @param args the command line arguments
@@ -511,13 +522,12 @@ public class MainForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnDangXuat;
+    private javax.swing.JLabel btnQLSanPham;
     private javax.swing.JPanel giaodien;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -538,5 +548,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JLabel lbChao;
     private javax.swing.JLabel lbChucVu;
     private javax.swing.JPanel main;
+    private javax.swing.JLabel nhanvien;
     // End of variables declaration//GEN-END:variables
 }

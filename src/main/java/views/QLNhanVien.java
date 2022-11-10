@@ -5,6 +5,7 @@
 package views;
 
 import domainmodels.NhanVien;
+import java.awt.Component;
 import java.awt.Image;
 import java.io.File;
 import java.text.ParseException;
@@ -20,7 +21,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import services.AnhService;
 import services.HashPasswordServices;
 import services.INhanVienServices;
@@ -45,10 +48,7 @@ public class QLNhanVien extends javax.swing.JFrame {
         cbbVaiTro.addItem("Quản Lý");
         cbbVaiTro.addItem("Nhân Viên");
         hienThi();
-        ImageIcon icon = new ImageIcon("D:\\PRO1041\\avatar.jpg");
-        Image image = icon.getImage().getScaledInstance(lbAnh.getWidth(), lbAnh.getHeight(), Image.SCALE_SMOOTH);
-        ImageIcon m = new ImageIcon(image);
-        lbAnh.setIcon(m);
+
     }
 
     public void hienThi() {
@@ -75,7 +75,7 @@ public class QLNhanVien extends javax.swing.JFrame {
             }
         }
     }
-
+  
     public NhanVien layTT() throws ParseException {
         String ma = txtMa.getText();
         String ten = txtTen.getText();
@@ -149,7 +149,7 @@ public class QLNhanVien extends javax.swing.JFrame {
         }
         nv.setVaiTro(vaiTro);
 
-        nv.setNgayTao(date);
+        nv.setNgaySua(date);
         nv.setTrangThai(0);
         return nv;
     }
@@ -165,10 +165,7 @@ public class QLNhanVien extends javax.swing.JFrame {
         String vaiTro = tbNhanVien.getValueAt(index, 6).toString();
         NhanVien c = services.fill(ma);
         if (c.getAnh() == null) {
-            ImageIcon icon = new ImageIcon("D:\\PRO1041\\avatar.jpg");
-            Image image = icon.getImage().getScaledInstance(lbAnh.getWidth(), lbAnh.getHeight(), Image.SCALE_SMOOTH);
-            ImageIcon m = new ImageIcon(image);
-            lbAnh.setIcon(m);
+            
         } else {
             ImageIcon icon = new ImageIcon(c.getAnh());
             Image image = icon.getImage().getScaledInstance(lbAnh.getWidth(), lbAnh.getHeight(), Image.SCALE_SMOOTH);
@@ -193,10 +190,8 @@ public class QLNhanVien extends javax.swing.JFrame {
         txtQueQuan.setText("");
         txtMatKhau.setText("");
         cbbVaiTro.setSelectedIndex(0);
-        ImageIcon icon = new ImageIcon("D:\\PRO1041\\avatar.jpg");
-        Image image = icon.getImage().getScaledInstance(lbAnh.getWidth(), lbAnh.getHeight(), Image.SCALE_SMOOTH);
-        ImageIcon m = new ImageIcon(image);
-        lbAnh.setIcon(m);
+        
+        lbAnh.setIcon(null);
     }
 
     /**
@@ -419,15 +414,9 @@ public class QLNhanVien extends javax.swing.JFrame {
                             .addGroup(nhanvienLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(nhanvienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(nhanvienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(nhanvienLayout.createSequentialGroup()
-                                            .addComponent(jLabel14)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addGroup(nhanvienLayout.createSequentialGroup()
-                                            .addGroup(nhanvienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jLabel13)
-                                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addComponent(jLabel14)
+                                    .addComponent(jLabel13)
+                                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(nhanvienLayout.createSequentialGroup()
                                         .addGroup(nhanvienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel28)
@@ -446,8 +435,8 @@ public class QLNhanVien extends javax.swing.JFrame {
                                                     .addComponent(cbbVaiTro, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                             .addGroup(nhanvienLayout.createSequentialGroup()
                                                 .addGap(18, 18, 18)
-                                                .addComponent(txtMatKhau)))
-                                        .addGap(9, 9, 9))))
+                                                .addComponent(txtMatKhau)))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nhanvienLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(lbAnh, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -641,7 +630,9 @@ public class QLNhanVien extends javax.swing.JFrame {
         //            return;
         //        }
         File s = chooser.getSelectedFile();
-
+        if (s == null) {
+           return;
+        }
         String fileName = s.getAbsolutePath();
         AnhService anhService = new AnhService();
         anhService.setAnh(fileName);
