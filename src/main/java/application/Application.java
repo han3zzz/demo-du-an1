@@ -20,6 +20,7 @@ public class Application {
           System.out.println("hiep");
           System.out.println("linh");
           System.out.println("tung");
+          System.out.println("trung");
           
         new LoginForm().setVisible(true);
     }
