@@ -10,5 +10,6 @@ package repositories;
  */
 public class NewClass1 {
     //huhu
+    //hahaah
     
 }
