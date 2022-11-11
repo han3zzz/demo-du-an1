@@ -9,17 +9,12 @@ package repositories;
  * @author HANGOCHAN
  */
 public class NewClass {
+
     //akakka
    
     ///msnsnd
-    fggg
-            
-            
-    linh
-       han  
-        ahibi    
-            
-            
+  
+
             
             
 }
