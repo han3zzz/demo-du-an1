@@ -13,20 +13,15 @@ import views.WelcomeForm;
  */
 public class Application {
     public static void main(String[] args) {
-        System.out.println("trung moi moi");
-        System.out.println("test");
-         System.out.println("test");
-         System.out.println("han");
+          System.out.println("trung moi moi");
+          System.out.println("test");
+          System.out.println("test");
+          System.out.println("han");
           System.out.println("hiep");
           System.out.println("linh");
           System.out.println("tung");
           System.out.println("trung");
           System.out.println("quan");
-          
-          
-          
-          
-          
           
         new LoginForm().setVisible(true);
     }
