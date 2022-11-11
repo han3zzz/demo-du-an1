@@ -9,5 +9,6 @@ package repositories;
  * @author Admin
  */
 public class NewClass1 {
+    //huhu
     
 }
