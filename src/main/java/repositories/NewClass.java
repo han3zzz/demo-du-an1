@@ -9,5 +9,5 @@ package repositories;
  * @author HANGOCHAN
  */
 public class NewClass {
-    
+    //akakka
 }
