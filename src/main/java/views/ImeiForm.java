@@ -50,9 +50,9 @@ public class ImeiForm extends javax.swing.JFrame {
             model.addRow(data);
         }
         int row = model.getRowCount();
-       
-            txtSoLuong.setText("Số lượng : "+String.valueOf(row));
-        
+
+        txtSoLuong.setText("Số lượng : " + String.valueOf(row));
+
     }
 
     public void loadSoLuong() {
@@ -64,7 +64,6 @@ public class ImeiForm extends javax.swing.JFrame {
         List<String> items = services.getList();
         QLChiTietSanPham.cbbImei(items);
     }
-
 
     public void loadTxtSoLuong() {
         List<String> list = services.getList();
@@ -357,7 +356,6 @@ public class ImeiForm extends javax.swing.JFrame {
                         return;
                     }
                     XSSFCell cell = exelRow.getCell(0);
-                    
 
                     int row = tbImei.getRowCount();
                     for (int k = 0; k < row; k++) {
@@ -366,7 +364,7 @@ public class ImeiForm extends javax.swing.JFrame {
                             return;
                         }
                     }
-                    
+
                     if (!cell.getStringCellValue().matches(checkSo)) {
                         JOptionPane.showMessageDialog(this, "File bạn vừa thêm có chứa Imei không phải là một chuỗi toàn số !");
                         return;
