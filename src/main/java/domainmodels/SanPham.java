@@ -37,9 +37,6 @@ public class SanPham implements Serializable{
     @ManyToOne
     @JoinColumn (name = "MaNSX" , nullable = false)
     private NSX nsx ;
-    @ManyToOne
-    @JoinColumn (name = "MaDM" , nullable = false)
-    private DanhMuc danhmuc ;
     @OneToMany(mappedBy = "sanPham" , fetch = FetchType.LAZY)
     List<ChiTietSP> chiTietSPs;
 
@@ -91,13 +88,6 @@ public class SanPham implements Serializable{
         this.nsx = nsx;
     }
 
-    public DanhMuc getDanhMuc() {
-        return danhmuc;
-    }
-
-    public void setDanhMuc(DanhMuc danhMuc) {
-        this.danhmuc = danhMuc;
-    }
 
     public List<ChiTietSP> getChiTietSPs() {
         return chiTietSPs;
