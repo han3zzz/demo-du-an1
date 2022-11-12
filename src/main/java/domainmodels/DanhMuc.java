@@ -33,7 +33,7 @@ public class DanhMuc implements Serializable{
     private Date ngaySua ;
     @Column(name = "TrangThai")
     private Integer trangThai ;
-    @OneToMany(mappedBy = "dm",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "danhmuc",fetch = FetchType.LAZY)
     private List<SanPham> sanPhams;
 
     public DanhMuc(String maDM, String tenDM, Date ngayTao, Date ngaySua, Integer trangThai, List<SanPham> sanPhams) {
