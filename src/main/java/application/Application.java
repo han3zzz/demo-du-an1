@@ -21,6 +21,8 @@ public class Application {
           System.out.println("linh");
           System.out.println("tung");
           System.out.println("trung");
+          
+          
           System.out.println("quan");
           
         new LoginForm().setVisible(true);
