@@ -1135,16 +1135,16 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
             }
             ChiTietSP c = layTTSanPham();
             List<ChiTietSP> list = chiTietSPServices.getImeibyMaSP(c.getSanPham().getMaSP());
-            ImeiServices imeiServices = new ImeiServices();
-            List<String> list1 = imeiServices.getList();
+            int row = cbbImei.getItemCount();
             for (ChiTietSP chiTietSP : list) {
-                for (String string : list1) {
-                    if (chiTietSP.getMaImei().equals(string)) {
+                for (int j = 0; j < row; j++) {
+                    if (chiTietSP.getMaImei().equals(cbbImei.getItemAt(j))) {
                         JOptionPane.showMessageDialog(this, "List Imei chưa Imei đã tồn tại trên hệ thống !");
                         return;
                     }
                 }
             }
+
             String Imei = "";
             for (int i = 0; i < cbbImei.getItemCount(); i++) {
                 Imei = cbbImei.getItemAt(i);
@@ -1300,17 +1300,6 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
             }
             // TODO add your handling code here:
             ChiTietSP c = layTTSuaSanPham();
-            List<ChiTietSP> list = chiTietSPServices.getImeibyMaSP(c.getSanPham().getMaSP());
-            ImeiServices imeiServices = new ImeiServices();
-            List<String> list1 = imeiServices.getList();
-            for (ChiTietSP chiTietSP : list) {
-                for (String string : list1) {
-                    if (chiTietSP.getMaImei().equals(string)) {
-                        JOptionPane.showMessageDialog(this, "List Imei chưa Imei đã tồn tại trên hệ thống !");
-                        return;
-                    }
-                }
-            }
             int row = cbbImei.getItemCount();
 
             String Imei = "";
@@ -1320,11 +1309,12 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
                 Imei = cbbImei.getItemAt(i);
 
                 ChiTietSP c1 = layTTSanPham();
-
+//                c1.setAnh(c.getAnh());
                 c1.setMaImei(Imei);
                 chiTietSPServices.add(c1);
                 ChiTietSP c3 = layTTSuaSanPham();
                 c3.setMaImei(Imei);
+                c3.setAnh(c1.getAnh());
 
                 chiTietSPServices.update(c3);
             }
