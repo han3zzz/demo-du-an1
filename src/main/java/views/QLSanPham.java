@@ -668,7 +668,7 @@ public class QLSanPham extends javax.swing.JFrame {
 
     private void jLabel5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MousePressed
         // TODO add your handling code here:
-        new NSXForm().setVisible(true);
+        new QLNSX().setVisible(true);
     }//GEN-LAST:event_jLabel5MousePressed
 
     private void cbbdanhMucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbdanhMucActionPerformed
