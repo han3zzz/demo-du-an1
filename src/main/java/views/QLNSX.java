@@ -46,13 +46,13 @@ public class QLNSX extends javax.swing.JFrame {
             }
         }
     }
-    public void reset(){
-        SanPhamForm sanPhamForm =  new SanPhamForm();
-        sanPhamForm.loadCbbNSX();
-    }
+//    public void reset(){
+//        SanPhamForm sanPhamForm =  new SanPhamForm();
+//        sanPhamForm.loadCbbNSX();
+//    }
     public void loadCBBNSX(){
          List<NSX> items = services.getALL();
-        SanPhamForm.loadCbbNSX(items);
+        QLSanPham.loadCbbNSX(items);
     }
 
     public NSX layTT() throws ParseException {

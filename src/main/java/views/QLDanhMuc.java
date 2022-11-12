@@ -52,10 +52,10 @@ public class QLDanhMuc extends javax.swing.JFrame {
         }
     }
 
-    public void reset() {
-        SanPhamForm sanPhamForm = new SanPhamForm();
-        sanPhamForm.loadCbbNSX();
-    }
+//    public void reset() {
+//        SanPhamForm sanPhamForm = new SanPhamForm();
+//        sanPhamForm.loadCbbNSX();
+//    }
 //    public void loadCBBNSX(){
 //         List<DanhMuc> items = services.getALL();
 //        SanPhamForm.loadCbbNSX(items);
