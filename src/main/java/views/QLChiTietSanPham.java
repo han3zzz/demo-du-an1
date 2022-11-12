@@ -162,6 +162,17 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
             cbbImei.addItem(item);
         }
     }
+    public static void cbbBoNho(List<String> items){
+        cbbBoNhoTrong.removeAllItems();
+        for (String item : items) {
+            cbbBoNhoTrong.addItem(item);
+        }
+    }
+    public static void cbbMauSac(List<String> items){
+        for (String item : items) {
+            cbbMauSac.addItem(item);
+        }
+    }
 
     public static void txtSoLuong(String sl) {
         txtSoLuongTon.setText(sl);
@@ -1477,11 +1488,11 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
     private keeptoo.KGradientPanel btnThem;
     private javax.swing.JLabel btnUpdate;
     private javax.swing.JLabel btnUpload;
-    private javax.swing.JComboBox<String> cbbBoNhoTrong;
+    private static javax.swing.JComboBox<String> cbbBoNhoTrong;
     private javax.swing.JComboBox<String> cbbCamera;
     private javax.swing.JComboBox<String> cbbHeDieuHanh;
     private static javax.swing.JComboBox<String> cbbImei;
-    private javax.swing.JComboBox<String> cbbMauSac;
+    private static javax.swing.JComboBox<String> cbbMauSac;
     private javax.swing.JComboBox<String> cbbRam;
     private static javax.swing.JComboBox<String> cbbSanPham;
     private javax.swing.JComboBox<String> cbbTGBH;

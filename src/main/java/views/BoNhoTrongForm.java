@@ -379,11 +379,12 @@ public class BoNhoTrongForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             // TODO add your handling code here:
-            BoNhoTrong n = layTT();
-            if (n.getMaBNT().trim().isEmpty() || txtTen.getText().trim().isEmpty()) {
+            
+            if (txtMa.getText().trim().isEmpty() || txtTen.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Không được để trống !");
                 return;
             }
+            BoNhoTrong n = layTT();
             if (services.seachbyMa(n.getMaBNT()) != null) {
                 JOptionPane.showMessageDialog(this, "Mã đã tồn tại !");
                 return;

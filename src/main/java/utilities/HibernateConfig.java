@@ -5,6 +5,7 @@ import domainmodels.BaoHanh;
 import domainmodels.BaoHanhChiTiet;
 import domainmodels.BoNhoTrong;
 import domainmodels.ChiTietSP;
+import domainmodels.DanhMuc;
 import domainmodels.HoaDon;
 import domainmodels.HoaDonChiTiet;
 import domainmodels.KhachHang;
@@ -31,13 +32,14 @@ public class HibernateConfig {
         Properties properties = new Properties();
         properties.put(Environment.DIALECT, "org.hibernate.dialect.SQLServerDialect");
         properties.put(Environment.DRIVER, "com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        properties.put(Environment.URL, "jdbc:sqlserver://localhost:1433;databaseName=DuAn1_QLBanDT");
+        properties.put(Environment.URL, "jdbc:sqlserver://localhost:1433;databaseName=DuAn1_QLBanDienThoai");
         properties.put(Environment.USER, "sa");
         properties.put(Environment.PASS, "123456");
 //        properties.put(Environment.SHOW_SQL, "true");
 
         conf.setProperties(properties);
         conf.addAnnotatedClass(NSX.class);
+        conf.addAnnotatedClass(DanhMuc.class);
         conf.addAnnotatedClass(SanPham.class);
         conf.addAnnotatedClass(BoNhoTrong.class);
         conf.addAnnotatedClass(MauSac.class);
