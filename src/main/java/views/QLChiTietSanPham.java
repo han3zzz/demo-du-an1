@@ -502,7 +502,6 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
         hienThiSanPham();
     }
 
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -1070,18 +1069,18 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập giá nhập hoặc giá bán là số !");
                 return;
             }
-            if (giaNhapString.length() > 10 || giaBanString.length()  > 10) {
+            if (giaNhapString.length() > 10 || giaBanString.length() > 10) {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập giá nhập hoặc giá bán nhỏ hơn 9999999999 !");
                 return;
             }
-            
+
             Double giaNhap = Double.parseDouble(txtGiaNhap.getText());
             Double giaBan = Double.parseDouble(txtGiaBan.getText());
             if (giaNhap > giaBan) {
-                 JOptionPane.showMessageDialog(this, "Vui lòng nhập giá nhập nhỏ hơn hoặc bằng giá bán !");
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập giá nhập nhỏ hơn hoặc bằng giá bán !");
                 return;
             }
-            if (giaNhap <= 0 ||giaBan <=0) {
+            if (giaNhap <= 0 || giaBan <= 0) {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập giá nhập hoặc giá bán lớn hơn 0 !");
                 return;
             }
@@ -1118,26 +1117,38 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập pin nhỏ hơn 9999 !");
                 return;
             }
-            if (cbbImei.getItemCount()  == 0) {
+            if (cbbImei.getItemCount() == 0) {
                 JOptionPane.showMessageDialog(this, "Imei rỗng !");
                 return;
             }
-            if (cbbSanPham.getItemCount()  == 0) {
+            if (cbbSanPham.getItemCount() == 0) {
                 JOptionPane.showMessageDialog(this, "Không có sản phẩm nào !");
                 return;
             }
             if (cbbBoNhoTrong.getItemCount() == 0) {
-                 JOptionPane.showMessageDialog(this, "Không có Bộ nhớ trong nào !");
+                JOptionPane.showMessageDialog(this, "Không có Bộ nhớ trong nào !");
                 return;
             }
             if (cbbBoNhoTrong.getItemCount() == 0) {
                 JOptionPane.showMessageDialog(this, "Không có màu sắc nào !");
                 return;
             }
+            ChiTietSP c = layTTSanPham();
+            List<ChiTietSP> list = chiTietSPServices.getImeibyMaSP(c.getSanPham().getMaSP());
+            ImeiServices imeiServices = new ImeiServices();
+            List<String> list1 = imeiServices.getList();
+            for (ChiTietSP chiTietSP : list) {
+                for (String string : list1) {
+                    if (chiTietSP.getMaImei().equals(string)) {
+                        JOptionPane.showMessageDialog(this, "List Imei chưa Imei đã tồn tại trên hệ thống !");
+                        return;
+                    }
+                }
+            }
             String Imei = "";
             for (int i = 0; i < cbbImei.getItemCount(); i++) {
                 Imei = cbbImei.getItemAt(i);
-                ChiTietSP c = layTTSanPham();
+
                 c.setMaImei(Imei);
                 chiTietSPServices.add(c);
             }
@@ -1219,18 +1230,18 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập giá nhập hoặc giá bán là số !");
                 return;
             }
-            if (giaNhapString.length() > 10 || giaBanString.length()  > 10) {
+            if (giaNhapString.length() > 10 || giaBanString.length() > 10) {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập giá nhập hoặc giá bán nhỏ hơn 9999999999 !");
                 return;
             }
-            
+
             Double giaNhap = Double.parseDouble(txtGiaNhap.getText());
             Double giaBan = Double.parseDouble(txtGiaBan.getText());
             if (giaNhap > giaBan) {
-                 JOptionPane.showMessageDialog(this, "Vui lòng nhập giá nhập nhỏ hơn hoặc bằng giá bán !");
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập giá nhập nhỏ hơn hoặc bằng giá bán !");
                 return;
             }
-            if (giaNhap <= 0 ||giaBan <=0) {
+            if (giaNhap <= 0 || giaBan <= 0) {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập giá nhập hoặc giá bán lớn hơn 0 !");
                 return;
             }
@@ -1267,16 +1278,16 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập pin nhỏ hơn 9999 !");
                 return;
             }
-            if (cbbImei.getItemCount()  == 0) {
+            if (cbbImei.getItemCount() == 0) {
                 JOptionPane.showMessageDialog(this, "Imei rỗng !");
                 return;
             }
-            if (cbbSanPham.getItemCount()  == 0) {
+            if (cbbSanPham.getItemCount() == 0) {
                 JOptionPane.showMessageDialog(this, "Không có sản phẩm nào !");
                 return;
             }
             if (cbbBoNhoTrong.getItemCount() == 0) {
-                 JOptionPane.showMessageDialog(this, "Không có Bộ nhớ trong nào !");
+                JOptionPane.showMessageDialog(this, "Không có Bộ nhớ trong nào !");
                 return;
             }
             if (cbbBoNhoTrong.getItemCount() == 0) {
@@ -1289,7 +1300,17 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
             }
             // TODO add your handling code here:
             ChiTietSP c = layTTSuaSanPham();
-
+            List<ChiTietSP> list = chiTietSPServices.getImeibyMaSP(c.getSanPham().getMaSP());
+            ImeiServices imeiServices = new ImeiServices();
+            List<String> list1 = imeiServices.getList();
+            for (ChiTietSP chiTietSP : list) {
+                for (String string : list1) {
+                    if (chiTietSP.getMaImei().equals(string)) {
+                        JOptionPane.showMessageDialog(this, "List Imei chưa Imei đã tồn tại trên hệ thống !");
+                        return;
+                    }
+                }
+            }
             int row = cbbImei.getItemCount();
 
             String Imei = "";
