@@ -16,21 +16,21 @@ public class ChiTietSPViewModels {
     private String nsx ;
     private String mauSac ;
     private Integer boNho ;
-    private Integer ram ;
-    private String cpu ;
     private Integer tonKho ;
+    private BigDecimal giaNhap ;
     private BigDecimal giaBan ;
+    private String anh ;
     private Integer trangThai ;
 
-    public ChiTietSPViewModels(String tenSP, String nsx, String mauSac, Integer boNho, Integer ram, String cpu, Integer tonKho, BigDecimal giaBan, Integer trangThai) {
+    public ChiTietSPViewModels(String tenSP, String nsx, String mauSac, Integer boNho, Integer tonKho, BigDecimal giaNhap, BigDecimal giaBan, String anh, Integer trangThai) {
         this.tenSP = tenSP;
         this.nsx = nsx;
         this.mauSac = mauSac;
         this.boNho = boNho;
-        this.ram = ram;
-        this.cpu = cpu;
         this.tonKho = tonKho;
+        this.giaNhap = giaNhap;
         this.giaBan = giaBan;
+        this.anh = anh;
         this.trangThai = trangThai;
     }
 
@@ -66,28 +66,20 @@ public class ChiTietSPViewModels {
         this.boNho = boNho;
     }
 
-    public Integer getRam() {
-        return ram;
-    }
-
-    public void setRam(Integer ram) {
-        this.ram = ram;
-    }
-
-    public String getCpu() {
-        return cpu;
-    }
-
-    public void setCpu(String cpu) {
-        this.cpu = cpu;
-    }
-
     public Integer getTonKho() {
         return tonKho;
     }
 
     public void setTonKho(Integer tonKho) {
         this.tonKho = tonKho;
+    }
+
+    public BigDecimal getGiaNhap() {
+        return giaNhap;
+    }
+
+    public void setGiaNhap(BigDecimal giaNhap) {
+        this.giaNhap = giaNhap;
     }
 
     public BigDecimal getGiaBan() {
@@ -98,6 +90,14 @@ public class ChiTietSPViewModels {
         this.giaBan = giaBan;
     }
 
+    public String getAnh() {
+        return anh;
+    }
+
+    public void setAnh(String anh) {
+        this.anh = anh;
+    }
+
     public Integer getTrangThai() {
         return trangThai;
     }
@@ -106,6 +106,7 @@ public class ChiTietSPViewModels {
         this.trangThai = trangThai;
     }
 
+   
     
 
     

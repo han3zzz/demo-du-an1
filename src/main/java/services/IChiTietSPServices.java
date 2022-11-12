@@ -21,4 +21,6 @@ public interface IChiTietSPServices {
     public ChiTietSP fill(String maSP);
     public List<ChiTietSP> getImeibyMaSP(String maSP);
     public ChiTietSPViewModels load(String maSP);
+    public void updateImei(String ma );
+    public void xoaImei(String ma);
 }

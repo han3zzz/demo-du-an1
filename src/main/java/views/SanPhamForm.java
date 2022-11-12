@@ -6,6 +6,8 @@ package views;
 
 import domainmodels.NSX;
 import domainmodels.SanPham;
+import java.awt.Component;
+import java.awt.Image;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
@@ -14,12 +16,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import services.ChiTietSPServices;
+import services.IChiTietSPServices;
 import services.INSXServices;
 import services.ISanPhamServices;
 import services.NSXServices;
 import services.SanPhamService;
+import viewmodels.ChiTietSPViewModels;
 
 /**
  *
@@ -32,12 +41,13 @@ public class SanPhamForm extends javax.swing.JFrame {
      */
     private ISanPhamServices sanPhamServices;
     private INSXServices nSXServices;
-
+    private IChiTietSPServices chiTietSPServices;
     public SanPhamForm() {
         initComponents();
 
         sanPhamServices = new SanPhamService();
         nSXServices = new NSXServices();
+        chiTietSPServices = new ChiTietSPServices();
         loadCbbNSX();
         load();
 
@@ -53,7 +63,7 @@ public class SanPhamForm extends javax.swing.JFrame {
     }
 
     public void load() {
-        DefaultTableModel model = (DefaultTableModel) tbSanPham.getModel();
+        DefaultTableModel model = (DefaultTableModel) tbQLSanPham.getModel();
         model.setRowCount(0);
         List<SanPham> list = sanPhamServices.getALL();
         for (SanPham sanPham : list) {
@@ -67,6 +77,49 @@ public class SanPhamForm extends javax.swing.JFrame {
             }
         }
     }
+    public void loadCbbSanPham(){
+        List<SanPham> items = sanPhamServices.getALL();
+        QLChiTietSanPham.cbbSanPham(items);
+    }
+//    public void loadHienThiSanPham(){
+//        tbQLSanPham.getColumn("Ảnh").setCellRenderer(new SanPhamForm.myTableCellRender());
+//        String maSP = "";
+//        List<SanPham> sanPhams = sanPhamServices.getALL();
+//        for (SanPham sanPham : sanPhams) {
+//            maSP = sanPham.getMaSP();
+//            ChiTietSPViewModels c = chiTietSPServices.load(maSP);
+//            if (c == null) {
+//                continue;
+//            }
+//            if (c.getTrangThai() == 0) {
+//                JLabel label = new JLabel();
+//                ImageIcon icon = new ImageIcon(c.getAnh());
+//                Image img = icon.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+//                label.setIcon(new ImageIcon(img));
+//                Object[] data = new Object[]{
+//                    c.getTenSP(),
+//                    c.getNsx(),
+//                    c.getMauSac(),
+//                    c.getBoNho(),
+//                    c.getTonKho(),
+//                    c.getGiaNhap(),
+//                    c.getGiaBan(),
+//                    label
+//                };
+//                QLChiTietSanPham.loadHienThiSanPham(data);
+//            }
+//        }
+//        
+//    }
+//     class myTableCellRender implements TableCellRenderer {
+//
+//        @Override
+//        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+//            tbQLSanPham.setRowHeight(70);
+//
+//            return (Component) value;
+//        }
+//    }
     public SanPham layTT() throws ParseException{
         String ma = txtMa.getText();
         String ten = txtTen.getText();
@@ -114,14 +167,21 @@ public class SanPhamForm extends javax.swing.JFrame {
         return sp ;
     }
     public void fill(){
-        int index = tbSanPham.getSelectedRow();
-        String ma = tbSanPham.getValueAt(index, 0).toString();
-        String ten = tbSanPham.getValueAt(index, 1).toString();
-        String nsx = tbSanPham.getValueAt(index, 2).toString();
+        int index = tbQLSanPham.getSelectedRow();
+        String ma = tbQLSanPham.getValueAt(index, 0).toString();
+        String ten = tbQLSanPham.getValueAt(index, 1).toString();
+        String nsx = tbQLSanPham.getValueAt(index, 2).toString();
         
         txtMa.setText(ma);
         txtTen.setText(ten);
         cbbNSX.setSelectedItem(nsx);
+    }
+    public static void loadCbbNSX(List<NSX> items){
+        for (NSX item : items) {
+             if (item.getTrangThai() == 0) {
+                cbbNSX.addItem(item.getTenNSX());
+            }
+        }
     }
 
     /**
@@ -140,7 +200,7 @@ public class SanPhamForm extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtTen = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbSanPham = new javax.swing.JTable();
+        tbQLSanPham = new javax.swing.JTable();
         kGradientPanel1 = new keeptoo.KGradientPanel();
         btnUpdate = new javax.swing.JLabel();
         kGradientPanel2 = new keeptoo.KGradientPanel();
@@ -174,7 +234,7 @@ public class SanPhamForm extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Tên");
 
-        tbSanPham.setModel(new javax.swing.table.DefaultTableModel(
+        tbQLSanPham.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -193,15 +253,15 @@ public class SanPhamForm extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tbSanPham.addMouseListener(new java.awt.event.MouseAdapter() {
+        tbQLSanPham.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbSanPhamMouseClicked(evt);
+                tbQLSanPhamMouseClicked(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                tbSanPhamMousePressed(evt);
+                tbQLSanPhamMousePressed(evt);
             }
         });
-        jScrollPane1.setViewportView(tbSanPham);
+        jScrollPane1.setViewportView(tbQLSanPham);
 
         btnUpdate.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_update_30px.png"))); // NOI18N
@@ -387,14 +447,14 @@ public class SanPhamForm extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tbSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbSanPhamMouseClicked
+    private void tbQLSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbQLSanPhamMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_tbSanPhamMouseClicked
+    }//GEN-LAST:event_tbQLSanPhamMouseClicked
 
-    private void tbSanPhamMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbSanPhamMousePressed
+    private void tbQLSanPhamMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbQLSanPhamMousePressed
         // TODO add your handling code here:
         fill();
-    }//GEN-LAST:event_tbSanPhamMousePressed
+    }//GEN-LAST:event_tbQLSanPhamMousePressed
 
     private void btnUpdateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateMouseClicked
 
@@ -404,12 +464,12 @@ public class SanPhamForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             // TODO add your handling code here:
-            int index = tbSanPham.getSelectedRow();
+            int index = tbQLSanPham.getSelectedRow();
             if (index == -1) {
                 JOptionPane.showMessageDialog(this, "Bạn chưa chọn bản ghi nào !");
                 return;
             }
-            int i = tbSanPham.getSelectedRowCount();
+            int i = tbQLSanPham.getSelectedRowCount();
             if (i > 1) {
                 JOptionPane.showMessageDialog(this, "Bạn chỉ được chọn 1 bản ghi !");
                 return;
@@ -426,6 +486,7 @@ public class SanPhamForm extends javax.swing.JFrame {
             if (sanPhamServices.update(n) == true) {
                 JOptionPane.showMessageDialog(this, "Sửa thành công !");
                 load();
+                loadCbbSanPham();
             } else {
                 JOptionPane.showMessageDialog(this, "Sửa thất bại !");
             }
@@ -454,6 +515,7 @@ public class SanPhamForm extends javax.swing.JFrame {
             if (sanPhamServices.add(n) == true) {
                 JOptionPane.showMessageDialog(this, "Thêm thành công !");
                 load();
+                loadCbbSanPham();
             } else {
                 JOptionPane.showMessageDialog(this, "Thêm thất bại");
             }
@@ -465,12 +527,12 @@ public class SanPhamForm extends javax.swing.JFrame {
     private void btnDeleteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMousePressed
         try {
             // TODO add your handling code here:
-            int index = tbSanPham.getSelectedRow();
+            int index = tbQLSanPham.getSelectedRow();
             if (index == -1) {
                 JOptionPane.showMessageDialog(this, "Bạn chưa chọn bản ghi nào !");
                 return;
             }
-           int i = tbSanPham.getSelectedRowCount();
+           int i = tbQLSanPham.getSelectedRowCount();
             if (i > 1) {
                 JOptionPane.showMessageDialog(this, "Bạn chỉ được chọn 1 bản ghi !");
                 return;
@@ -483,6 +545,7 @@ public class SanPhamForm extends javax.swing.JFrame {
             if (sanPhamServices.delete(n) == true) {
                 JOptionPane.showMessageDialog(this, "Xóa thành công !");
                 load();
+                loadCbbSanPham();
             } else {
                 JOptionPane.showMessageDialog(this, "Xóa thất bại !");
             }
@@ -505,7 +568,7 @@ public class SanPhamForm extends javax.swing.JFrame {
             return;
         }
 
-        DefaultTableModel model = (DefaultTableModel) tbSanPham.getModel();
+        DefaultTableModel model = (DefaultTableModel) tbQLSanPham.getModel();
         model.setRowCount(0);
         if (n.getTrangThai() == 0) {
             JOptionPane.showMessageDialog(this, "Tìm thành công !");
@@ -574,7 +637,7 @@ public class SanPhamForm extends javax.swing.JFrame {
     private javax.swing.JLabel btnDelete;
     private javax.swing.JLabel btnSearch;
     private javax.swing.JLabel btnUpdate;
-    public javax.swing.JComboBox<String> cbbNSX;
+    private static javax.swing.JComboBox<String> cbbNSX;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -586,7 +649,7 @@ public class SanPhamForm extends javax.swing.JFrame {
     private keeptoo.KGradientPanel kGradientPanel2;
     private keeptoo.KGradientPanel kGradientPanel3;
     private keeptoo.KGradientPanel kGradientPanel4;
-    private javax.swing.JTable tbSanPham;
+    private javax.swing.JTable tbQLSanPham;
     private javax.swing.JTextField txtMa;
     private javax.swing.JTextField txtTen;
     // End of variables declaration//GEN-END:variables

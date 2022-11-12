@@ -32,12 +32,12 @@ public class ChiTietSPServices implements IChiTietSPServices{
             String nsx = ctsp.getSanPham().getNsx().getTenNSX();
             String mauSac = ctsp.getMauSac().getTenMauSac();
             Integer boNho = ctsp.getBoNhoTrong().getDungLuong();
-            Integer ram = ctsp.getRam();
-            String cpu = ctsp.getCpu();
             Integer tonKho = count.size();
             BigDecimal giaBan = ctsp.getGiaBan();
+            BigDecimal giaNhap = ctsp.getGiaNhap();
+            String anh = ctsp.getAnh();
             Integer trangThai = ctsp.getTrangThai();
-            ChiTietSPViewModels ctspvm = new ChiTietSPViewModels(tenSP, nsx, mauSac, boNho, ram, cpu, tonKho, giaBan,trangThai);
+            ChiTietSPViewModels ctspvm = new ChiTietSPViewModels(tenSP, nsx, mauSac, boNho, tonKho,giaNhap, giaBan,anh,trangThai);
             ctspvms.add(ctspvm);
         }
         
@@ -86,12 +86,23 @@ public class ChiTietSPServices implements IChiTietSPServices{
             String nsx = ctsp.getSanPham().getNsx().getTenNSX();
             String mauSac = ctsp.getMauSac().getTenMauSac();
             Integer boNho = ctsp.getBoNhoTrong().getDungLuong();
-            Integer ram = ctsp.getRam();
-            String cpu = ctsp.getCpu();
             Integer tonKho = count.size();
             BigDecimal giaBan = ctsp.getGiaBan();
+             BigDecimal giaNhap = ctsp.getGiaNhap();
+            String anh = ctsp.getAnh();
             Integer trangThai = ctsp.getTrangThai();
-            ChiTietSPViewModels ctspvm = new ChiTietSPViewModels(tenSP, nsx, mauSac, boNho, ram, cpu, tonKho, giaBan,trangThai);
+            ChiTietSPViewModels ctspvm = new ChiTietSPViewModels(tenSP, nsx, mauSac, boNho, tonKho,giaNhap, giaBan,anh,trangThai);
         return ctspvm;
     }
+
+    @Override
+    public void updateImei(String ma) {
+        ctspr.updateImei(ma);
+    }
+
+    @Override
+    public void xoaImei(String ma) {
+        ctspr.xoaImei(ma);
+    }
+
 }

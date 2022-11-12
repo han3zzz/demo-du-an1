@@ -8,6 +8,7 @@ import domainmodels.BoNhoTrong;
 import domainmodels.ChiTietSP;
 import domainmodels.MauSac;
 import domainmodels.SanPham;
+import java.awt.Component;
 import java.awt.Image;
 import java.io.File;
 import java.math.BigDecimal;
@@ -22,8 +23,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import services.AnhService;
 import services.BoNhoTrongServices;
 import services.ChiTietSPServices;
@@ -40,17 +44,17 @@ import viewmodels.ChiTietSPViewModels;
  *
  * @author HANGOCHAN
  */
-public class QLSanPham extends javax.swing.JFrame {
+public class QLChiTietSanPham extends javax.swing.JFrame {
 
     /**
-     * Creates new form QLSanPham
+     * Creates new form QLChiTietSanPham
      */
     private ISanPhamServices sanPhamServices;
     private IMauSacServices mauSacServices;
     private IBoNhoTrongServices boNhoTrongServices;
     private IChiTietSPServices chiTietSPServices;
 
-    public QLSanPham() {
+    public QLChiTietSanPham() {
         initComponents();
 
         sanPhamServices = new SanPhamService();
@@ -58,16 +62,10 @@ public class QLSanPham extends javax.swing.JFrame {
         boNhoTrongServices = new BoNhoTrongServices();
         chiTietSPServices = new ChiTietSPServices();
 
-        cbbSanPham.removeAllItems();
         cbbMauSac.removeAllItems();
         cbbBoNhoTrong.removeAllItems();
         cbbImei.removeAllItems();
-        List<SanPham> sanPhams = sanPhamServices.getALL();
-        for (SanPham sanPham : sanPhams) {
-            if (sanPham.getTrangThai() == 0) {
-                cbbSanPham.addItem(sanPham.getTenSP());
-            }
-        }
+
         List<MauSac> mauSacs = mauSacServices.getALL();
         for (MauSac mauSac : mauSacs) {
             if (mauSac.getTrangThai() == 0) {
@@ -81,10 +79,18 @@ public class QLSanPham extends javax.swing.JFrame {
                 cbbBoNhoTrong.addItem(String.valueOf(bnt.getDungLuong()));
             }
         }
+        cbbSanPham.removeAllItems();
+        List<SanPham> sanPhams = sanPhamServices.getALL();
+        for (SanPham sanPham : sanPhams) {
+            if (sanPham.getTrangThai() == 0) {
+                cbbSanPham.addItem(sanPham.getTenSP());
+            }
+        }
         hienThiSanPham();
     }
 
     public void hienThiSanPham() {
+        tbSanPham.getColumn("Ảnh").setCellRenderer(new myTableCellRender());
         DefaultTableModel model = (DefaultTableModel) tbSanPham.getModel();
         model.setRowCount(0);
         String maSP = "";
@@ -96,44 +102,70 @@ public class QLSanPham extends javax.swing.JFrame {
                 continue;
             }
             if (c.getTrangThai() == 0) {
-
+                JLabel label = new JLabel();
+                ImageIcon icon = new ImageIcon(c.getAnh());
+                Image img = icon.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+                label.setIcon(new ImageIcon(img));
                 Object[] data = new Object[]{
                     c.getTenSP(),
                     c.getNsx(),
                     c.getMauSac(),
                     c.getBoNho(),
-                    c.getRam(),
-                    c.getCpu(),
                     c.getTonKho(),
-                    c.getGiaBan()
+                    c.getGiaNhap(),
+                    c.getGiaBan(),
+                    label
                 };
                 model.addRow(data);
             }
-//        List<ChiTietSPViewModels> list = chiTietSPServices.getALL();
-//        for (ChiTietSPViewModels c : list) {
-//            if (c.getTrangThai() == 0) {
-//
-//                Object[] data = new Object[]{
-//                    c.getTenSP(),
-//                    c.getNsx(),
-//                    c.getMauSac(),
-//                    c.getBoNho(),
-//                    c.getRam(),
-//                    c.getCpu(),
-//                    c.getTonKho(),
-//                    c.getGiaBan()
-//                };
-//                model.addRow(data);
-//                
-//            }
 
         }
+        cbbSanPham.setSelectedIndex(0);
+    }
+
+    class myTableCellRender implements TableCellRenderer {
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            tbSanPham.setRowHeight(70);
+
+            return (Component) value;
+        }
+    }
+
+    public static void cbbSanPham(List<SanPham> items) {
+        cbbSanPham.removeAllItems();
+
+        for (SanPham sanPham : items) {
+            if (sanPham.getTrangThai() == 0) {
+                cbbSanPham.addItem(sanPham.getTenSP());
+            }
+        }
+
+    }
+
+    public static void loadHienThiSanPham(Object[] data) {
+
+        DefaultTableModel model = (DefaultTableModel) tbSanPham.getModel();
+        model.setRowCount(0);
+        model.addRow(data);
+    }
+
+    public static void cbbImei(List<String> items) {
+        cbbImei.removeAllItems();
+        for (String item : items) {
+            cbbImei.addItem(item);
+        }
+    }
+
+    public static void txtSoLuong(String sl) {
+        txtSoLuongTon.setText(sl);
     }
 
     public void fillSanPham() {
         int index = tbSanPham.getSelectedRow();
         String tenSP = tbSanPham.getValueAt(index, 0).toString();
-        String soLuong = tbSanPham.getValueAt(index, 6).toString();
+        String soLuong = tbSanPham.getValueAt(index, 4).toString();
         List<SanPham> sanPhams = sanPhamServices.getALL();
         String maSP = "";
         for (SanPham sanPham : sanPhams) {
@@ -172,6 +204,7 @@ public class QLSanPham extends javax.swing.JFrame {
         cbbRam.setSelectedItem(String.valueOf(c.getRam()));
         cbbBoNhoTrong.setSelectedItem(String.valueOf(c.getBoNhoTrong().getDungLuong()));
         cbbMauSac.setSelectedItem(c.getMauSac().getTenMauSac());
+        btnAdd.setEnabled(false);
         String ngayBh = "";
         if (c.getThoiGianBH() == 30) {
             ngayBh = "1 Tháng";
@@ -190,7 +223,7 @@ public class QLSanPham extends javax.swing.JFrame {
 
     public ChiTietSP layTTSanPham() throws ParseException {
         String Imei = "";
-        for (int i = 0; i < cbbImei.getHeight(); i++) {
+        for (int i = 0; i < cbbImei.getItemCount(); i++) {
             Imei = cbbImei.getItemAt(i);
         }
         double giaNhapdb = Double.parseDouble(txtGiaNhap.getText());
@@ -269,9 +302,10 @@ public class QLSanPham extends javax.swing.JFrame {
         return c;
 
     }
+
     public ChiTietSP layTTSuaSanPham() throws ParseException {
         String Imei = "";
-        for (int i = 0; i < cbbImei.getHeight(); i++) {
+        for (int i = 0; i < cbbImei.getItemCount(); i++) {
             Imei = cbbImei.getItemAt(i);
         }
         double giaNhapdb = Double.parseDouble(txtGiaNhap.getText());
@@ -337,7 +371,7 @@ public class QLSanPham extends javax.swing.JFrame {
         c.setMoTa(moTa);
         c.setThoiGianBH(thoiGianBaoHanh);
         ChiTietSP spp = chiTietSPServices.fill(masp);
-        if (!spp.getAnh().equals(anh)) {
+        if (spp.getAnh() == null) {
             c.setAnh(anh);
         } else {
             c.setAnh(spp.getAnh());
@@ -357,7 +391,97 @@ public class QLSanPham extends javax.swing.JFrame {
         return c;
 
     }
-    public void clear(){
+
+    public ChiTietSP layTTSuaChiTietSanPham() throws ParseException {
+        String Imei = "";
+        for (int i = 0; i < cbbImei.getItemCount(); i++) {
+            Imei = cbbImei.getItemAt(i);
+        }
+        double giaNhapdb = Double.parseDouble(txtGiaNhap.getText());
+        BigDecimal giaNhap = BigDecimal.valueOf(giaNhapdb);
+        double giaBandb = Double.parseDouble(txtGiaBan.getText());
+        BigDecimal giaBan = BigDecimal.valueOf(giaBandb);
+        String moTa = txtGhiChu.getText();
+        Integer thoiGianBaoHanh = 0;
+        String thoiGian = (String) cbbTGBH.getSelectedItem();
+        if (thoiGian.equals("1 Tháng")) {
+            thoiGianBaoHanh = 30;
+        } else if (thoiGian.equals("3 Tháng")) {
+            thoiGianBaoHanh = 90;
+        } else if (thoiGian.equals("6 tháng")) {
+            thoiGianBaoHanh = 180;
+        } else {
+            thoiGianBaoHanh = 360;
+        }
+        AnhService anhService = new AnhService();
+        String anh = anhService.getAnh();
+        String camera = (String) cbbCamera.getSelectedItem();
+        String heDieuHanh = (String) cbbHeDieuHanh.getSelectedItem();
+        String ramString = (String) cbbRam.getSelectedItem();
+        Integer ram = Integer.parseInt(ramString);
+        String cpu = txtCpu.getText();
+        String manHinh = txtManHinh.getText();
+        Integer pin = Integer.parseInt(txtPin.getText());
+        String xuatXu = txtXuatXu.getText();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+        ZonedDateTime now = ZonedDateTime.now();
+        String ngayTao = dtf.format(now);
+        Date date = new SimpleDateFormat("MM-dd-yyyy").parse(ngayTao);
+        SanPham sp = null;
+        String tenSP = (String) cbbSanPham.getSelectedItem();
+        List<SanPham> sanPhams = sanPhamServices.getALL();
+        String masp = "";
+        for (SanPham sanPham : sanPhams) {
+            if (tenSP.equals(sanPham.getTenSP())) {
+                sp = sanPham;
+                masp = sanPham.getMaSP();
+            }
+        }
+        MauSac mauSac = null;
+        String tenMauSac = (String) cbbMauSac.getSelectedItem();
+        List<MauSac> mauSacs = mauSacServices.getALL();
+        for (MauSac mauSac1 : mauSacs) {
+            if (tenMauSac.equals(mauSac1.getTenMauSac())) {
+                mauSac = mauSac1;
+            }
+        }
+        BoNhoTrong bnt = null;
+        String boNho = (String) cbbBoNhoTrong.getSelectedItem();
+        List<BoNhoTrong> boNhoTrongs = boNhoTrongServices.getALL();
+        for (BoNhoTrong boNhoTrong : boNhoTrongs) {
+            if (Integer.parseInt(boNho) == boNhoTrong.getDungLuong()) {
+                bnt = boNhoTrong;
+            }
+        }
+        ChiTietSP c = new ChiTietSP();
+        c.setMaImei(Imei);
+        c.setGiaNhap(giaNhap);
+        c.setGiaBan(giaBan);
+        c.setMoTa(moTa);
+        c.setThoiGianBH(thoiGianBaoHanh);
+        ChiTietSP spp = chiTietSPServices.fill(masp);
+        if (spp.getAnh() == null) {
+            c.setAnh(anh);
+        } else {
+            c.setAnh(spp.getAnh());
+        }
+        c.setCamera(camera);
+        c.setHeDieuHanh(heDieuHanh);
+        c.setRam(ram);
+        c.setCpu(cpu);
+        c.setManHinh(manHinh);
+        c.setDungLuongPin(pin);
+        c.setXuatXu(xuatXu);
+        c.setNgaySua(date);
+        c.setTrangThai(1);
+        c.setSanPham(sp);
+        c.setMauSac(mauSac);
+        c.setBoNhoTrong(bnt);
+        return c;
+
+    }
+
+    public void clear() {
         lbAnh.setIcon(null);
         cbbSanPham.setSelectedIndex(0);
         txtGiaNhap.setText("");
@@ -375,7 +499,9 @@ public class QLSanPham extends javax.swing.JFrame {
         cbbMauSac.setSelectedIndex(0);
         cbbCamera.setSelectedIndex(0);
         cbbTGBH.setSelectedIndex(0);
+        hienThiSanPham();
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -422,7 +548,7 @@ public class QLSanPham extends javax.swing.JFrame {
         txtCpu = new javax.swing.JTextField();
         txtManHinh = new javax.swing.JTextField();
         txtPin = new javax.swing.JTextField();
-        kGradientPanel2 = new keeptoo.KGradientPanel();
+        btnThem = new keeptoo.KGradientPanel();
         btnAdd = new javax.swing.JLabel();
         kGradientPanel5 = new keeptoo.KGradientPanel();
         btnReset = new javax.swing.JLabel();
@@ -443,13 +569,10 @@ public class QLSanPham extends javax.swing.JFrame {
 
         tbSanPham.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+
             },
             new String [] {
-                "Tên SP", "NSX", "Màu Sắc", "Bộ Nhớ", "Ram", "CPU", "Tồn kho", "Giá"
+                "Tên SP", "NSX", "Màu Sắc", "Bộ Nhớ", "Tồn kho", "Giá nhập", "Giá bán", "Ảnh"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -471,6 +594,11 @@ public class QLSanPham extends javax.swing.JFrame {
         jLabel12.setText("Sản phẩm ");
 
         cbbSanPham.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbbSanPham.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbSanPhamActionPerformed(evt);
+            }
+        });
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel13.setText("Giá nhập");
@@ -547,24 +675,27 @@ public class QLSanPham extends javax.swing.JFrame {
         jLabel28.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel28.setText("Xuất xứ");
 
-        kGradientPanel2.setkGradientFocus(150);
+        btnThem.setkGradientFocus(150);
 
         btnAdd.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_add_30px_6.png"))); // NOI18N
         btnAdd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnAddMouseExited(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnAddMousePressed(evt);
             }
         });
 
-        javax.swing.GroupLayout kGradientPanel2Layout = new javax.swing.GroupLayout(kGradientPanel2);
-        kGradientPanel2.setLayout(kGradientPanel2Layout);
-        kGradientPanel2Layout.setHorizontalGroup(
-            kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout btnThemLayout = new javax.swing.GroupLayout(btnThem);
+        btnThem.setLayout(btnThemLayout);
+        btnThemLayout.setHorizontalGroup(
+            btnThemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(btnAdd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
         );
-        kGradientPanel2Layout.setVerticalGroup(
-            kGradientPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        btnThemLayout.setVerticalGroup(
+            btnThemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
         );
 
@@ -649,6 +780,9 @@ public class QLSanPham extends javax.swing.JFrame {
 
         btnSanPham.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_joyent_30px.png"))); // NOI18N
         btnSanPham.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnSanPhamMouseExited(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnSanPhamMousePressed(evt);
             }
@@ -669,6 +803,11 @@ public class QLSanPham extends javax.swing.JFrame {
         });
 
         btnMauSac.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_joyent_30px.png"))); // NOI18N
+        btnMauSac.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnMauSacMousePressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout sanphamLayout = new javax.swing.GroupLayout(sanpham);
         sanpham.setLayout(sanphamLayout);
@@ -694,7 +833,7 @@ public class QLSanPham extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnBoNho)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(kGradientPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(kGradientPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -850,7 +989,7 @@ public class QLSanPham extends javax.swing.JFrame {
                                 .addGroup(sanphamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(sanphamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(kGradientPanel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(kGradientPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(kGradientPanel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(kGradientPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(14, 14, 14))
@@ -907,13 +1046,92 @@ public class QLSanPham extends javax.swing.JFrame {
     private void btnAddMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMousePressed
         try {
             // TODO add your handling code here:
-            
-            if (txtGiaNhap.getText().trim().isEmpty() || txtGiaBan.getText().trim().isEmpty() || txtGhiChu.getText().trim().isEmpty() || txtCpu.getText().trim().isEmpty() || txtXuatXu.getText().trim().isEmpty() || txtManHinh.getText().trim().isEmpty()||txtManHinh.getText().isEmpty()) {
+            String checkSo = "^[0-9]*$";
+            if (btnAdd.isEnabled() == false) {
+                JOptionPane.showMessageDialog(this, "Không thể thêm vì sản phẩm đã tồn tại !");
+                return;
+            }
+            if (txtGiaNhap.getText().trim().isEmpty() || txtGiaBan.getText().trim().isEmpty() || txtGhiChu.getText().trim().isEmpty() || txtCpu.getText().trim().isEmpty() || txtXuatXu.getText().trim().isEmpty() || txtManHinh.getText().trim().isEmpty() || txtManHinh.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Không được để trống !");
                 return;
             }
             if (lbAnh.getIcon() == null) {
                 JOptionPane.showMessageDialog(this, "Vui lòng tải ảnh sản phẩm lên !");
+                return;
+            }
+            String giaNhapString = txtGiaNhap.getText().trim();
+            String giaBanString = txtGiaBan.getText().trim();
+            String ghiChu = txtGhiChu.getText().trim();
+            String xuatXu = txtXuatXu.getText().trim();
+            String cpu = txtCpu.getText().trim();
+            String manHinh = txtManHinh.getText().trim();
+            String pin = txtPin.getText().trim();
+            if (!giaBanString.matches(checkSo) || !giaNhapString.matches(checkSo)) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập giá nhập hoặc giá bán là số !");
+                return;
+            }
+            if (giaNhapString.length() > 10 || giaBanString.length()  > 10) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập giá nhập hoặc giá bán nhỏ hơn 9999999999 !");
+                return;
+            }
+            
+            Double giaNhap = Double.parseDouble(txtGiaNhap.getText());
+            Double giaBan = Double.parseDouble(txtGiaBan.getText());
+            if (giaNhap > giaBan) {
+                 JOptionPane.showMessageDialog(this, "Vui lòng nhập giá nhập nhỏ hơn hoặc bằng giá bán !");
+                return;
+            }
+            if (giaNhap <= 0 ||giaBan <=0) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập giá nhập hoặc giá bán lớn hơn 0 !");
+                return;
+            }
+            if (ghiChu.length() > 255) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập ghi chú nhỏ hơn 255 kí tự !");
+                return;
+            }
+            if (xuatXu.length() > 50) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập xuất xứ nhỏ hơn 100 kí tự !");
+                return;
+            }
+            if (xuatXu.matches(checkSo)) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập xuất xứ là chữ !");
+                return;
+            }
+            if (cpu.length() > 50) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập cpu nhỏ hơn 50 kí tự !");
+                return;
+            }
+            if (manHinh.length() > 50) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập màn hình nhỏ hơn 50 kí tự !");
+                return;
+            }
+            if (!pin.matches(checkSo)) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập pin là số !");
+                return;
+            }
+            Integer pinS = Integer.parseInt(pin);
+            if (pinS <= 0) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập pin lớn hơn 0 !");
+                return;
+            }
+            if (pinS >= 10000) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập pin nhỏ hơn 9999 !");
+                return;
+            }
+            if (cbbImei.getItemCount()  == 0) {
+                JOptionPane.showMessageDialog(this, "Imei rỗng !");
+                return;
+            }
+            if (cbbSanPham.getItemCount()  == 0) {
+                JOptionPane.showMessageDialog(this, "Không có sản phẩm nào !");
+                return;
+            }
+            if (cbbBoNhoTrong.getItemCount() == 0) {
+                 JOptionPane.showMessageDialog(this, "Không có Bộ nhớ trong nào !");
+                return;
+            }
+            if (cbbBoNhoTrong.getItemCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Không có màu sắc nào !");
                 return;
             }
             String Imei = "";
@@ -923,31 +1141,17 @@ public class QLSanPham extends javax.swing.JFrame {
                 c.setMaImei(Imei);
                 chiTietSPServices.add(c);
             }
-            
+
             JOptionPane.showMessageDialog(this, "Thêm thành công !");
             hienThiSanPham();
             clear();
-
-            //            if (chiTietSPServices.add(c) == true) {
-            //                JOptionPane.showMessageDialog(this, "Thêm thành công !");
-            //                hienThiSanPham();
-            //            } else {
-            //                JOptionPane.showMessageDialog(this, "Thêm thất bại !");
-            //            }
         } catch (ParseException ex) {
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnAddMousePressed
 
     private void btnResetMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnResetMousePressed
-
-        ImeiServices imeiServices = new ImeiServices();
-        List<String> list = imeiServices.getList();
-        cbbImei.removeAllItems();
-        for (String string : list) {
-            cbbImei.addItem(string);
-        }
-        txtSoLuongTon.setText(String.valueOf(list.size()));
+        clear();
     }//GEN-LAST:event_btnResetMousePressed
 
     private void btnDeleteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMousePressed
@@ -984,7 +1188,7 @@ public class QLSanPham extends javax.swing.JFrame {
 
     private void btnUpdateMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateMousePressed
         // TODO add your handling code here:
-
+        String checkSo = "^[0-9]*$";
         try {
             int index = tbSanPham.getSelectedRow();
             if (index == -1) {
@@ -996,7 +1200,7 @@ public class QLSanPham extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Bạn chỉ được chọn 1 bản ghi !");
                 return;
             }
-            if (txtGiaNhap.getText().trim().isEmpty() || txtGiaBan.getText().trim().isEmpty() || txtGhiChu.getText().trim().isEmpty() || txtCpu.getText().trim().isEmpty() || txtXuatXu.getText().trim().isEmpty() || txtManHinh.getText().trim().isEmpty()||txtManHinh.getText().isEmpty()) {
+            if (txtGiaNhap.getText().trim().isEmpty() || txtGiaBan.getText().trim().isEmpty() || txtGhiChu.getText().trim().isEmpty() || txtCpu.getText().trim().isEmpty() || txtXuatXu.getText().trim().isEmpty() || txtManHinh.getText().trim().isEmpty() || txtManHinh.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Không được để trống !");
                 return;
             }
@@ -1004,31 +1208,109 @@ public class QLSanPham extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Vui lòng tải ảnh sản phẩm lên !");
                 return;
             }
+            String giaNhapString = txtGiaNhap.getText().trim();
+            String giaBanString = txtGiaBan.getText().trim();
+            String ghiChu = txtGhiChu.getText().trim();
+            String xuatXu = txtXuatXu.getText().trim();
+            String cpu = txtCpu.getText().trim();
+            String manHinh = txtManHinh.getText().trim();
+            String pin = txtPin.getText().trim();
+            if (!giaBanString.matches(checkSo) || !giaNhapString.matches(checkSo)) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập giá nhập hoặc giá bán là số !");
+                return;
+            }
+            if (giaNhapString.length() > 10 || giaBanString.length()  > 10) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập giá nhập hoặc giá bán nhỏ hơn 9999999999 !");
+                return;
+            }
+            
+            Double giaNhap = Double.parseDouble(txtGiaNhap.getText());
+            Double giaBan = Double.parseDouble(txtGiaBan.getText());
+            if (giaNhap > giaBan) {
+                 JOptionPane.showMessageDialog(this, "Vui lòng nhập giá nhập nhỏ hơn hoặc bằng giá bán !");
+                return;
+            }
+            if (giaNhap <= 0 ||giaBan <=0) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập giá nhập hoặc giá bán lớn hơn 0 !");
+                return;
+            }
+            if (ghiChu.length() > 255) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập ghi chú nhỏ hơn 255 kí tự !");
+                return;
+            }
+            if (xuatXu.length() > 50) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập xuất xứ nhỏ hơn 100 kí tự !");
+                return;
+            }
+            if (xuatXu.matches(checkSo)) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập xuất xứ là chữ !");
+                return;
+            }
+            if (cpu.length() > 50) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập cpu nhỏ hơn 50 kí tự !");
+                return;
+            }
+            if (manHinh.length() > 50) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập màn hình nhỏ hơn 50 kí tự !");
+                return;
+            }
+            if (!pin.matches(checkSo)) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập pin là số !");
+                return;
+            }
+            Integer pinS = Integer.parseInt(pin);
+            if (pinS <= 0) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập pin lớn hơn 0 !");
+                return;
+            }
+            if (pinS >= 10000) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập pin nhỏ hơn 9999 !");
+                return;
+            }
+            if (cbbImei.getItemCount()  == 0) {
+                JOptionPane.showMessageDialog(this, "Imei rỗng !");
+                return;
+            }
+            if (cbbSanPham.getItemCount()  == 0) {
+                JOptionPane.showMessageDialog(this, "Không có sản phẩm nào !");
+                return;
+            }
+            if (cbbBoNhoTrong.getItemCount() == 0) {
+                 JOptionPane.showMessageDialog(this, "Không có Bộ nhớ trong nào !");
+                return;
+            }
+            if (cbbBoNhoTrong.getItemCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Không có màu sắc nào !");
+                return;
+            }
             int check = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn sửa ?");
             if (check != JOptionPane.YES_OPTION) {
                 return;
             }
             // TODO add your handling code here:
-            String Imei = "";
-            for (int i = 0; i < cbbImei.getItemCount(); i++) {
-                Imei = cbbImei.getItemAt(i);
-                ChiTietSP c = layTTSuaSanPham();
-                //                ChiTietSP sp = chiTietSPServices.fill(c.getSanPham().getMaSP());
-                //                c.setAnh(sp.getAnh());
+            ChiTietSP c = layTTSuaSanPham();
 
-                c.setMaImei(Imei);
-                chiTietSPServices.update(c);
+            int row = cbbImei.getItemCount();
+
+            String Imei = "";
+            chiTietSPServices.xoaImei(c.getSanPham().getMaSP());
+            for (int i = 0; i < row; i++) {
+
+                Imei = cbbImei.getItemAt(i);
+
+                ChiTietSP c1 = layTTSanPham();
+
+                c1.setMaImei(Imei);
+                chiTietSPServices.add(c1);
+                ChiTietSP c3 = layTTSuaSanPham();
+                c3.setMaImei(Imei);
+
+                chiTietSPServices.update(c3);
             }
+
             JOptionPane.showMessageDialog(this, "Sửa thành công !");
             hienThiSanPham();
             clear();
-
-            //            if (chiTietSPServices.add(c) == true) {
-            //                JOptionPane.showMessageDialog(this, "Thêm thành công !");
-            //                hienThiSanPham();
-            //            } else {
-            //                JOptionPane.showMessageDialog(this, "Thêm thất bại !");
-            //            }
         } catch (ParseException ex) {
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1037,13 +1319,15 @@ public class QLSanPham extends javax.swing.JFrame {
     private void btnUploadMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUploadMousePressed
         // TODO add your handling code here:
         JFileChooser chooser = new JFileChooser("D:\\PRO1041");
-        chooser.showOpenDialog(null);
-        //        if (JFileChooser.CANCEL_OPTION == 1) {
-        //            return;
-        //        }
+        int check = chooser.showOpenDialog(null);
+        if (check == JFileChooser.CANCEL_OPTION) {
+            return;
+        }
         File s = chooser.getSelectedFile();
-        if (s == null) {
-           return;
+        String fileType = chooser.getTypeDescription(s);
+        if (!fileType.equals("JPG File") && !fileType.equals("PNG File")) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn file JPG hoặc PNG !");
+            return;
         }
         String fileName = s.getAbsolutePath();
         AnhService anhService = new AnhService();
@@ -1079,6 +1363,57 @@ public class QLSanPham extends javax.swing.JFrame {
         new BoNhoTrongForm().setVisible(true);
     }//GEN-LAST:event_btnBoNhoMousePressed
 
+    private void btnAddMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAddMouseExited
+
+    private void btnSanPhamMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSanPhamMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSanPhamMouseExited
+
+    private void cbbSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbSanPhamActionPerformed
+        // TODO add your handling code here:
+        int row = tbSanPham.getRowCount();
+        if (row == 0) {
+            return;
+        }
+        if (row == 1) {
+            String cbbSanPham = (String) QLChiTietSanPham.cbbSanPham.getSelectedItem();
+            String tenSP = tbSanPham.getValueAt(0, 0).toString();
+            if (tenSP.equals(cbbSanPham)) {
+                btnAdd.setEnabled(false);
+            } else {
+                btnAdd.setEnabled(true);
+            }
+            return;
+        }
+        String tenSP = "";
+        String cbbSanPham = (String) QLChiTietSanPham.cbbSanPham.getSelectedItem();
+        if (cbbSanPham == null) {
+            return;
+        }
+        for (int i = 0; i < row; i++) {
+            tenSP = tbSanPham.getValueAt(i, 0).toString();
+            if (cbbSanPham.equals(tenSP)) {
+                btnAdd.setEnabled(false);
+                btnUpdate.setEnabled(true);
+                btnDelete.setEnabled(true);
+                return;
+            }
+            btnUpdate.setEnabled(false);
+            btnDelete.setEnabled(false);
+            btnAdd.setEnabled(true);
+
+        }
+
+
+    }//GEN-LAST:event_cbbSanPhamActionPerformed
+
+    private void btnMauSacMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMauSacMousePressed
+        // TODO add your handling code here:
+        new MauSacForm().setVisible(true);
+    }//GEN-LAST:event_btnMauSacMousePressed
+
     /**
      * @param args the command line arguments
      */
@@ -1096,20 +1431,21 @@ public class QLSanPham extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(QLSanPham.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QLChiTietSanPham.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(QLSanPham.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QLChiTietSanPham.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(QLSanPham.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QLChiTietSanPham.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(QLSanPham.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(QLChiTietSanPham.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new QLSanPham().setVisible(true);
+                new QLChiTietSanPham().setVisible(true);
             }
         });
     }
@@ -1122,15 +1458,16 @@ public class QLSanPham extends javax.swing.JFrame {
     private javax.swing.JLabel btnMauSac;
     private javax.swing.JLabel btnReset;
     private javax.swing.JLabel btnSanPham;
+    private keeptoo.KGradientPanel btnThem;
     private javax.swing.JLabel btnUpdate;
     private javax.swing.JLabel btnUpload;
     private javax.swing.JComboBox<String> cbbBoNhoTrong;
     private javax.swing.JComboBox<String> cbbCamera;
     private javax.swing.JComboBox<String> cbbHeDieuHanh;
-    private javax.swing.JComboBox<String> cbbImei;
+    private static javax.swing.JComboBox<String> cbbImei;
     private javax.swing.JComboBox<String> cbbMauSac;
     private javax.swing.JComboBox<String> cbbRam;
-    private javax.swing.JComboBox<String> cbbSanPham;
+    private static javax.swing.JComboBox<String> cbbSanPham;
     private javax.swing.JComboBox<String> cbbTGBH;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -1150,20 +1487,19 @@ public class QLSanPham extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel28;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private keeptoo.KGradientPanel kGradientPanel2;
     private keeptoo.KGradientPanel kGradientPanel5;
     private keeptoo.KGradientPanel kGradientPanel6;
     private keeptoo.KGradientPanel kGradientPanel7;
     private javax.swing.JLabel lbAnh;
     private javax.swing.JPanel sanpham;
-    private javax.swing.JTable tbSanPham;
+    private static javax.swing.JTable tbSanPham;
     private javax.swing.JTextField txtCpu;
     private javax.swing.JTextArea txtGhiChu;
     private javax.swing.JTextField txtGiaBan;
     private javax.swing.JTextField txtGiaNhap;
     private javax.swing.JTextField txtManHinh;
     private javax.swing.JTextField txtPin;
-    private javax.swing.JLabel txtSoLuongTon;
+    private static javax.swing.JLabel txtSoLuongTon;
     private javax.swing.JTextField txtXuatXu;
     // End of variables declaration//GEN-END:variables
 }

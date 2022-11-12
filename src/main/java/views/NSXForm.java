@@ -53,6 +53,10 @@ public class NSXForm extends javax.swing.JFrame {
         SanPhamForm sanPhamForm =  new SanPhamForm();
         sanPhamForm.loadCbbNSX();
     }
+    public void loadCBBNSX(){
+         List<NSX> items = services.getALL();
+        SanPhamForm.loadCbbNSX(items);
+    }
 
     public NSX layTT() throws ParseException {
         String ma = txtMa.getText();
@@ -80,6 +84,7 @@ public class NSXForm extends javax.swing.JFrame {
         n.setMaNSX(ma);
         n.setTenNSX(ten);
         n.setNgaySua(date);
+         n.setTrangThai(0);
         return n;
     }
 
@@ -371,7 +376,7 @@ public class NSXForm extends javax.swing.JFrame {
             if (services.update(n) == true) {
                 JOptionPane.showMessageDialog(this, "Sửa thành công !");
                 load();
-                reset();
+                loadCBBNSX();
             } else {
                 JOptionPane.showMessageDialog(this, "Sửa thất bại !");
             }
@@ -397,7 +402,7 @@ public class NSXForm extends javax.swing.JFrame {
             if (services.add(n) == true) {
                 JOptionPane.showMessageDialog(this, "Thêm thành công !");
                 load();
-                reset();
+                loadCBBNSX();
                
             } else {
                 JOptionPane.showMessageDialog(this, "Thêm thất bại");
@@ -428,7 +433,7 @@ public class NSXForm extends javax.swing.JFrame {
             if (services.delete(n) == true) {
                 JOptionPane.showMessageDialog(this, "Xóa thành công !");
                 load();
-                reset();
+                loadCBBNSX();
             } else {
                 JOptionPane.showMessageDialog(this, "Xóa thất bại !");
             }

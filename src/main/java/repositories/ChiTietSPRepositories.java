@@ -62,6 +62,15 @@ public class ChiTietSPRepositories {
             return false;
         }
     }
+    public void xoaImei(String ma){
+        Session session = HibernateConfig.getFACTORY().openSession();
+        Transaction transaction = session.beginTransaction();
+        Query q = session.createQuery("DELETE FROM ChiTietSP where MaSP = :masp");
+        q.setParameter("masp", ma);
+        int index = q.executeUpdate();
+        transaction.commit();
+        session.close();
+    }
     public ChiTietSP seachbyMa(String ma){
         Session session = HibernateConfig.getFACTORY().openSession();
         Query q = session.createQuery("From ChiTietSP where MaImei = :ma");
@@ -95,13 +104,22 @@ public class ChiTietSPRepositories {
     }
     public ChiTietSP load(String maSP){
         Session session = HibernateConfig.getFACTORY().openSession();
-        Query q = session.createQuery("From ChiTietSP where MaSP = :masp");
+        Query q = session.createQuery("From ChiTietSP where MaSP = :masp and TrangThai = 0");
         q.setParameter("masp", maSP);
         List<ChiTietSP> list = q.getResultList();
         if (list.size() == 0) {
             return null;
         }
         return list.get(0);
+    }
+    public void updateImei(String ma ){
+        Session session = HibernateConfig.getFACTORY().openSession();
+        Transaction transaction = session.beginTransaction();
+        Query q = session.createQuery("UPDATE ChiTietSP SET TrangThai = 1 where MaImei = :masp");
+        q.setParameter("masp", ma);
+        int index = q.executeUpdate();
+        transaction.commit();
+        session.close();
     }
     
 }

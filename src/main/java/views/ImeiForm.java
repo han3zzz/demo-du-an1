@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import javax.management.modelmbean.ModelMBean;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
 import javax.swing.table.DefaultTableModel;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -32,26 +33,45 @@ public class ImeiForm extends javax.swing.JFrame {
     /**
      * Creates new form ImeiForm
      */
+    private ImeiServices services;
+
     public ImeiForm() {
         initComponents();
-//        loadImei();
-    txtSoLuong.setText("Số lượng : 0");
-    }
-    public void loadSoLuong(){
-        int soLuong = tbImei.getRowCount();
-        txtSoLuong.setText("Số lượng : "+String.valueOf(soLuong));
-    }
-    public void loadImei(){
+        txtSoLuong.setText("Số lượng : 0");
         DefaultTableModel model = (DefaultTableModel) tbImei.getModel();
-        ImeiServices services = new ImeiServices();
         List<String> list = services.getList();
+        if (list == null) {
+            return;
+        }
         for (String string : list) {
-            Object [] data =new Object[]{
+            Object[] data = new Object[]{
                 string
             };
             model.addRow(data);
         }
+        int row = model.getRowCount();
+       
+            txtSoLuong.setText("Số lượng : "+String.valueOf(row));
+        
     }
+
+    public void loadSoLuong() {
+        int soLuong = tbImei.getRowCount();
+        txtSoLuong.setText("Số lượng : " + String.valueOf(soLuong));
+    }
+
+    public void loadCbbImei() {
+        List<String> items = services.getList();
+        QLChiTietSanPham.cbbImei(items);
+    }
+
+
+    public void loadTxtSoLuong() {
+        List<String> list = services.getList();
+        QLChiTietSanPham.txtSoLuong(String.valueOf(list.size()));
+
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -236,6 +256,15 @@ public class ImeiForm extends javax.swing.JFrame {
     private void btnAddMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMousePressed
         // TODO add your handling code here:
         String imei = txtImei.getText();
+        String checkSo = "^[0-9]*$";
+        if (imei.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Imei không được để trống !");
+            return;
+        }
+        if (!imei.matches(checkSo)) {
+            JOptionPane.showMessageDialog(this, "Imei phải là chuỗi toàn số !");
+            return;
+        }
         if (imei.length() != 15) {
             JOptionPane.showMessageDialog(this, "Imei phải 15 kí tự !");
             return;
@@ -249,9 +278,8 @@ public class ImeiForm extends javax.swing.JFrame {
             }
         }
         List<String> list = new ArrayList();
-        
-        
-        
+        list.removeAll(list);
+
         Object[] data = new Object[]{
             imei
         };
@@ -260,9 +288,10 @@ public class ImeiForm extends javax.swing.JFrame {
         for (int i = 0; i < tbImei.getRowCount(); i++) {
             list.add(tbImei.getValueAt(i, 0).toString());
         }
-        
-        ImeiServices services = new ImeiServices();
+
         services.setList(list);
+        loadCbbImei();
+        loadTxtSoLuong();
     }//GEN-LAST:event_btnAddMousePressed
 
     private void btnDeleteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMousePressed
@@ -278,36 +307,43 @@ public class ImeiForm extends javax.swing.JFrame {
             return;
         }
         int check1 = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa ?");
-            if (check1 != JOptionPane.YES_OPTION) {
-                return;
-            }
-            List<String> list = new ArrayList();
-            
+        if (check1 != JOptionPane.YES_OPTION) {
+            return;
+        }
+        List<String> list = new ArrayList();
+        list.removeAll(list);
         DefaultTableModel model = (DefaultTableModel) tbImei.getModel();
         model.removeRow(index);
         loadSoLuong();
         for (int i = 0; i < tbImei.getRowCount(); i++) {
             list.add(tbImei.getValueAt(i, 0).toString());
         }
-        ImeiServices services = new ImeiServices();
         services.setList(list);
-        
+        loadCbbImei();
+        loadTxtSoLuong();
     }//GEN-LAST:event_btnDeleteMousePressed
 
     private void btnExelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExelMousePressed
         // TODO add your handling code here:
+        String checkSo = "^[0-9]*$";
         File exelFile;
         FileInputStream exelFIS = null;
-        BufferedInputStream exelBIS = null ;
-         XSSFWorkbook exelJableImport = null ;
-        String pach ="D:\\PRO1041";
+        BufferedInputStream exelBIS = null;
+        XSSFWorkbook exelJableImport = null;
+        String pach = "D:\\PRO1041";
         JFileChooser fileChooser = new JFileChooser(pach);
-       int index = fileChooser.showOpenDialog(null);
-       
-       
+        int index = fileChooser.showOpenDialog(null);
+        if (index == JFileChooser.CANCEL_OPTION) {
+            return;
+        }
         if (index == JFileChooser.APPROVE_OPTION) {
             try {
                 exelFile = fileChooser.getSelectedFile();
+                String fileType = fileChooser.getTypeDescription(exelFile);
+                if (!fileType.equals("Microsoft Excel Worksheet")) {
+                    JOptionPane.showMessageDialog(this, "Vui lòng chọn file Microsoft Excel Worksheet !");
+                    return;
+                }
                 exelFIS = new FileInputStream(exelFile);
                 exelBIS = new BufferedInputStream(exelFIS);
                 exelJableImport = new XSSFWorkbook(exelBIS);
@@ -316,18 +352,45 @@ public class ImeiForm extends javax.swing.JFrame {
                 List<String> list = new ArrayList();
                 for (int i = 0; i <= exelSheet.getLastRowNum(); i++) {
                     XSSFRow exelRow = exelSheet.getRow(i);
+                    if (exelRow == null) {
+                        JOptionPane.showMessageDialog(this, "File bạn vừa thêm không chứa Imei nào. Vui lòng kiểm tra lại !");
+                        return;
+                    }
                     XSSFCell cell = exelRow.getCell(0);
-                    ImeiServices services = new ImeiServices();
                     
-                    list.add(cell.getStringCellValue());
+
+                    int row = tbImei.getRowCount();
+                    for (int k = 0; k < row; k++) {
+                        if (cell.getStringCellValue().equals(tbImei.getValueAt(k, 0).toString())) {
+                            JOptionPane.showMessageDialog(this, "File bạn vừa thêm chứa Imei đã tồn tại trong list. Vui lòng kiểm tra lại !");
+                            return;
+                        }
+                    }
+                    
+                    if (!cell.getStringCellValue().matches(checkSo)) {
+                        JOptionPane.showMessageDialog(this, "File bạn vừa thêm có chứa Imei không phải là một chuỗi toàn số !");
+                        return;
+                    }
+                    if (cell.getStringCellValue().length() != 15) {
+                        JOptionPane.showMessageDialog(this, "File bạn vừa thêm có chứa Imei không không là độ dài 15 kí tự !");
+                        return;
+                    }
                     Object[] data = new Object[]{
-                      cell
-                            
+                        cell
                     };
-                    services.setList(list);
                     model.addRow(data);
+
+                    list.removeAll(list);
+                    for (int j = 0; j <= row; j++) {
+
+                        list.add(tbImei.getValueAt(j, 0).toString());
+
+                    }
+                    services.setList(list);
+
                     loadSoLuong();
-                   
+                    loadCbbImei();
+                    loadTxtSoLuong();
                 }
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(ImeiForm.class.getName()).log(Level.SEVERE, null, ex);
