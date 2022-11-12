@@ -120,7 +120,12 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
             }
 
         }
-        cbbSanPham.setSelectedIndex(0);
+        if (cbbSanPham.getItemCount() == 0) {
+            
+        }
+        else{
+            cbbSanPham.setSelectedIndex(0);
+        }
     }
 
     class myTableCellRender implements TableCellRenderer {
