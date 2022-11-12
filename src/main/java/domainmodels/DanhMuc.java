@@ -11,8 +11,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -21,42 +19,36 @@ import javax.persistence.Table;
  * @author HANGOCHAN
  */
 @Entity
-@Table (name = "SanPham")
-public class SanPham implements Serializable{
+@Table(name = "DanhMuc")
+public class DanhMuc implements Serializable{
     @Id
-    @Column (name = "MaSP" , nullable = false)
-    private String maSP ;
-    @Column (name = "TenSP")
-    private String tenSP ;
+    @Column(name = "MaDM" , nullable = false)
+    private String maDanhMuc ;
+    @Column (name = "TenDM")
+    private String tenDanhMuc ;
     @Column (name = "NgayTao")
     private Date ngayTao ;
     @Column (name = "NgaySua")
     private Date ngaySua ;
     @Column (name = "TrangThai")
     private Integer trangThai ;
-    @ManyToOne
-    @JoinColumn (name = "MaNSX" , nullable = false)
-    private NSX nsx ;
-    @OneToMany(mappedBy = "sanPham" , fetch = FetchType.LAZY)
-    List<ChiTietSP> chiTietSPs;
-    @ManyToOne
-    @JoinColumn (name = "MaDM" , nullable = false)
-    private DanhMuc danhmuc ;
+    @OneToMany (mappedBy = "danhmuc" , fetch = FetchType.LAZY)
+    private List<SanPham> sanphams ;
 
-    public String getMaSP() {
-        return maSP;
+    public String getMaDanhMuc() {
+        return maDanhMuc;
     }
 
-    public void setMaSP(String maSP) {
-        this.maSP = maSP;
+    public void setMaDanhMuc(String maDanhMuc) {
+        this.maDanhMuc = maDanhMuc;
     }
 
-    public String getTenSP() {
-        return tenSP;
+    public String getTenDanhMuc() {
+        return tenDanhMuc;
     }
 
-    public void setTenSP(String tenSP) {
-        this.tenSP = tenSP;
+    public void setTenDanhMuc(String tenDanhMuc) {
+        this.tenDanhMuc = tenDanhMuc;
     }
 
     public Date getNgayTao() {
@@ -83,26 +75,13 @@ public class SanPham implements Serializable{
         this.trangThai = trangThai;
     }
 
-    public NSX getNsx() {
-        return nsx;
+    public List<SanPham> getSanphams() {
+        return sanphams;
     }
 
-    public void setNsx(NSX nsx) {
-        this.nsx = nsx;
+    public void setSanphams(List<SanPham> sanphams) {
+        this.sanphams = sanphams;
     }
-
-
-    public List<ChiTietSP> getChiTietSPs() {
-        return chiTietSPs;
-    }
-
-    public void setChiTietSPs(List<ChiTietSP> chiTietSPs) {
-        this.chiTietSPs = chiTietSPs;
-    }
-
-   
-    
-    
     
     
     
