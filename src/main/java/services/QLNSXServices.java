@@ -19,7 +19,8 @@ public class QLNSXServices implements IQLNSXServices{
     public QLNSXServices(){
         nsxr = new QLNSXRepositories();
     }
-
+ 
+    
     @Override
     public List<NSX> getALL() {
         return nsxr.getAll();
