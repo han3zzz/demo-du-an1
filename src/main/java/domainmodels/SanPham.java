@@ -91,7 +91,6 @@ public class SanPham implements Serializable{
         this.nsx = nsx;
     }
 
-
     public List<ChiTietSP> getChiTietSPs() {
         return chiTietSPs;
     }
@@ -99,6 +98,16 @@ public class SanPham implements Serializable{
     public void setChiTietSPs(List<ChiTietSP> chiTietSPs) {
         this.chiTietSPs = chiTietSPs;
     }
+
+    public DanhMuc getDanhmuc() {
+        return danhmuc;
+    }
+
+    public void setDanhmuc(DanhMuc danhmuc) {
+        this.danhmuc = danhmuc;
+    }
+
+   
 
    
     

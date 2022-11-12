@@ -34,9 +34,11 @@ import services.ChiTietSPServices;
 import services.IBoNhoTrongServices;
 import services.IChiTietSPServices;
 import services.IMauSacServices;
+import services.IQLSanPhamServices;
 import services.ISanPhamServices;
 import services.ImeiServices;
 import services.MauSacServices;
+import services.QLSanPhamServices;
 import services.SanPhamService;
 import viewmodels.ChiTietSPViewModels;
 
@@ -49,7 +51,7 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
     /**
      * Creates new form QLChiTietSanPham
      */
-    private ISanPhamServices sanPhamServices;
+    private IQLSanPhamServices sanPhamServices;
     private IMauSacServices mauSacServices;
     private IBoNhoTrongServices boNhoTrongServices;
     private IChiTietSPServices chiTietSPServices;
@@ -57,7 +59,7 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
     public QLChiTietSanPham() {
         initComponents();
 
-        sanPhamServices = new SanPhamService();
+        sanPhamServices = new QLSanPhamServices();
         mauSacServices = new MauSacServices();
         boNhoTrongServices = new BoNhoTrongServices();
         chiTietSPServices = new ChiTietSPServices();
@@ -1368,7 +1370,7 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
 
     private void btnSanPhamMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSanPhamMousePressed
         // TODO add your handling code here:
-        new SanPhamForm().setVisible(true);
+        new QLSanPham().setVisible(true);
     }//GEN-LAST:event_btnSanPhamMousePressed
 
     private void btnImeiMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnImeiMousePressed
