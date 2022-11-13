@@ -69,6 +69,7 @@ public class QLSanPham extends javax.swing.JFrame {
             }
         }
     }
+    
 
     public void load() {
         DefaultTableModel model = (DefaultTableModel) tbQLSanPham.getModel();
@@ -89,6 +90,18 @@ public class QLSanPham extends javax.swing.JFrame {
     public void loadCbbSanPham(){
         List<SanPham> items = sanPhamServices.getALL();
         QLChiTietSanPham.cbbSanPham(items);
+    }
+    public static  void loadCbbDanhMuc(List<DanhMuc> items){
+        cbbdanhMuc.removeAllItems();
+        for (DanhMuc item : items) {
+            cbbdanhMuc.addItem(item.getTenDanhMuc());
+        }
+    }
+    public static  void loadCbbNsx(List<NSX> items){
+        cbbNSX.removeAllItems();
+        for (NSX item : items) {
+            cbbNSX.addItem(item.getTenNSX());
+        }
     }
 //    public void loadHienThiSanPham(){
 //        tbQLSanPham.getColumn("Ảnh").setCellRenderer(new SanPhamForm.myTableCellRender());
@@ -548,7 +561,7 @@ public class QLSanPham extends javax.swing.JFrame {
             if (sanPhamServices.update(n) == true) {
                 JOptionPane.showMessageDialog(this, "Sửa thành công !");
                 load();
-//                loadCbbSanPham();
+               loadCbbSanPham();
             } else {
                 JOptionPane.showMessageDialog(this, "Sửa thất bại !");
             }
@@ -591,7 +604,7 @@ public class QLSanPham extends javax.swing.JFrame {
             if (sanPhamServices.add(n) == true) {
                 JOptionPane.showMessageDialog(this, "Thêm thành công !");
                 load();
-//                loadCbbSanPham();
+                loadCbbSanPham();
             } else {
                 JOptionPane.showMessageDialog(this, "Thêm thất bại");
             }
@@ -622,7 +635,7 @@ public class QLSanPham extends javax.swing.JFrame {
             if (sanPhamServices.delete(n) == true) {
                 JOptionPane.showMessageDialog(this, "Xóa thành công !");
                 load();
-//                loadCbbSanPham();
+                loadCbbSanPham();
             } else {
                 JOptionPane.showMessageDialog(this, "Xóa thất bại !");
             }
