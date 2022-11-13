@@ -128,7 +128,44 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
             cbbSanPham.setSelectedIndex(0);
         }
     }
+    public void loadHienThiSanPham(List<SanPham> list ,ChiTietSPViewModels c){
+        tbSanPham.getColumn("Ảnh").setCellRenderer(new myTableCellRender());
+        DefaultTableModel model = (DefaultTableModel) tbSanPham.getModel();
+        model.setRowCount(0);
+        String maSP = "";
+        list = sanPhamServices.getALL();
+        for (SanPham sanPham : list) {
+            maSP = sanPham.getMaSP();
+             c = chiTietSPServices.load(maSP);
+            if (c == null) {
+                continue;
+            }
+            if (c.getTrangThai() == 0) {
+                JLabel label = new JLabel();
+                ImageIcon icon = new ImageIcon(c.getAnh());
+                Image img = icon.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+                label.setIcon(new ImageIcon(img));
+                Object[] data = new Object[]{
+                    c.getTenSP(),
+                    c.getNsx(),
+                    c.getMauSac(),
+                    c.getBoNho(),
+                    c.getTonKho(),
+                    c.getGiaNhap(),
+                    c.getGiaBan(),
+                    label
+                };
+                model.addRow(data);
+            }
 
+        }
+        if (cbbSanPham.getItemCount() == 0) {
+            
+        }
+        else{
+            cbbSanPham.setSelectedIndex(0);
+        }
+    }
     class myTableCellRender implements TableCellRenderer {
 
         @Override
