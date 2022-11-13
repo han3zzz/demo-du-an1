@@ -29,13 +29,16 @@ public class QLDanhMuc extends javax.swing.JFrame {
      * Creates new form QLDanhMuc
      */
     private IDanhMucServices services;
-
     public QLDanhMuc() {
         initComponents();
 
         services = new DanhMucServices();
         load();
 
+    }
+    public void loadCbbDanhMuc(){
+        List<DanhMuc> items = services.getALL();
+        QLSanPham.loadCbbDanhMuc(items);
     }
 
     public void load() {
@@ -364,7 +367,7 @@ public class QLDanhMuc extends javax.swing.JFrame {
             if (services.update(n) == true) {
                 JOptionPane.showMessageDialog(this, "Sửa thành công !");
                 load();
-//                loadCBBNSX();
+                loadCbbDanhMuc();
             } else {
                 JOptionPane.showMessageDialog(this, "Sửa thất bại !");
             }
@@ -396,7 +399,7 @@ public class QLDanhMuc extends javax.swing.JFrame {
             if (services.add(n) == true) {
                 JOptionPane.showMessageDialog(this, "Thêm thành công !");
                 load();
-//                loadCBBNSX();
+                loadCbbDanhMuc();
             } else {
                 JOptionPane.showMessageDialog(this, "Thêm thất bại");
             }
@@ -427,7 +430,7 @@ public class QLDanhMuc extends javax.swing.JFrame {
             if (services.delete(n) == true) {
                 JOptionPane.showMessageDialog(this, "Xóa thành công !");
                 load();
-//                loadCBBNSX();
+                loadCbbDanhMuc();
             } else {
                 JOptionPane.showMessageDialog(this, "Xóa thất bại !");
             }
