@@ -472,7 +472,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void btnQLSanPhamMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQLSanPhamMousePressed
         // TODO add your handling code here:
-       
+       new QLChiTietSanPham().setVisible(true);
        
     }//GEN-LAST:event_btnQLSanPhamMousePressed
 

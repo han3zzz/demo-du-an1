@@ -105,4 +105,9 @@ public class ChiTietSPServices implements IChiTietSPServices{
         ctspr.xoaImei(ma);
     }
 
+    @Override
+    public List<ChiTietSP> getImei() {
+        return ctspr.getAll();
+    }
+
 }

@@ -122,25 +122,23 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
 
         }
         if (cbbSanPham.getItemCount() == 0) {
-            
-        }
-        else{
+
+        } else {
             cbbSanPham.setSelectedIndex(0);
         }
         if (cbbBoNhoTrong.getItemCount() == 0) {
-            
-        }
-        else{
+
+        } else {
             cbbBoNhoTrong.setSelectedIndex(0);
         }
         if (cbbMauSac.getItemCount() == 0) {
-            
-        }
-        else{
+
+        } else {
             cbbMauSac.setSelectedIndex(0);
         }
     }
-    public void loadHienThiSanPham(List<SanPham> list ,ChiTietSPViewModels c){
+
+    public void loadHienThiSanPham(List<SanPham> list, ChiTietSPViewModels c) {
         tbSanPham.getColumn("Ảnh").setCellRenderer(new myTableCellRender());
         DefaultTableModel model = (DefaultTableModel) tbSanPham.getModel();
         model.setRowCount(0);
@@ -148,7 +146,7 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
         list = sanPhamServices.getALL();
         for (SanPham sanPham : list) {
             maSP = sanPham.getMaSP();
-             c = chiTietSPServices.load(maSP);
+            c = chiTietSPServices.load(maSP);
             if (c == null) {
                 continue;
             }
@@ -172,12 +170,12 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
 
         }
         if (cbbSanPham.getItemCount() == 0) {
-            
-        }
-        else{
+
+        } else {
             cbbSanPham.setSelectedIndex(0);
         }
     }
+
     class myTableCellRender implements TableCellRenderer {
 
         @Override
@@ -198,7 +196,8 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
         }
 
     }
-     public static void cbbBoNhoTrong(List<BoNhoTrong> items) {
+
+    public static void cbbBoNhoTrong(List<BoNhoTrong> items) {
         cbbBoNhoTrong.removeAllItems();
 
         for (BoNhoTrong boNhoTrong : items) {
@@ -208,7 +207,8 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
         }
 
     }
-     public static void cbbMauSac(List<MauSac> items) {
+
+    public static void cbbMauSac(List<MauSac> items) {
         cbbMauSac.removeAllItems();
 
         for (MauSac m : items) {
@@ -249,6 +249,8 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
     }
 
     public void fillSanPham() {
+         AnhService anhService = new AnhService();
+        anhService.setAnh(null);
         int index = tbSanPham.getSelectedRow();
         String tenSP = tbSanPham.getValueAt(index, 0).toString();
         String soLuong = tbSanPham.getValueAt(index, 4).toString();
@@ -275,7 +277,8 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
             ImageIcon m = new ImageIcon(image);
             lbAnh.setIcon(m);
         }
-
+        anhService.setAnh(c.getAnh());
+       
         cbbSanPham.setSelectedItem(tenSP);
         txtGiaNhap.setText(String.valueOf(c.getGiaNhap()));
         txtGiaBan.setText(String.valueOf(c.getGiaBan()));
@@ -366,6 +369,7 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
                 bnt = boNhoTrong;
             }
         }
+
         ChiTietSP c = new ChiTietSP();
         c.setMaImei(Imei);
         c.setGiaNhap(giaNhap);
@@ -1220,12 +1224,12 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
                 return;
             }
             ChiTietSP c = layTTSanPham();
-            List<ChiTietSP> list = chiTietSPServices.getImeibyMaSP(c.getSanPham().getMaSP());
+            List<ChiTietSP> list = chiTietSPServices.getImei();
             int row = cbbImei.getItemCount();
             for (ChiTietSP chiTietSP : list) {
                 for (int j = 0; j < row; j++) {
                     if (chiTietSP.getMaImei().equals(cbbImei.getItemAt(j))) {
-                        JOptionPane.showMessageDialog(this, "List Imei chưa Imei đã tồn tại trên hệ thống !");
+                        JOptionPane.showMessageDialog(this, "List Imei chứa Imei đã tồn tại trên hệ thống !");
                         return;
                     }
                 }
@@ -1242,6 +1246,7 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Thêm thành công !");
             hienThiSanPham();
             clear();
+
         } catch (ParseException ex) {
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1385,13 +1390,12 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
                 return;
             }
             // TODO add your handling code here:
+//            String anh = tbSanPham.getValueAt(index, 7).toString();
             ChiTietSP c = layTTSuaSanPham();
             int row = cbbImei.getItemCount();
-
             String Imei = "";
             chiTietSPServices.xoaImei(c.getSanPham().getMaSP());
             for (int i = 0; i < row; i++) {
-
                 Imei = cbbImei.getItemAt(i);
 
                 ChiTietSP c1 = layTTSanPham();
@@ -1408,6 +1412,7 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Sửa thành công !");
             hienThiSanPham();
             clear();
+
         } catch (ParseException ex) {
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }

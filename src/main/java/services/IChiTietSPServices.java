@@ -14,6 +14,7 @@ import viewmodels.ChiTietSPViewModels;
  */
 public interface IChiTietSPServices {
     public List<ChiTietSPViewModels> getALL();
+    public List<ChiTietSP> getImei();
     public boolean add(ChiTietSP m);
     public boolean update(ChiTietSP m);
     public boolean delete(ChiTietSP m);

@@ -4,6 +4,7 @@
  */
 package views;
 
+import domainmodels.ChiTietSP;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,6 +23,8 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import services.ChiTietSPServices;
+import services.IChiTietSPServices;
 import services.ImeiServices;
 
 /**
@@ -34,9 +37,11 @@ public class ImeiForm extends javax.swing.JFrame {
      * Creates new form ImeiForm
      */
     private ImeiServices services;
+    private IChiTietSPServices chiTietSPServices;
 
     public ImeiForm() {
         initComponents();
+        chiTietSPServices = new ChiTietSPServices();
         txtSoLuong.setText("Số lượng : 0");
         DefaultTableModel model = (DefaultTableModel) tbImei.getModel();
         List<String> list = services.getList();
@@ -276,6 +281,16 @@ public class ImeiForm extends javax.swing.JFrame {
                 return;
             }
         }
+        List<ChiTietSP> list1 = chiTietSPServices.getImei();
+        int row = tbImei.getRowCount();
+        for (ChiTietSP chiTietSP : list1) {
+            for (int j = 0; j < row; j++) {
+                if (chiTietSP.getMaImei().equals(txtImei.getText())) {
+                    JOptionPane.showMessageDialog(this, "Imei đã tồn tại trên hệ thống !");
+                    return;
+                }
+            }
+        }
         List<String> list = new ArrayList();
         list.removeAll(list);
 
@@ -372,6 +387,15 @@ public class ImeiForm extends javax.swing.JFrame {
                     if (cell.getStringCellValue().length() != 15) {
                         JOptionPane.showMessageDialog(this, "File bạn vừa thêm có chứa Imei không không là độ dài 15 kí tự !");
                         return;
+                    }
+                    List<ChiTietSP> list1 = chiTietSPServices.getImei();
+                    for (ChiTietSP chiTietSP : list1) {
+                        for (int j = 0; j < row; j++) {
+                            if (chiTietSP.getMaImei().equals(cell.getStringCellValue())) {
+                                JOptionPane.showMessageDialog(this, "List Imei chứa Imei đã tồn tại trên hệ thống !");
+                                return;
+                            }
+                        }
                     }
                     Object[] data = new Object[]{
                         cell
