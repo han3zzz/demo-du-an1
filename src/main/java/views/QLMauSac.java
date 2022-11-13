@@ -410,45 +410,7 @@ public class QLMauSac extends javax.swing.JFrame {
 
     private void btnUpdateMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateMousePressed
         // TODO add your handling code here:
-        try {
-            // TODO add your handling code here:
-            int index = tbMauSac.getSelectedRow();
-            if (index == -1) {
-                JOptionPane.showMessageDialog(this, "Bạn chưa chọn bản ghi nào !");
-                return;
-            }
-            int i = tbMauSac.getSelectedRowCount();
-            if (i > 1) {
-                JOptionPane.showMessageDialog(this, "Bạn chỉ được chọn 1 bản ghi !");
-                return;
-            }
-            
-            if (txtMa.getText().trim().isEmpty() || txtTen.getText().trim().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Không được để trống !");
-                return;
-            }
-            if (txtMa.getText().length() > 10) {
-                JOptionPane.showMessageDialog(this, "Tên nhỏ hơn hoặc bằng 30 kí tự !");
-                return;
-            }
-            if (txtTen.getText().length() > 30) {
-                JOptionPane.showMessageDialog(this, "Mã nhỏ hơn hoặc bằng 10 kí tự !");
-                return;
-            }
-            MauSac n = layTTSua();
-            int check = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn sửa ?");
-            if (check != JOptionPane.YES_OPTION) {
-                return;
-            }
-            if (services.update(n) == true) {
-                JOptionPane.showMessageDialog(this, "Sửa thành công !");
-                load();
-            } else {
-                JOptionPane.showMessageDialog(this, "Sửa thất bại !");
-            }
-        } catch (ParseException ex) {
-            Logger.getLogger(QLMauSac.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
     }//GEN-LAST:event_btnUpdateMousePressed
 
     /**
