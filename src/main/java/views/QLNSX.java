@@ -32,6 +32,10 @@ public class QLNSX extends javax.swing.JFrame {
         services = new QLNSXServices();
         load();
     }
+    public void loadCbbNSX(){
+        List<NSX> items = services.getALL();
+        QLSanPham.loadCbbNsx(items);
+    }
     
     public void load() {
         DefaultTableModel model = (DefaultTableModel) tbNSX.getModel();
