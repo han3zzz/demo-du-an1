@@ -257,7 +257,7 @@ public class QLSanPham extends javax.swing.JFrame {
         cbbdanhMuc = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -689,6 +689,7 @@ public class QLSanPham extends javax.swing.JFrame {
 
     private void jLabel7MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MousePressed
         // TODO add your handling code here:
+        new QLDanhMuc().setVisible(true);
     }//GEN-LAST:event_jLabel7MousePressed
 
     /**
