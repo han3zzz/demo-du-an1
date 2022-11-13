@@ -36,7 +36,7 @@ public class QLMauSac extends javax.swing.JFrame {
     }
     public void loadCbbMauSac(){
         List<MauSac> items = services.getALL();
-        QLChiTietSanPham.cbbMauSac(items);
+        QLChiTietSanPhamPanel.cbbMauSac(items);
     }
     
     public void load() {

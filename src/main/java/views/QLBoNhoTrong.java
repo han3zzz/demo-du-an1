@@ -64,7 +64,7 @@ public class QLBoNhoTrong extends javax.swing.JFrame {
     }
     public void loadCbbBoNhoTrong(){
         List<BoNhoTrong> items = services.getALL();
-        QLChiTietSanPham.cbbBoNhoTrong(items);
+        QLChiTietSanPhamPanel.cbbBoNhoTrong(items);
     }
     
 

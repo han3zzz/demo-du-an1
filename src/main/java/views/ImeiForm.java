@@ -67,12 +67,12 @@ public class ImeiForm extends javax.swing.JFrame {
 
     public void loadCbbImei() {
         List<String> items = services.getList();
-        QLChiTietSanPham.cbbImei(items);
+        QLChiTietSanPhamPanel.cbbImei(items);
     }
 
     public void loadTxtSoLuong() {
         List<String> list = services.getList();
-        QLChiTietSanPham.txtSoLuong(String.valueOf(list.size()));
+        QLChiTietSanPhamPanel.txtSoLuong(String.valueOf(list.size()));
 
     }
 

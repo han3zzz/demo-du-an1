@@ -91,6 +91,10 @@ public class QLSanPham extends javax.swing.JFrame {
         List<SanPham> items = sanPhamServices.getALL();
         QLChiTietSanPham.cbbSanPham(items);
     }
+    public void loadCbbSanPham1(){
+        List<SanPham> items = sanPhamServices.getALL();
+        QLChiTietSanPhamPanel.cbbSanPham(items);
+    }
     public static  void loadCbbDanhMuc(List<DanhMuc> items){
         cbbdanhMuc.removeAllItems();
         for (DanhMuc item : items) {
@@ -565,7 +569,8 @@ public class QLSanPham extends javax.swing.JFrame {
             if (sanPhamServices.update(n) == true) {
                 JOptionPane.showMessageDialog(this, "Sửa thành công !");
                 load();
-               loadCbbSanPham();
+//               loadCbbSanPham();
+               loadCbbSanPham1();
             } else {
                 JOptionPane.showMessageDialog(this, "Sửa thất bại !");
             }
@@ -608,7 +613,8 @@ public class QLSanPham extends javax.swing.JFrame {
             if (sanPhamServices.add(n) == true) {
                 JOptionPane.showMessageDialog(this, "Thêm thành công !");
                 load();
-                loadCbbSanPham();
+//                loadCbbSanPham();
+                loadCbbSanPham1();
             } else {
                 JOptionPane.showMessageDialog(this, "Thêm thất bại");
             }
@@ -639,7 +645,8 @@ public class QLSanPham extends javax.swing.JFrame {
             if (sanPhamServices.delete(n) == true) {
                 JOptionPane.showMessageDialog(this, "Xóa thành công !");
                 load();
-                loadCbbSanPham();
+//                loadCbbSanPham();
+                loadCbbSanPham1();
             } else {
                 JOptionPane.showMessageDialog(this, "Xóa thất bại !");
             }
