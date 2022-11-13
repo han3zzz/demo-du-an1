@@ -117,7 +117,7 @@ public class QLMauSac extends javax.swing.JFrame {
         kGradientPanel1 = new keeptoo.KGradientPanel();
         btnUpdate = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         btnAdd.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_add_30px_6.png"))); // NOI18N

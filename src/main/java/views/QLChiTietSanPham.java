@@ -127,6 +127,18 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
         else{
             cbbSanPham.setSelectedIndex(0);
         }
+        if (cbbBoNhoTrong.getItemCount() == 0) {
+            
+        }
+        else{
+            cbbBoNhoTrong.setSelectedIndex(0);
+        }
+        if (cbbMauSac.getItemCount() == 0) {
+            
+        }
+        else{
+            cbbMauSac.setSelectedIndex(0);
+        }
     }
     public void loadHienThiSanPham(List<SanPham> list ,ChiTietSPViewModels c){
         tbSanPham.getColumn("Ảnh").setCellRenderer(new myTableCellRender());
