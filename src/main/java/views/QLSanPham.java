@@ -94,13 +94,17 @@ public class QLSanPham extends javax.swing.JFrame {
     public static  void loadCbbDanhMuc(List<DanhMuc> items){
         cbbdanhMuc.removeAllItems();
         for (DanhMuc item : items) {
-            cbbdanhMuc.addItem(item.getTenDanhMuc());
+            if (item.getTrangThai() == 0) {
+                cbbdanhMuc.addItem(item.getTenDanhMuc());
+            }
         }
     }
     public static  void loadCbbNsx(List<NSX> items){
         cbbNSX.removeAllItems();
         for (NSX item : items) {
-            cbbNSX.addItem(item.getTenNSX());
+            if (item.getTrangThai() == 0) {
+                cbbNSX.addItem(item.getTenNSX());
+            }
         }
     }
 //    public void loadHienThiSanPham(){
