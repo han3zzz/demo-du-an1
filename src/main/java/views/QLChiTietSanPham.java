@@ -149,6 +149,26 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
         }
 
     }
+     public static void cbbBoNhoTrong(List<BoNhoTrong> items) {
+        cbbBoNhoTrong.removeAllItems();
+
+        for (BoNhoTrong boNhoTrong : items) {
+            if (boNhoTrong.getTrangThai() == 0) {
+                cbbBoNhoTrong.addItem(String.valueOf(boNhoTrong.getDungLuong()));
+            }
+        }
+
+    }
+     public static void cbbMauSac(List<MauSac> items) {
+        cbbMauSac.removeAllItems();
+
+        for (MauSac m : items) {
+            if (m.getTrangThai() == 0) {
+                cbbMauSac.addItem(m.getTenMauSac());
+            }
+        }
+
+    }
 
     public static void loadHienThiSanPham(Object[] data) {
 
@@ -163,17 +183,17 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
             cbbImei.addItem(item);
         }
     }
-    public static void cbbBoNho(List<String> items){
-        cbbBoNhoTrong.removeAllItems();
-        for (String item : items) {
-            cbbBoNhoTrong.addItem(item);
-        }
-    }
-    public static void cbbMauSac(List<String> items){
-        for (String item : items) {
-            cbbMauSac.addItem(item);
-        }
-    }
+//    public static void cbbBoNho(List<String> items){
+//        cbbBoNhoTrong.removeAllItems();
+//        for (String item : items) {
+//            cbbBoNhoTrong.addItem(item);
+//        }
+//    }
+//    public static void cbbMauSac(List<String> items){
+//        for (String item : items) {
+//            cbbMauSac.addItem(item);
+//        }
+//    }
 
     public static void txtSoLuong(String sl) {
         txtSoLuongTon.setText(sl);
