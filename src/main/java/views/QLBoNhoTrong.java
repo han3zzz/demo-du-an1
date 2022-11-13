@@ -5,6 +5,9 @@
 package views;
 
 import domainmodels.BoNhoTrong;
+import domainmodels.SanPham;
+import java.awt.Component;
+import java.awt.Image;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
@@ -13,10 +16,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import services.ChiTietSPServices;
+import services.IChiTietSPServices;
 import services.IQLBoNhoTrongServices;
+import services.IQLSanPhamServices;
 import services.QLBoNhoTrongServices;
+import services.QLSanPhamServices;
+import viewmodels.ChiTietSPViewModels;
 
 /**
  *
@@ -28,13 +40,17 @@ public class QLBoNhoTrong extends javax.swing.JFrame {
      * Creates new form QLBoNhoTrong
      */
     private IQLBoNhoTrongServices services;
+    private IQLSanPhamServices sanPhamServices;
+    private IChiTietSPServices chiTietSPServices;
     public QLBoNhoTrong() {
         initComponents();
         services = new QLBoNhoTrongServices();
+        sanPhamServices = new QLSanPhamServices();
+        chiTietSPServices = new ChiTietSPServices();
         load();
     }
     public void load() {
-        DefaultTableModel model = (DefaultTableModel) tbMauSac.getModel();
+        DefaultTableModel model = (DefaultTableModel) tbBNT.getModel();
         model.setRowCount(0);
         List<BoNhoTrong> list = services.getALL();
         for (BoNhoTrong m : list) {
@@ -46,6 +62,11 @@ public class QLBoNhoTrong extends javax.swing.JFrame {
             }
         }
     }
+    public void loadCbbBoNhoTrong(){
+        List<BoNhoTrong> items = services.getALL();
+        QLChiTietSanPham.cbbBoNhoTrong(items);
+    }
+    
 
     public BoNhoTrong layTT() throws ParseException {
         String ma = txtMa.getText();
@@ -78,9 +99,9 @@ public class QLBoNhoTrong extends javax.swing.JFrame {
     }
 
     public void fill() {
-        int index = tbMauSac.getSelectedRow();
-        String ma = tbMauSac.getValueAt(index, 0).toString();
-        String ten = tbMauSac.getValueAt(index, 1).toString();
+        int index = tbBNT.getSelectedRow();
+        String ma = tbBNT.getValueAt(index, 0).toString();
+        String ten = tbBNT.getValueAt(index, 1).toString();
 
         txtMa.setText(ma);
         txtTen.setText(ten);
@@ -102,7 +123,7 @@ public class QLBoNhoTrong extends javax.swing.JFrame {
         txtMa = new javax.swing.JTextField();
         txtTen = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbMauSac = new javax.swing.JTable();
+        tbBNT = new javax.swing.JTable();
         kGradientPanel1 = new keeptoo.KGradientPanel();
         btnUpdate = new javax.swing.JLabel();
         kGradientPanel2 = new keeptoo.KGradientPanel();
@@ -127,7 +148,7 @@ public class QLBoNhoTrong extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Dung lượng");
 
-        tbMauSac.setModel(new javax.swing.table.DefaultTableModel(
+        tbBNT.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -146,15 +167,15 @@ public class QLBoNhoTrong extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tbMauSac.addMouseListener(new java.awt.event.MouseAdapter() {
+        tbBNT.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbMauSacMouseClicked(evt);
+                tbBNTMouseClicked(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                tbMauSacMousePressed(evt);
+                tbBNTMousePressed(evt);
             }
         });
-        jScrollPane1.setViewportView(tbMauSac);
+        jScrollPane1.setViewportView(tbBNT);
 
         btnUpdate.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_update_30px.png"))); // NOI18N
@@ -311,14 +332,14 @@ public class QLBoNhoTrong extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tbMauSacMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbMauSacMouseClicked
+    private void tbBNTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbBNTMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_tbMauSacMouseClicked
+    }//GEN-LAST:event_tbBNTMouseClicked
 
-    private void tbMauSacMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbMauSacMousePressed
+    private void tbBNTMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbBNTMousePressed
         // TODO add your handling code here:
         fill();
-    }//GEN-LAST:event_tbMauSacMousePressed
+    }//GEN-LAST:event_tbBNTMousePressed
 
     private void btnUpdateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateMouseClicked
 
@@ -329,12 +350,12 @@ public class QLBoNhoTrong extends javax.swing.JFrame {
         String checkSo = "^[0-9]*$";
         try {
             // TODO add your handling code here:
-            int index = tbMauSac.getSelectedRow();
+            int index = tbBNT.getSelectedRow();
             if (index == -1) {
                 JOptionPane.showMessageDialog(this, "Bạn chưa chọn bản ghi nào !");
                 return;
             }
-            int i = tbMauSac.getSelectedRowCount();
+            int i = tbBNT.getSelectedRowCount();
             if (i > 1) {
                 JOptionPane.showMessageDialog(this, "Bạn chỉ được chọn 1 bản ghi !");
                 return;
@@ -366,6 +387,7 @@ public class QLBoNhoTrong extends javax.swing.JFrame {
             if (services.update(n) == true) {
                 JOptionPane.showMessageDialog(this, "Sửa thành công !");
                 load();
+                loadCbbBoNhoTrong();
             } else {
                 JOptionPane.showMessageDialog(this, "Sửa thất bại !");
             }
@@ -415,6 +437,7 @@ public class QLBoNhoTrong extends javax.swing.JFrame {
             if (services.add(n) == true) {
                 JOptionPane.showMessageDialog(this, "Thêm thành công !");
                 load();
+                loadCbbBoNhoTrong();
 
             } else {
                 JOptionPane.showMessageDialog(this, "Thêm thất bại");
@@ -427,12 +450,12 @@ public class QLBoNhoTrong extends javax.swing.JFrame {
     private void btnDeleteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMousePressed
         try {
             // TODO add your handling code here:
-            int index = tbMauSac.getSelectedRow();
+            int index = tbBNT.getSelectedRow();
             if (index == -1) {
                 JOptionPane.showMessageDialog(this, "Bạn chưa chọn bản ghi nào !");
                 return;
             }
-            int i = tbMauSac.getSelectedRowCount();
+            int i = tbBNT.getSelectedRowCount();
             if (i > 1) {
                 JOptionPane.showMessageDialog(this, "Bạn chỉ được chọn 1 bản ghi !");
                 return;
@@ -445,6 +468,7 @@ public class QLBoNhoTrong extends javax.swing.JFrame {
             if (services.delete(n) == true) {
                 JOptionPane.showMessageDialog(this, "Xóa thành công !");
                 load();
+                loadCbbBoNhoTrong();
             } else {
                 JOptionPane.showMessageDialog(this, "Xóa thất bại !");
             }
@@ -467,7 +491,7 @@ public class QLBoNhoTrong extends javax.swing.JFrame {
             return;
         }
 
-        DefaultTableModel model = (DefaultTableModel) tbMauSac.getModel();
+        DefaultTableModel model = (DefaultTableModel) tbBNT.getModel();
         model.setRowCount(0);
         if (n.getTrangThai() == 0) {
             JOptionPane.showMessageDialog(this, "Tìm thành công !");
@@ -532,7 +556,7 @@ public class QLBoNhoTrong extends javax.swing.JFrame {
     private keeptoo.KGradientPanel kGradientPanel2;
     private keeptoo.KGradientPanel kGradientPanel3;
     private keeptoo.KGradientPanel kGradientPanel4;
-    private javax.swing.JTable tbMauSac;
+    private javax.swing.JTable tbBNT;
     private javax.swing.JTextField txtMa;
     private javax.swing.JTextField txtTen;
     // End of variables declaration//GEN-END:variables
