@@ -21,7 +21,6 @@ import services.ChiTietSPServices;
 import services.DanhMucServices;
 import services.IChiTietSPServices;
 import services.IDanhMucServices;
-import services.INSXServices;
 import services.IQLNSXServices;
 import services.IQLSanPhamServices;
 import services.ISanPhamServices;

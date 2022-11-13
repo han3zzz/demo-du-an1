@@ -29,15 +29,15 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import services.AnhService;
-import services.BoNhoTrongServices;
 import services.ChiTietSPServices;
-import services.IBoNhoTrongServices;
 import services.IChiTietSPServices;
-import services.IMauSacServices;
+import services.IQLBoNhoTrongServices;
+import services.IQLMauSacServices;
 import services.IQLSanPhamServices;
 import services.ISanPhamServices;
 import services.ImeiServices;
-import services.MauSacServices;
+import services.QLBoNhoTrongServices;
+import services.QLMauSacServices;
 import services.QLSanPhamServices;
 import viewmodels.ChiTietSPViewModels;
 
@@ -51,16 +51,16 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
      * Creates new form QLChiTietSanPham
      */
     private IQLSanPhamServices sanPhamServices;
-    private IMauSacServices mauSacServices;
-    private IBoNhoTrongServices boNhoTrongServices;
+    private IQLMauSacServices mauSacServices;
+    private IQLBoNhoTrongServices boNhoTrongServices;
     private IChiTietSPServices chiTietSPServices;
 
     public QLChiTietSanPham() {
         initComponents();
 
         sanPhamServices = new QLSanPhamServices();
-        mauSacServices = new MauSacServices();
-        boNhoTrongServices = new BoNhoTrongServices();
+        mauSacServices = new QLMauSacServices();
+        boNhoTrongServices = new QLBoNhoTrongServices();
         chiTietSPServices = new ChiTietSPServices();
 
         cbbMauSac.removeAllItems();
@@ -1388,7 +1388,7 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
 
     private void btnBoNhoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBoNhoMousePressed
         // TODO add your handling code here:
-        new BoNhoTrongForm().setVisible(true);
+        new QLBoNhoTrong().setVisible(true);
     }//GEN-LAST:event_btnBoNhoMousePressed
 
     private void btnAddMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseExited
@@ -1439,7 +1439,7 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
 
     private void btnMauSacMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMauSacMousePressed
         // TODO add your handling code here:
-        new MauSacForm().setVisible(true);
+        new QLMauSac().setVisible(true);
     }//GEN-LAST:event_btnMauSacMousePressed
 
     /**

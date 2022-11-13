@@ -6,7 +6,6 @@ package services;
 
 import domainmodels.NSX;
 import java.util.List;
-import repositories.NSXRepositories;
 import repositories.QLNSXRepositories;
 
 /**
