@@ -295,6 +295,9 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
         cbbMauSac.setSelectedItem(c.getMauSac().getTenMauSac());
         btnAdd.setEnabled(false);
         String ngayBh = "";
+        if (c.getThoiGianBH() == 0) {
+            ngayBh = "0";
+        }
         if (c.getThoiGianBH() == 30) {
             ngayBh = "1 Tháng";
         }
@@ -324,12 +327,12 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
         String thoiGian = (String) cbbTGBH.getSelectedItem();
         if (thoiGian.equals("1 Tháng")) {
             thoiGianBaoHanh = 30;
-        } else if (thoiGian.equals("3 Tháng")) {
+        }if (thoiGian.equals("3 Tháng")) {
             thoiGianBaoHanh = 90;
-        } else if (thoiGian.equals("6 tháng")) {
+        }if(thoiGian.equals("6 tháng")) {
             thoiGianBaoHanh = 180;
-        } else {
-            thoiGianBaoHanh = 360;
+        }if (thoiGian.equals("12 tháng")) {
+            thoiGianBaoHanh = 360 ;
         }
         AnhService anhService = new AnhService();
         String anh = anhService.getAnh();
@@ -405,11 +408,14 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
         String moTa = txtGhiChu.getText();
         Integer thoiGianBaoHanh = 0;
         String thoiGian = (String) cbbTGBH.getSelectedItem();
-        if (thoiGian.equals("1 Tháng")) {
+        if (thoiGian.equals("0")) {
+            thoiGianBaoHanh = 0 ;
+        }
+        else if (thoiGian.equals("1 Tháng")) {
             thoiGianBaoHanh = 30;
         } else if (thoiGian.equals("3 Tháng")) {
             thoiGianBaoHanh = 90;
-        } else if (thoiGian.equals("6 tháng")) {
+        } else if (thoiGian.equals("6 Tháng")) {
             thoiGianBaoHanh = 180;
         } else {
             thoiGianBaoHanh = 360;
@@ -494,11 +500,14 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
         String moTa = txtGhiChu.getText();
         Integer thoiGianBaoHanh = 0;
         String thoiGian = (String) cbbTGBH.getSelectedItem();
-        if (thoiGian.equals("1 Tháng")) {
+        if (thoiGian.equals("0")) {
+            thoiGianBaoHanh = 0 ;
+        }
+        else if (thoiGian.equals("1 Tháng")) {
             thoiGianBaoHanh = 30;
         } else if (thoiGian.equals("3 Tháng")) {
             thoiGianBaoHanh = 90;
-        } else if (thoiGian.equals("6 tháng")) {
+        } else if (thoiGian.equals("6 Tháng")) {
             thoiGianBaoHanh = 180;
         } else {
             thoiGianBaoHanh = 360;
@@ -735,7 +744,7 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
         jLabel21.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel21.setText("Thời gian bảo hành");
 
-        cbbTGBH.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 Tháng", "3 Tháng", "6 Tháng", "12 Tháng" }));
+        cbbTGBH.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1 Tháng", "3 Tháng", "6 Tháng", "12 Tháng" }));
 
         jLabel22.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel22.setText("Camera");
