@@ -226,6 +226,7 @@ public class QLSanPham extends javax.swing.JFrame {
         cbbdanhMuc.setSelectedItem(danhMuc);
     }
     public static void loadCbbNSX(List<NSX> items){
+        cbbNSX.removeAllItems();
         for (NSX item : items) {
              if (item.getTrangThai() == 0) {
                 cbbNSX.addItem(item.getTenNSX());

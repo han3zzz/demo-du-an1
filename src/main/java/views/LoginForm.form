@@ -272,6 +272,7 @@
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnQuenMatKhauMouseClicked"/>
+            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnQuenMatKhauMousePressed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lbEyeOpen">

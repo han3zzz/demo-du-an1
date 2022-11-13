@@ -11,7 +11,9 @@ import java.awt.event.MouseListener;
 import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import views.DoiMatKhauPanel;
 import views.QLChiTietSanPhamPanel;
+import views.QLNhanVienPanel;
 
 /**
  *
@@ -29,7 +31,7 @@ public class ChuyenManHinhServices {
     }
 
     public void setView(JPanel jpnItem, JLabel jlbItem) {
-        kinSelected = "";
+        kinSelected = "sanpham";
 
         jpnItem.setBackground(new Color(96, 100, 191));
         jlbItem.setBackground(new Color(96, 100, 191));
@@ -65,9 +67,23 @@ public class ChuyenManHinhServices {
 
         @Override
         public void mouseClicked(MouseEvent e) {
+             kinSelected = kind;
+            jpnItem.setBackground(new Color(96,100,191));
+            jlbItem.setBackground(new Color(96,100,191));
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+           
             switch (kind) {
                 case "sanpham":
                     node = new QLChiTietSanPhamPanel();
+                    break;
+                    case "doimatkhau":
+                    node = new DoiMatKhauPanel();
+                    break;
+                    case "nhanvien":
+                    node = new QLNhanVienPanel();
                     break;
                 default:
 //                    node = new QLChiTietSanPhamPanel();
@@ -79,13 +95,6 @@ public class ChuyenManHinhServices {
             root.validate();
             root.repaint();
             setChangeBackground(kind);
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-//            kinSelected = kind;
-//            jpnItem.setBackground(new Color(96,100,191));
-//            jlbItem.setBackground(new Color(96,100,191));
         }
 
         @Override
@@ -101,10 +110,10 @@ public class ChuyenManHinhServices {
 
         @Override
         public void mouseExited(MouseEvent e) {
-            if (!kinSelected.equalsIgnoreCase(kind)) {
-                jpnItem.setBackground(new Color(76,175,80));
-            jlbItem.setBackground(new Color(76,175,80));
-            }
+//            if (!kinSelected.equalsIgnoreCase(kind)) {
+//                jpnItem.setBackground(new Color(76,175,80));
+//            jlbItem.setBackground(new Color(76,175,80));
+//            }
         }
         private void setChangeBackground(String kind){
             for (MenuServices item : listItem) {

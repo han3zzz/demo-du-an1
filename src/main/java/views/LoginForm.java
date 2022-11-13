@@ -127,6 +127,9 @@ public class LoginForm extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnQuenMatKhauMouseClicked(evt);
             }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnQuenMatKhauMousePressed(evt);
+            }
         });
 
         lbEyeOpen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_eye_25px_2.png"))); // NOI18N
@@ -248,7 +251,7 @@ public class LoginForm extends javax.swing.JFrame {
 
     private void btnQuenMatKhauMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQuenMatKhauMouseClicked
         // TODO add your handling code here:
-        new QuenMatKhauForm().setVisible(true);
+
     }//GEN-LAST:event_btnQuenMatKhauMouseClicked
 
     private void lbEyeOpenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbEyeOpenMouseClicked
@@ -306,6 +309,11 @@ public class LoginForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         setState(LoginForm.ICONIFIED);
     }//GEN-LAST:event_btnClose1MousePressed
+
+    private void btnQuenMatKhauMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQuenMatKhauMousePressed
+        // TODO add your handling code here:
+        new QuenMatKhauForm().setVisible(true);
+    }//GEN-LAST:event_btnQuenMatKhauMousePressed
 
     /**
      * @param args the command line arguments
