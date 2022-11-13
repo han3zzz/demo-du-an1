@@ -34,6 +34,10 @@ public class QLMauSac extends javax.swing.JFrame {
         services = new QLMauSacServices();
         load();
     }
+    public void loadCbbMauSac(){
+        List<MauSac> items = services.getALL();
+        QLChiTietSanPham.cbbMauSac(items);
+    }
     
     public void load() {
         DefaultTableModel model = (DefaultTableModel) tbMauSac.getModel();
@@ -313,11 +317,12 @@ public class QLMauSac extends javax.swing.JFrame {
                 return;
             }
             if (txtMa.getText().length() > 10) {
-                JOptionPane.showMessageDialog(this, "Tên nhỏ hơn hoặc bằng 30 kí tự !");
+                 JOptionPane.showMessageDialog(this, "Mã nhỏ hơn hoặc bằng 10 kí tự !");
                 return;
+                
             }
             if (txtTen.getText().length() > 30) {
-                JOptionPane.showMessageDialog(this, "Mã nhỏ hơn hoặc bằng 10 kí tự !");
+               JOptionPane.showMessageDialog(this, "Tên nhỏ hơn hoặc bằng 30 kí tự !");
                 return;
             }
             MauSac n = layTT();
@@ -328,6 +333,7 @@ public class QLMauSac extends javax.swing.JFrame {
             if (services.add(n) == true) {
                 JOptionPane.showMessageDialog(this, "Thêm thành công !");
                 load();
+                loadCbbMauSac();
             } else {
                 JOptionPane.showMessageDialog(this, "Thêm thất bại");
             }
@@ -357,6 +363,7 @@ public class QLMauSac extends javax.swing.JFrame {
             if (services.delete(n) == true) {
                 JOptionPane.showMessageDialog(this, "Xóa thành công !");
                 load();
+                loadCbbMauSac();
             } else {
                 JOptionPane.showMessageDialog(this, "Xóa thất bại !");
             }
@@ -428,11 +435,12 @@ public class QLMauSac extends javax.swing.JFrame {
                 return;
             }
             if (txtMa.getText().length() > 10) {
-                JOptionPane.showMessageDialog(this, "Tên nhỏ hơn hoặc bằng 30 kí tự !");
+                 JOptionPane.showMessageDialog(this, "Mã nhỏ hơn hoặc bằng 10 kí tự !");
                 return;
+                
             }
             if (txtTen.getText().length() > 30) {
-                JOptionPane.showMessageDialog(this, "Mã nhỏ hơn hoặc bằng 10 kí tự !");
+               JOptionPane.showMessageDialog(this, "Tên nhỏ hơn hoặc bằng 30 kí tự !");
                 return;
             }
             MauSac n = layTTSua();
@@ -443,6 +451,7 @@ public class QLMauSac extends javax.swing.JFrame {
             if (services.update(n) == true) {
                 JOptionPane.showMessageDialog(this, "Sửa thành công !");
                 load();
+                loadCbbMauSac();
             } else {
                 JOptionPane.showMessageDialog(this, "Sửa thất bại !");
             }
