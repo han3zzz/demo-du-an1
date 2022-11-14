@@ -34,8 +34,8 @@ public class BoNhoTrong implements Serializable{
     @Column (name = "TrangThai")
     private Integer trangThai ;
     
-    @OneToMany(mappedBy = "boNhoTrong" , fetch = FetchType.LAZY)
-    List<ChiTietSP> chiTietSPs;
+    @OneToMany(mappedBy = "bonhotrong" , fetch = FetchType.LAZY)
+    List<SanPham> sanPhams;
 
     public String getMaBNT() {
         return maBNT;
@@ -77,13 +77,15 @@ public class BoNhoTrong implements Serializable{
         this.trangThai = trangThai;
     }
 
-    public List<ChiTietSP> getChiTietSPs() {
-        return chiTietSPs;
+    public List<SanPham> getSanPhams() {
+        return sanPhams;
     }
 
-    public void setChiTietSPs(List<ChiTietSP> chiTietSPs) {
-        this.chiTietSPs = chiTietSPs;
+    public void setSanPhams(List<SanPham> sanPhams) {
+        this.sanPhams = sanPhams;
     }
+
+    
     
     
     

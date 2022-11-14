@@ -64,7 +64,7 @@ public class QLBoNhoTrong extends javax.swing.JFrame {
     }
     public void loadCbbBoNhoTrong(){
         List<BoNhoTrong> items = services.getALL();
-        QLChiTietSanPhamPanel.cbbBoNhoTrong(items);
+        QLSanPham.loadCbbBoNhoo(items);
     }
     
 
@@ -330,6 +330,7 @@ public class QLBoNhoTrong extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void tbBNTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbBNTMouseClicked

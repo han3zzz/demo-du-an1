@@ -28,6 +28,20 @@ public class SanPham implements Serializable{
     private String maSP ;
     @Column (name = "TenSP")
     private String tenSP ;
+    @Column(name = "Camera")
+    private String camera ;
+    @Column(name = "HeDieuHanh")
+    private String heDieuHanh ;
+    @Column(name = "Ram")
+    private Integer ram ;
+    @Column(name = "Cpu")
+    private String cpu ;
+    @Column(name = "ManHinh")
+    private String manHinh ;
+    @Column(name = "DungLuongPin")
+    private Integer pin ;
+    @Column(name = "XuatXu")
+    private String xuatxu ;
     @Column (name = "NgayTao")
     private Date ngayTao ;
     @Column (name = "NgaySua")
@@ -37,11 +51,17 @@ public class SanPham implements Serializable{
     @ManyToOne
     @JoinColumn (name = "MaNSX" , nullable = false)
     private NSX nsx ;
-    @OneToMany(mappedBy = "sanPham" , fetch = FetchType.LAZY)
-    List<ChiTietSP> chiTietSPs;
     @ManyToOne
     @JoinColumn (name = "MaDM" , nullable = false)
     private DanhMuc danhmuc ;
+     @ManyToOne
+    @JoinColumn(name = "MaMauSac" , nullable = false)
+    private MauSac mausac ;
+    @ManyToOne
+    @JoinColumn(name = "MaBNT", nullable = false)
+    private BoNhoTrong bonhotrong ;
+    @OneToMany(mappedBy = "sanPham" , fetch = FetchType.LAZY)
+    List<ChiTietSP> chiTietSPs;
 
     public String getMaSP() {
         return maSP;
@@ -57,6 +77,62 @@ public class SanPham implements Serializable{
 
     public void setTenSP(String tenSP) {
         this.tenSP = tenSP;
+    }
+
+    public String getCamera() {
+        return camera;
+    }
+
+    public void setCamera(String camera) {
+        this.camera = camera;
+    }
+
+    public String getHeDieuHanh() {
+        return heDieuHanh;
+    }
+
+    public void setHeDieuHanh(String heDieuHanh) {
+        this.heDieuHanh = heDieuHanh;
+    }
+
+    public Integer getRam() {
+        return ram;
+    }
+
+    public void setRam(Integer ram) {
+        this.ram = ram;
+    }
+
+    public String getCpu() {
+        return cpu;
+    }
+
+    public void setCpu(String cpu) {
+        this.cpu = cpu;
+    }
+
+    public String getManHinh() {
+        return manHinh;
+    }
+
+    public void setManHinh(String manHinh) {
+        this.manHinh = manHinh;
+    }
+
+    public Integer getPin() {
+        return pin;
+    }
+
+    public void setPin(Integer pin) {
+        this.pin = pin;
+    }
+
+    public String getXuatxu() {
+        return xuatxu;
+    }
+
+    public void setXuatxu(String xuatxu) {
+        this.xuatxu = xuatxu;
     }
 
     public Date getNgayTao() {
@@ -91,14 +167,6 @@ public class SanPham implements Serializable{
         this.nsx = nsx;
     }
 
-    public List<ChiTietSP> getChiTietSPs() {
-        return chiTietSPs;
-    }
-
-    public void setChiTietSPs(List<ChiTietSP> chiTietSPs) {
-        this.chiTietSPs = chiTietSPs;
-    }
-
     public DanhMuc getDanhmuc() {
         return danhmuc;
     }
@@ -106,6 +174,33 @@ public class SanPham implements Serializable{
     public void setDanhmuc(DanhMuc danhmuc) {
         this.danhmuc = danhmuc;
     }
+
+    public MauSac getMausac() {
+        return mausac;
+    }
+
+    public void setMausac(MauSac mausac) {
+        this.mausac = mausac;
+    }
+
+    public BoNhoTrong getBonhotrong() {
+        return bonhotrong;
+    }
+
+    public void setBonhotrong(BoNhoTrong bonhotrong) {
+        this.bonhotrong = bonhotrong;
+    }
+
+    public List<ChiTietSP> getChiTietSPs() {
+        return chiTietSPs;
+    }
+
+    public void setChiTietSPs(List<ChiTietSP> chiTietSPs) {
+        this.chiTietSPs = chiTietSPs;
+    }
+    
+
+    
 
    
 

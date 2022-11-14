@@ -26,7 +26,6 @@ public class MauSac implements Serializable{
     private String maMauSac ;
     @Column (name = "TenMauSac")
     private String tenMauSac ;
-
     @Column (name = "NgayTao")
     private Date ngayTao ;
     @Column (name = "NgaySua")
@@ -34,8 +33,8 @@ public class MauSac implements Serializable{
     @Column (name = "TrangThai")
     private Integer trangThai ;
     
-    @OneToMany(mappedBy = "mauSac" , fetch = FetchType.LAZY)
-    List<ChiTietSP> chiTietSPs;
+    @OneToMany(mappedBy = "mausac" , fetch = FetchType.LAZY)
+    List<SanPham> sanPhams;
 
     public String getMaMauSac() {
         return maMauSac;
@@ -77,13 +76,15 @@ public class MauSac implements Serializable{
         this.trangThai = trangThai;
     }
 
-    public List<ChiTietSP> getChiTietSPs() {
-        return chiTietSPs;
+    public List<SanPham> getSanPhams() {
+        return sanPhams;
     }
 
-    public void setChiTietSPs(List<ChiTietSP> chiTietSPs) {
-        this.chiTietSPs = chiTietSPs;
+    public void setSanPhams(List<SanPham> sanPhams) {
+        this.sanPhams = sanPhams;
     }
+
+   
     
     
 }

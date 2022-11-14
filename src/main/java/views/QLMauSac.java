@@ -36,7 +36,7 @@ public class QLMauSac extends javax.swing.JFrame {
     }
     public void loadCbbMauSac(){
         List<MauSac> items = services.getALL();
-        QLChiTietSanPhamPanel.cbbMauSac(items);
+        QLSanPham.loadCbbMauSacc(items);
     }
     
     public void load() {
@@ -317,6 +317,7 @@ public class QLMauSac extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseClicked

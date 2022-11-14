@@ -37,20 +37,6 @@ public class ChiTietSP implements Serializable{
     private Integer thoiGianBH ;
     @Column(name = "Anh")
     private String anh ;
-    @Column(name = "Camera")
-    private String camera ;
-    @Column(name = "HeDieuHanh")
-    private String heDieuHanh ;
-    @Column(name = "Ram")
-    private Integer ram ;
-    @Column(name = "Cpu")
-    private String cpu ;
-    @Column(name = "ManHinh")
-    private String manHinh ;
-    @Column(name = "DungLuongPin")
-    private Integer dungLuongPin ;
-    @Column(name = "XuatXu")
-    private String xuatXu ;
     @Column(name = "NgayTao")
     private Date ngayTao ;
     @Column(name = "NgaySua")
@@ -62,13 +48,6 @@ public class ChiTietSP implements Serializable{
     @JoinColumn(name = "MaSP", nullable = false)
     private SanPham sanPham;
     
-    @ManyToOne
-    @JoinColumn(name = "MaMauSac", nullable = false)
-    private MauSac mauSac;
-    
-    @ManyToOne
-    @JoinColumn(name = "MaBNT", nullable = false)
-    private BoNhoTrong boNhoTrong;
     
     @OneToMany(mappedBy = "maImei", fetch = FetchType.LAZY)
     private List<HoaDonChiTiet> hoaDonChiTiets;
@@ -123,62 +102,6 @@ public class ChiTietSP implements Serializable{
         this.anh = anh;
     }
 
-    public String getCamera() {
-        return camera;
-    }
-
-    public void setCamera(String camera) {
-        this.camera = camera;
-    }
-
-    public String getHeDieuHanh() {
-        return heDieuHanh;
-    }
-
-    public void setHeDieuHanh(String heDieuHanh) {
-        this.heDieuHanh = heDieuHanh;
-    }
-
-    public Integer getRam() {
-        return ram;
-    }
-
-    public void setRam(Integer ram) {
-        this.ram = ram;
-    }
-
-    public String getCpu() {
-        return cpu;
-    }
-
-    public void setCpu(String cpu) {
-        this.cpu = cpu;
-    }
-
-    public String getManHinh() {
-        return manHinh;
-    }
-
-    public void setManHinh(String manHinh) {
-        this.manHinh = manHinh;
-    }
-
-    public Integer getDungLuongPin() {
-        return dungLuongPin;
-    }
-
-    public void setDungLuongPin(Integer dungLuongPin) {
-        this.dungLuongPin = dungLuongPin;
-    }
-
-    public String getXuatXu() {
-        return xuatXu;
-    }
-
-    public void setXuatXu(String xuatXu) {
-        this.xuatXu = xuatXu;
-    }
-
     public Date getNgayTao() {
         return ngayTao;
     }
@@ -211,22 +134,6 @@ public class ChiTietSP implements Serializable{
         this.sanPham = sanPham;
     }
 
-    public MauSac getMauSac() {
-        return mauSac;
-    }
-
-    public void setMauSac(MauSac mauSac) {
-        this.mauSac = mauSac;
-    }
-
-    public BoNhoTrong getBoNhoTrong() {
-        return boNhoTrong;
-    }
-
-    public void setBoNhoTrong(BoNhoTrong boNhoTrong) {
-        this.boNhoTrong = boNhoTrong;
-    }
-
     public List<HoaDonChiTiet> getHoaDonChiTiets() {
         return hoaDonChiTiets;
     }
@@ -242,6 +149,8 @@ public class ChiTietSP implements Serializable{
     public void setBaoHanhChiTiets(List<BaoHanhChiTiet> baoHanhChiTiets) {
         this.baoHanhChiTiets = baoHanhChiTiets;
     }
+
+    
     
     
     

@@ -30,8 +30,8 @@ public class ChiTietSPServices implements IChiTietSPServices{
             List<ChiTietSP> count = ctspr.count(ctsp.getSanPham().getMaSP());
             String tenSP = ctsp.getSanPham().getTenSP();
             String nsx = ctsp.getSanPham().getNsx().getTenNSX();
-            String mauSac = ctsp.getMauSac().getTenMauSac();
-            Integer boNho = ctsp.getBoNhoTrong().getDungLuong();
+            String mauSac = ctsp.getSanPham().getMausac().getTenMauSac();
+            Integer boNho = ctsp.getSanPham().getBonhotrong().getDungLuong();
             Integer tonKho = count.size();
             BigDecimal giaBan = ctsp.getGiaBan();
             BigDecimal giaNhap = ctsp.getGiaNhap();
@@ -84,8 +84,8 @@ public class ChiTietSPServices implements IChiTietSPServices{
         
         String tenSP = ctsp.getSanPham().getTenSP();
             String nsx = ctsp.getSanPham().getNsx().getTenNSX();
-            String mauSac = ctsp.getMauSac().getTenMauSac();
-            Integer boNho = ctsp.getBoNhoTrong().getDungLuong();
+            String mauSac = ctsp.getSanPham().getMausac().getTenMauSac();
+            Integer boNho = ctsp.getSanPham().getBonhotrong().getDungLuong();
             Integer tonKho = count.size();
             BigDecimal giaBan = ctsp.getGiaBan();
              BigDecimal giaNhap = ctsp.getGiaNhap();

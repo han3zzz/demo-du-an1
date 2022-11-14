@@ -284,15 +284,7 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
         txtGiaBan.setText(String.valueOf(c.getGiaBan()));
         txtGhiChu.setText(c.getMoTa());
         txtSoLuongTon.setText(soLuong);
-        txtXuatXu.setText(c.getXuatXu());
-        txtCpu.setText(c.getCpu());
-        txtManHinh.setText(c.getManHinh());
-        txtPin.setText(String.valueOf(c.getDungLuongPin()));
-        cbbCamera.setSelectedItem(c.getCamera());
-        cbbHeDieuHanh.setSelectedItem(c.getHeDieuHanh());
-        cbbRam.setSelectedItem(String.valueOf(c.getRam()));
-        cbbBoNhoTrong.setSelectedItem(String.valueOf(c.getBoNhoTrong().getDungLuong()));
-        cbbMauSac.setSelectedItem(c.getMauSac().getTenMauSac());
+       
         btnAdd.setEnabled(false);
         String ngayBh = "";
         if (c.getThoiGianBH() == 0) {
@@ -380,18 +372,10 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
         c.setMoTa(moTa);
         c.setThoiGianBH(thoiGianBaoHanh);
         c.setAnh(anh);
-        c.setCamera(camera);
-        c.setHeDieuHanh(heDieuHanh);
-        c.setRam(ram);
-        c.setCpu(cpu);
-        c.setManHinh(manHinh);
-        c.setDungLuongPin(pin);
-        c.setXuatXu(xuatXu);
+       
         c.setNgayTao(date);
         c.setTrangThai(0);
         c.setSanPham(sp);
-        c.setMauSac(mauSac);
-        c.setBoNhoTrong(bnt);
         return c;
 
     }
@@ -472,18 +456,10 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
         } else {
             c.setAnh(spp.getAnh());
         }
-        c.setCamera(camera);
-        c.setHeDieuHanh(heDieuHanh);
-        c.setRam(ram);
-        c.setCpu(cpu);
-        c.setManHinh(manHinh);
-        c.setDungLuongPin(pin);
-        c.setXuatXu(xuatXu);
+      
         c.setNgaySua(date);
         c.setTrangThai(0);
         c.setSanPham(sp);
-        c.setMauSac(mauSac);
-        c.setBoNhoTrong(bnt);
         return c;
 
     }
@@ -564,18 +540,11 @@ public class QLChiTietSanPham extends javax.swing.JFrame {
         } else {
             c.setAnh(spp.getAnh());
         }
-        c.setCamera(camera);
-        c.setHeDieuHanh(heDieuHanh);
-        c.setRam(ram);
-        c.setCpu(cpu);
-        c.setManHinh(manHinh);
-        c.setDungLuongPin(pin);
-        c.setXuatXu(xuatXu);
+      
         c.setNgaySua(date);
         c.setTrangThai(1);
         c.setSanPham(sp);
-        c.setMauSac(mauSac);
-        c.setBoNhoTrong(bnt);
+        
         return c;
 
     }
