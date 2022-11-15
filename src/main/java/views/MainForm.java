@@ -75,6 +75,7 @@ public class MainForm extends javax.swing.JFrame {
         listItems.add(new MenuServices("sanpham", sanpham, btnQLSanPham));
         listItems.add(new MenuServices("doimatkhau", doimatkhau, btnDoiMatKhau));
         listItems.add(new MenuServices("nhanvien", nhanvien, btnQLNhanVien));
+        listItems.add(new MenuServices("banhang", banhang, btnQLBanHang));
         chuyenManHinhServices.setEvent(listItems);
 
         cardLayout = (CardLayout) giaodien.getLayout();
@@ -109,7 +110,7 @@ public class MainForm extends javax.swing.JFrame {
         kGradientPanel12 = new keeptoo.KGradientPanel();
         btnQLNhanVien = new javax.swing.JLabel();
         kGradientPanel14 = new keeptoo.KGradientPanel();
-        jLabel5 = new javax.swing.JLabel();
+        btnQLBanHang = new javax.swing.JLabel();
         kGradientPanel15 = new keeptoo.KGradientPanel();
         jLabel6 = new javax.swing.JLabel();
         kGradientPanel16 = new keeptoo.KGradientPanel();
@@ -130,6 +131,7 @@ public class MainForm extends javax.swing.JFrame {
         sanpham = new javax.swing.JPanel();
         doimatkhau = new javax.swing.JPanel();
         nhanvien = new javax.swing.JPanel();
+        banhang = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -225,21 +227,21 @@ public class MainForm extends javax.swing.JFrame {
         kGradientPanel14.setkGradientFocus(300);
         kGradientPanel14.setkStartColor(new java.awt.Color(204, 204, 0));
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_click_&_collect_30px.png"))); // NOI18N
-        jLabel5.setText("Quản Lý Bán Hàng");
+        btnQLBanHang.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnQLBanHang.setForeground(new java.awt.Color(255, 255, 255));
+        btnQLBanHang.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnQLBanHang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_click_&_collect_30px.png"))); // NOI18N
+        btnQLBanHang.setText("Quản Lý Bán Hàng");
 
         javax.swing.GroupLayout kGradientPanel14Layout = new javax.swing.GroupLayout(kGradientPanel14);
         kGradientPanel14.setLayout(kGradientPanel14Layout);
         kGradientPanel14Layout.setHorizontalGroup(
             kGradientPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnQLBanHang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         kGradientPanel14Layout.setVerticalGroup(
             kGradientPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+            .addComponent(btnQLBanHang, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
         );
 
         kGradientPanel15.setkEndColor(new java.awt.Color(204, 102, 0));
@@ -514,6 +516,21 @@ public class MainForm extends javax.swing.JFrame {
 
         giaodien.add(nhanvien, "nhanvien");
 
+        banhang.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout banhangLayout = new javax.swing.GroupLayout(banhang);
+        banhang.setLayout(banhangLayout);
+        banhangLayout.setHorizontalGroup(
+            banhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1260, Short.MAX_VALUE)
+        );
+        banhangLayout.setVerticalGroup(
+            banhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 781, Short.MAX_VALUE)
+        );
+
+        giaodien.add(banhang, "banhang");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -619,8 +636,10 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel banhang;
     private javax.swing.JLabel btnDangXuat;
     private javax.swing.JLabel btnDoiMatKhau;
+    private javax.swing.JLabel btnQLBanHang;
     private javax.swing.JLabel btnQLNhanVien;
     private javax.swing.JLabel btnQLSanPham;
     private javax.swing.JPanel doimatkhau;
@@ -628,7 +647,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;

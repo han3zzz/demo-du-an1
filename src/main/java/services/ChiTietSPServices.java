@@ -95,10 +95,7 @@ public class ChiTietSPServices implements IChiTietSPServices{
         return ctspvm;
     }
 
-    @Override
-    public void updateImei(String ma) {
-        ctspr.updateImei(ma);
-    }
+ 
 
     @Override
     public void xoaImei(String ma) {
@@ -110,4 +107,23 @@ public class ChiTietSPServices implements IChiTietSPServices{
         return ctspr.getAll();
     }
 
+    @Override
+    public List<ChiTietSP> count(String maSP) {
+        return ctspr.count(maSP);
+    }
+
+    @Override
+    public void updateImei(String ma) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void updateImeiTrangThai(String ma, Integer trangThai) {
+        ctspr.updateImeiTrangThai(ma, trangThai);
+
+    
+
+   
+
+}
 }

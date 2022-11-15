@@ -854,6 +854,8 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
             btnUpdate.setEnabled(false);
             btnDelete.setEnabled(false);
             btnAdd.setEnabled(true);
+            ImeiServices imeiServices = new ImeiServices();
+            imeiServices.setList(null);
 
         }
 

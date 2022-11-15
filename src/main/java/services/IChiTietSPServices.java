@@ -24,4 +24,6 @@ public interface IChiTietSPServices {
     public ChiTietSPViewModels load(String maSP);
     public void updateImei(String ma );
     public void xoaImei(String ma);
+    public List<ChiTietSP> count(String maSP);
+    public void updateImeiTrangThai(String ma , Integer trangThai);
 }

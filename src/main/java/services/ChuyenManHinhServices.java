@@ -12,6 +12,7 @@ import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import views.DoiMatKhauPanel;
+import views.QLBanHangPanel;
 import views.QLChiTietSanPhamPanel;
 import views.QLNhanVienPanel;
 
@@ -84,6 +85,9 @@ public class ChuyenManHinhServices {
                     break;
                     case "nhanvien":
                     node = new QLNhanVienPanel();
+                    break;
+                    case "banhang":
+                    node = new QLBanHangPanel();
                     break;
                 default:
 //                    node = new QLChiTietSanPhamPanel();

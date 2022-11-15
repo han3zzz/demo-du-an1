@@ -112,11 +112,23 @@ public class ChiTietSPRepositories {
         }
         return list.get(0);
     }
-    public void updateImei(String ma ){
+    
+    
+//    public void updateImei(String ma ){
+//        Session session = HibernateConfig.getFACTORY().openSession();
+//        Transaction transaction = session.beginTransaction();
+//        Query q = session.createQuery("UPDATE ChiTietSP SET TrangThai = 1 where MaImei = :masp");
+//        q.setParameter("masp", ma);
+//        int index = q.executeUpdate();
+//        transaction.commit();
+//        session.close();
+//    }
+    public void updateImeiTrangThai(String ma , Integer trangThai){
         Session session = HibernateConfig.getFACTORY().openSession();
         Transaction transaction = session.beginTransaction();
-        Query q = session.createQuery("UPDATE ChiTietSP SET TrangThai = 1 where MaImei = :masp");
+        Query q = session.createQuery("UPDATE ChiTietSP SET TrangThai = :trangthai where MaImei = :masp");
         q.setParameter("masp", ma);
+        q.setParameter("trangthai", trangThai);
         int index = q.executeUpdate();
         transaction.commit();
         session.close();

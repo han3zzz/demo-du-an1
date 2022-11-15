@@ -55,7 +55,7 @@ public class HoaDon implements Serializable{
     @JoinColumn(name = "MaKH", nullable = false)
     private KhachHang khachHang;
     @ManyToOne
-    @JoinColumn(name = "MaKM", nullable = false)
+    @JoinColumn(name = "MaKM", nullable = true)
     private KhuyenMai khuyenMai;
     
     @OneToMany (mappedBy = "maHD" , fetch = FetchType.LAZY)
