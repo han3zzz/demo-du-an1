@@ -151,6 +151,10 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
             btnThanhToan.setEnabled(false);
             btnHuy.setEnabled(false);
         }
+        if (hd1.getTrangThai() == 0) {
+            btnThanhToan.setEnabled(true);
+            btnHuy.setEnabled(true);
+        }
         List<HoaDonChiTiet> list = hoaDonChiTietServies.getALL(ma);
         List<ChiTietSP> chiTietSPs = chiTietSPServices.getImei();
         tbGioHang.getColumn("Ảnh").setCellRenderer(new myTableCellRender());
@@ -1151,6 +1155,13 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
 
     private void tbGioHangMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbGioHangMousePressed
         // TODO add your handling code here:
+        int indexHoaDon = tbHoaDon.getSelectedRow();
+        String ma = tbHoaDon.getValueAt(indexHoaDon, 0).toString();
+        HoaDon hoaDon = hoaDonServices.fill(ma);
+        if (hoaDon.getTrangThai() == 2) {
+            JOptionPane.showMessageDialog(this, "Hóa đơn này đã thanh toán !");
+            return;
+        }
         int index = tbGioHang.getSelectedRow();
         String imei = tbGioHang.getValueAt(index, 2).toString();
         int indexhd = tbHoaDon.getSelectedRow();
@@ -1174,6 +1185,12 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
     private void tbSanPhamMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbSanPhamMousePressed
         // TODO add your handling code here:
         int check = tbHoaDon.getSelectedRow();
+        String ma = tbHoaDon.getValueAt(check, 0).toString();
+        HoaDon hoaDon = hoaDonServices.fill(ma);
+        if (hoaDon.getTrangThai() == 2) {
+            JOptionPane.showMessageDialog(this, "Hóa đơn này đã thanh toán !");
+            return;
+        }
         if (check == -1) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn hóa đơn trước khi thêm sản phẩm !");
             return;
@@ -1209,12 +1226,16 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
         txtPhiship.setText("0");
         txtPhiship.setEditable(false);
         txtPhiship.setEnabled(false);
-        Integer phiShip = 0;
+        Integer phiShip = Integer.parseInt(txtPhiship.getText());
         txtPhiShip.setText(String.valueOf(phiShip));
         Integer tongTien = Integer.parseInt(txtTongTien.getText());
         Integer giamGia = Integer.parseInt(txtGiamGia.getText());
         Integer tienPhaiThanhToan = tongTien + phiShip - giamGia;
-        Integer tienKhachDua = Integer.parseInt(txtTienKhachDua.getText());
+        String tienKhachDuaString = "";
+        if (txtTienKhachDua.getText().equals("")) {
+            tienKhachDuaString = "0";
+        }
+        Integer tienKhachDua = Integer.parseInt(tienKhachDuaString);
         Integer tienTraLai = tienKhachDua - tienPhaiThanhToan;
 
         txtTienTraLai.setText(String.valueOf(tienTraLai));
@@ -1408,6 +1429,9 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
             String ghiChu = txtGhichu.getText();
             String maHD = tbHoaDon.getValueAt(indexHoaDon, 0).toString();
             int check = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn hủy " + maHD + " !");
+            if (check != JOptionPane.YES_OPTION) {
+                return;
+            }
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy");
             ZonedDateTime now = ZonedDateTime.now();
             String ngayTao = dtf.format(now);

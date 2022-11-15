@@ -145,11 +145,11 @@ public class Imei extends javax.swing.JFrame {
 
     private void btnAddMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMousePressed
             GetImeiByMaSPServices getImeiByMaSPServices = new GetImeiByMaSPServices();
-              QLBanHang.loadSoLuongSanPham(1);
+              QLBanHangPanel.loadSoLuongSanPham(1);
                 String imei = (String) cbbImei.getSelectedItem();
               ChiTietSP c = chiTietSPServices.seachbyMa(imei);
               chiTietSPServices.updateImeiTrangThai(imei,2);
-              QLBanHang.loadGioHang(c);
+              QLBanHangPanel.loadGioHang(c);
               HoaDonChiTiet hdct = new HoaDonChiTiet();
               HoaDon hd = null ;
               List<HoaDon> hoaDons = hoaDonServices.getALL();
@@ -177,7 +177,7 @@ public class Imei extends javax.swing.JFrame {
                   tongTienstr = String.valueOf(hdct1.getDonGia());
                   tongTien += Integer.parseInt(tongTienstr);    
         }
-              QLBanHang.loadTongTien(String.valueOf(tongTien));
+              QLBanHangPanel.loadTongTien(String.valueOf(tongTien));
               this.dispose();
     }//GEN-LAST:event_btnAddMousePressed
 
