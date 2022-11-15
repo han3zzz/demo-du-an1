@@ -26,6 +26,7 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -66,13 +67,13 @@ import static views.QLBanHang.tbGioHang;
  *
  * @author HANGOCHAN
  */
-public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, ThreadFactory{
+public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, ThreadFactory {
 
     /**
      * Creates new form QLBanHangPanel
      */
-     private WebcamPanel panel = null;
-    private Webcam webcam = null;
+    private WebcamPanel panel = null;
+    private static Webcam webcam = null;
     private Executor executor = Executors.newSingleThreadExecutor(this);
     private IChiTietSPServices services;
     private IHoaDonServices hoaDonServices;
@@ -80,9 +81,10 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
     private IChiTietSPServices chiTietSPServices;
     private INhanVienServices nhanVienServices;
     private IHoaDonChiTietServies hoaDonChiTietServies;
+
     public QLBanHangPanel() {
         initComponents();
-        
+
         initWebcam();
         services = new ChiTietSPServices();
         sanPhamServices = new QLSanPhamServices();
@@ -100,8 +102,15 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
         hienThiHoaDon();
         hienThiSanPham();
     }
-    
-     public HoaDon layTTHoaDon() throws ParseException {
+
+    public static void windowClosed() {
+        if (webcam == null) {
+            return;
+        }
+        webcam.close();
+    }
+
+    public HoaDon layTTHoaDon() throws ParseException {
         String maHD = txtMaHD.getText();
         String maNV = "hanzzz";
         String maKH = "KH001";
@@ -332,7 +341,9 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
                     continue;
                 }
             }
-
+            if (image == null) {
+                continue;
+            }
             LuminanceSource source = new BufferedImageLuminanceSource(image);
             BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
 
@@ -354,10 +365,10 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
                     JOptionPane.showMessageDialog(this, "Mã QRCode/BARCODE không khớp với sản phẩm nào !");
                     continue;
                 }
-                
+
                 String maHd = tbHoaDon.getValueAt(index, 0).toString();
                 ChiTietSP c1 = chiTietSPServices.seachbyMa(result.getText());
-                if (c1.getTrangThai()== 2) {
+                if (c1.getTrangThai() == 2) {
                     JOptionPane.showMessageDialog(this, "Imei này đã tồn tại trên Hóa đơn !");
                     continue;
                 }
@@ -549,6 +560,12 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
         btnThem4 = new keeptoo.KGradientPanel();
         btnClear = new javax.swing.JLabel();
 
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                formMouseExited(evt);
+            }
+        });
+
         banhang.setBackground(new java.awt.Color(255, 255, 255));
 
         tbGioHang.setModel(new javax.swing.table.DefaultTableModel(
@@ -578,6 +595,11 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
 
         jLabel1.setFont(new java.awt.Font("Bahnschrift", 3, 12)); // NOI18N
         jLabel1.setText("Quét với QR-CODE/BAR-CODE");
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel1MousePressed(evt);
+            }
+        });
 
         tbSanPham.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1007,14 +1029,18 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
         banhangLayout.setVerticalGroup(
             banhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(banhangLayout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addGroup(banhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6)
+                .addGroup(banhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(banhangLayout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, banhangLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel4)
+                        .addGap(0, 0, 0)))
                 .addGroup(banhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, banhangLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 43, Short.MAX_VALUE)
                         .addGroup(banhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel23)
                             .addComponent(txtMaHD, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1034,8 +1060,9 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(banhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, banhangLayout.createSequentialGroup()
+                            .addGap(0, 0, 0)
                             .addComponent(jLabel5)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGap(0, 0, 0)
                             .addComponent(jLabel6)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 637, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1107,7 +1134,7 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
                                 .addComponent(btnThem2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(btnThem3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(btnThem4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -1341,13 +1368,12 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
                         }
                         TaoHoaDonServices taoHoaDonServices = new TaoHoaDonServices();
                         JOptionPane.showMessageDialog(this, "In thành công !");
-                        
-                            try {
-                                taoHoaDonServices.taoHoaDon(maHD);
-                            } catch (IOException ex) {
-                                Logger.getLogger(QLBanHangPanel.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        
+
+                        try {
+                            taoHoaDonServices.taoHoaDon(maHD);
+                        } catch (IOException ex) {
+                            Logger.getLogger(QLBanHangPanel.class.getName()).log(Level.SEVERE, null, ex);
+                        }
 
                         return;
                     }
@@ -1461,6 +1487,15 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
     private void txtMaHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaHDActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMaHDActionPerformed
+
+    private void jLabel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MousePressed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_jLabel1MousePressed
+
+    private void formMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formMouseExited
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

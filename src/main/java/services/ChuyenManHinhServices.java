@@ -4,6 +4,8 @@
  */
 package services;
 
+import com.github.sarxos.webcam.Webcam;
+import com.github.sarxos.webcam.WebcamPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
@@ -21,7 +23,7 @@ import views.QLNhanVienPanel;
  * @author HANGOCHAN
  */
 public class ChuyenManHinhServices {
-
+    private Webcam webcam = null;
     private JPanel root;
     private String kinSelected;
 
@@ -79,6 +81,7 @@ public class ChuyenManHinhServices {
             switch (kind) {
                 case "sanpham":
                     node = new QLChiTietSanPhamPanel();
+                    
                     break;
                     case "doimatkhau":
                     node = new DoiMatKhauPanel();

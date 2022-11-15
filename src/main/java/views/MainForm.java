@@ -4,6 +4,8 @@
  */
 package views;
 
+import com.github.sarxos.webcam.Webcam;
+import com.github.sarxos.webcam.WebcamPanel;
 import domainmodels.BoNhoTrong;
 import domainmodels.ChiTietSP;
 import domainmodels.MauSac;
@@ -22,6 +24,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -56,6 +60,7 @@ public class MainForm extends javax.swing.JFrame {
     /**
      * Creates new form MainForm
      */
+    
     CardLayout cardLayout;
     CardLayout cl;
     CardLayout c2;
@@ -76,6 +81,7 @@ public class MainForm extends javax.swing.JFrame {
         listItems.add(new MenuServices("doimatkhau", doimatkhau, btnDoiMatKhau));
         listItems.add(new MenuServices("nhanvien", nhanvien, btnQLNhanVien));
         listItems.add(new MenuServices("banhang", banhang, btnQLBanHang));
+        
         chuyenManHinhServices.setEvent(listItems);
 
         cardLayout = (CardLayout) giaodien.getLayout();
@@ -156,6 +162,11 @@ public class MainForm extends javax.swing.JFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_users_30px.png"))); // NOI18N
         jLabel3.setText("Quản Lý Khách Hàng");
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel3MousePressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout kGradientPanel3Layout = new javax.swing.GroupLayout(kGradientPanel3);
         kGradientPanel3.setLayout(kGradientPanel3Layout);
@@ -253,6 +264,11 @@ public class MainForm extends javax.swing.JFrame {
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_purchase_order_30px.png"))); // NOI18N
         jLabel6.setText("Quản Lý Hóa Đơn");
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel6MousePressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout kGradientPanel15Layout = new javax.swing.GroupLayout(kGradientPanel15);
         kGradientPanel15.setLayout(kGradientPanel15Layout);
@@ -274,6 +290,11 @@ public class MainForm extends javax.swing.JFrame {
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_analytics_30px.png"))); // NOI18N
         jLabel7.setText("Thống Kê Doanh Thu");
+        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel7MousePressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout kGradientPanel16Layout = new javax.swing.GroupLayout(kGradientPanel16);
         kGradientPanel16.setLayout(kGradientPanel16Layout);
@@ -295,6 +316,11 @@ public class MainForm extends javax.swing.JFrame {
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_gift_card_30px_1.png"))); // NOI18N
         jLabel8.setText("Quản Lý Khuyến Mãi");
+        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel8MousePressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout kGradientPanel17Layout = new javax.swing.GroupLayout(kGradientPanel17);
         kGradientPanel17.setLayout(kGradientPanel17Layout);
@@ -316,6 +342,11 @@ public class MainForm extends javax.swing.JFrame {
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_refresh_barcode_30px.png"))); // NOI18N
         jLabel9.setText("Quản Lý Bảo Hành");
+        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel9MousePressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout kGradientPanel18Layout = new javax.swing.GroupLayout(kGradientPanel18);
         kGradientPanel18.setLayout(kGradientPanel18Layout);
@@ -569,6 +600,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void btnDangXuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDangXuatMouseClicked
         // TODO add your handling code here:
+         QLBanHangPanel.windowClosed();
         int check = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn đăng xuất ?");
         if (check != JOptionPane.YES_OPTION) {
             return;
@@ -582,7 +614,7 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here:
 //       new QLChiTietSanPham().setVisible(true);
 //       cardLayout.show(giaodien, "sanpham");
-      
+       QLBanHangPanel.windowClosed();
         
     }//GEN-LAST:event_btnQLSanPhamMousePressed
 
@@ -593,12 +625,38 @@ public class MainForm extends javax.swing.JFrame {
 
     private void btnQLNhanVienMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQLNhanVienMousePressed
         // TODO add your handling code here:
+        QLBanHangPanel.windowClosed();
     }//GEN-LAST:event_btnQLNhanVienMousePressed
 
     private void btnDoiMatKhauMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDoiMatKhauMousePressed
         // TODO add your handling code here:
-        
+         QLBanHangPanel.windowClosed();
     }//GEN-LAST:event_btnDoiMatKhauMousePressed
+
+    private void jLabel3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MousePressed
+        // TODO add your handling code here:
+         QLBanHangPanel.windowClosed();
+    }//GEN-LAST:event_jLabel3MousePressed
+
+    private void jLabel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MousePressed
+        // TODO add your handling code here:
+         QLBanHangPanel.windowClosed();
+    }//GEN-LAST:event_jLabel6MousePressed
+
+    private void jLabel7MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MousePressed
+        // TODO add your handling code here:
+         QLBanHangPanel.windowClosed();
+    }//GEN-LAST:event_jLabel7MousePressed
+
+    private void jLabel8MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MousePressed
+        // TODO add your handling code here:
+         QLBanHangPanel.windowClosed();
+    }//GEN-LAST:event_jLabel8MousePressed
+
+    private void jLabel9MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MousePressed
+        // TODO add your handling code here:
+         QLBanHangPanel.windowClosed();
+    }//GEN-LAST:event_jLabel9MousePressed
 
     /**
      * @param args the command line arguments
