@@ -1185,14 +1185,16 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
     private void tbSanPhamMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbSanPhamMousePressed
         // TODO add your handling code here:
         int check = tbHoaDon.getSelectedRow();
+       
+        
+        if (check == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn hóa đơn trước khi thêm sản phẩm !");
+            return;
+        } 
         String ma = tbHoaDon.getValueAt(check, 0).toString();
         HoaDon hoaDon = hoaDonServices.fill(ma);
         if (hoaDon.getTrangThai() == 2) {
             JOptionPane.showMessageDialog(this, "Hóa đơn này đã thanh toán !");
-            return;
-        }
-        if (check == -1) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn hóa đơn trước khi thêm sản phẩm !");
             return;
         }
         int index = tbSanPham.getSelectedRow();
