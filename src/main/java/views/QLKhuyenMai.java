@@ -112,7 +112,7 @@ public class QLKhuyenMai extends javax.swing.JFrame {
 
         txtnakm.setText(ma);
         txttenkm.setText(ten);
-        cbbtrietkhau.
+        
         txtngaybatdau.setDate(date);
         txtngayketthuc.setDate(ngayKT);
     }
