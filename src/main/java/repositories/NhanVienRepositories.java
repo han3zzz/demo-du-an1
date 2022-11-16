@@ -80,4 +80,14 @@ public class NhanVienRepositories {
         List<NhanVien> list = q.getResultList();
         return list.get(0);
     }
+    public void doiMatKhau(String maNV , String matKhau){
+        Session session = HibernateConfig.getFACTORY().openSession();
+        Transaction transaction = session.beginTransaction();
+        Query q = session.createQuery("UPDATE NhanVien SET MatKhau = :matkhau where MaNV = :ma");
+        q.setParameter("ma", maNV);
+        q.setParameter("matkhau", matKhau);
+        int index = q.executeUpdate();
+        transaction.commit();
+        session.close();
+    }
 }
