@@ -35,6 +35,7 @@ public class QLKhuyenMai extends javax.swing.JFrame {
         initComponents();
         khuyenMaiServices = new QLKhuyenMaiServices();
         load();
+        
 
     }
 
@@ -54,14 +55,22 @@ public class QLKhuyenMai extends javax.swing.JFrame {
                 khuyenMai.getTenKM(),
                 khuyenMai.getChietKhau(),
                 khuyenMai.getNgayBatDau(),
-                khuyenMai.getNgayKetThuc(),
-                khuyenMai.getNgayTao(),
-                khuyenMai.getNgaySua(),
+                khuyenMai.getNgayKetThuc(),                
                 trangThai
             };
             model.addRow(data);
 
         }
+
+    }
+    public void clear(){
+        txtnakm.setText("");
+        txttenkm.setText("");
+        cbbtrietkhau.setSelectedItem(10);
+        txtngaybatdau.setDate(null);
+        txtngayketthuc.setDate(null);
+        cbbtrangthai.setSelectedIndex(0);
+        
 
     }
 
@@ -413,6 +422,10 @@ public class QLKhuyenMai extends javax.swing.JFrame {
     }//GEN-LAST:event_tbbangMousePressed
 
     private void btnAddMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseExited
+        
+    }//GEN-LAST:event_btnAddMouseExited
+
+    private void btnAddMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMousePressed
         try {
             // TODO add your handling code here:
             if (txtnakm.getText().trim().isEmpty() || txttenkm.getText().trim().isEmpty() || txtngaybatdau.getDate() == null || txtngayketthuc.getDate() == null) {
@@ -434,46 +447,50 @@ public class QLKhuyenMai extends javax.swing.JFrame {
         } catch (ParseException ex) {
             Logger.getLogger(QLKhuyenMai.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_btnAddMouseExited
-
-    private void btnAddMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMousePressed
-
     }//GEN-LAST:event_btnAddMousePressed
 
     private void btnResetMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnResetMousePressed
-        String ma = txtnakm.getText();
-        KhuyenMai n = khuyenMaiServices.seachbyMa(ma);
-        if (ma.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Nhập mã trước khi tìm kiếm !");
-            load();
-            return;
-        }
-        if (n == null) {
-            JOptionPane.showMessageDialog(this, "Không có dữ liệu !");
-            return;
-        }
+//        String ma = txtnakm.getText();
+//        KhuyenMai n = khuyenMaiServices.seachbyMa(ma);
+//        if (ma.trim().isEmpty()) {
+//            JOptionPane.showMessageDialog(this, "Nhập mã trước khi tìm kiếm !");
+//            load();
+//            return;
+//        }
+//        if (n == null) {
+//            JOptionPane.showMessageDialog(this, "Không có dữ liệu !");
+//            return;
+//        }
+//
+//        DefaultTableModel model = (DefaultTableModel) tbbang.getModel();
+//        model.setRowCount(0);
+//        if (n.getTrangThai() == 0) {
+//            JOptionPane.showMessageDialog(this, "Tìm thành công !");
+//           
+//            Object[] data = new Object[]{
+//                n.getMaKM(),
+//                n.getTenKM(),
+//                n.getChietKhau(),
+//                n.getNgayBatDau(),
+//                n.getNgayKetThuc(),
+//                n.getTrangThai()
+//            };
+//            model.addRow(data);
+//        } else {
+//            JOptionPane.showMessageDialog(this, "Không có dữ liệu !");
+//            return;
+//
+//        }
+clear();
 
-        DefaultTableModel model = (DefaultTableModel) tbbang.getModel();
-        model.setRowCount(0);
-        if (n.getTrangThai() == 0) {
-            JOptionPane.showMessageDialog(this, "Tìm thành công !");
-            Object[] data = new Object[]{
-                n.getMaKM(),
-                n.getTenKM(),
-                n.getChietKhau(),
-                n.getNgayBatDau(),
-                n.getNgayKetThuc(),
-                n.getTrangThai()
-            };
-            model.addRow(data);
-        } else {
-            JOptionPane.showMessageDialog(this, "Không có dữ liệu !");
 
-        }
+
+
     }//GEN-LAST:event_btnResetMousePressed
 
     private void btnDeleteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMousePressed
         try {
+            KhuyenMai khuyenMai = LayTT();
             int index = tbbang.getSelectedRow();
             if (index == -1) {
                 JOptionPane.showMessageDialog(this, "Vui lòng chọn mã cần xoá ");
@@ -488,7 +505,7 @@ public class QLKhuyenMai extends javax.swing.JFrame {
             if (xacNhan != JOptionPane.YES_OPTION) {
                 return;
             }
-            KhuyenMai khuyenMai = LayTT();
+            
             if (khuyenMaiServices.delete(khuyenMai)) {
                 JOptionPane.showMessageDialog(this, "Xoá Thành Công");
                 load();
