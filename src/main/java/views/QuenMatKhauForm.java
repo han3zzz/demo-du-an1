@@ -5,6 +5,7 @@
 package views;
 
 import javax.swing.JOptionPane;
+import services.QuenMatKhauServices;
 
 /**
  *
@@ -15,8 +16,11 @@ public class QuenMatKhauForm extends javax.swing.JFrame {
     /**
      * Creates new form QuenMatKhauForm
      */
+    private QuenMatKhauServices services;
     public QuenMatKhauForm() {
         initComponents();
+        
+        services = new QuenMatKhauServices();
     }
 
     /**
@@ -85,10 +89,10 @@ public class QuenMatKhauForm extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(61, 61, 61)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(31, 31, 31)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(txtMa, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtEmail, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -138,7 +142,18 @@ public class QuenMatKhauForm extends javax.swing.JFrame {
 
     private void btnQuenMatKhauMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQuenMatKhauMousePressed
         // TODO add your handling code here:
-
+        
+        String ma = txtMa.getText();
+        String email = txtEmail.getText();
+        if (services.checkTonTai(email, ma) == false) {
+            JOptionPane.showMessageDialog(this, "Tài khoản hoặc email không đúng");
+            
+        }
+        else{
+            services.capNhatPass(ma);
+            services.guiMail(ma, email);
+            JOptionPane.showMessageDialog(this, "Đã gửi mật khẩu mới về mail");
+        }
         
     }//GEN-LAST:event_btnQuenMatKhauMousePressed
 
