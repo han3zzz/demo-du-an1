@@ -154,6 +154,7 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
         if (hd1.getTrangThai() == 0) {
             btnThanhToan.setEnabled(true);
             btnHuy.setEnabled(true);
+            btnIn.setEnabled(false);
         }
         List<HoaDonChiTiet> list = hoaDonChiTietServies.getALL(ma);
         List<ChiTietSP> chiTietSPs = chiTietSPServices.getImei();
@@ -1461,7 +1462,10 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
 
     private void btnInMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInMousePressed
         try {
-
+            if (btnIn.isEnabled() == false) {
+                JOptionPane.showMessageDialog(this, "Hóa đơn này chưa thanh toán !");
+                return;
+            }
             // TODO add your handling code here:
             int index = tbHoaDon.getSelectedRow();
             if (index == -1) {

@@ -78,8 +78,11 @@ public class QLNhanVienPanel extends javax.swing.JPanel {
         String matKhau = txtMatKhau.getText();
         String vaiTroString = (String) cbbVaiTro.getSelectedItem();
         Integer vaiTro = 0;
-        if (!vaiTroString.equalsIgnoreCase("Quản Lý")) {
-            vaiTro = 1;
+        if (vaiTroString.equalsIgnoreCase("Quản Lý")) {
+            vaiTro = 0;
+        }
+        else{
+            vaiTro = 1 ;
         }
         AnhService anhService = new AnhService();
         String anh = anhService.getAnh();
@@ -134,11 +137,11 @@ public class QLNhanVienPanel extends javax.swing.JPanel {
         } else {
             nv.setMatKhau(a.HashPassword(matKhau));
         }
-        NhanVien nhanVien = services.seachbyMa(ma);
-        if (!nhanVien.getAnh().equals(anh)) {
-            nv.setAnh(anh);
+        NhanVien nv1 = services.fill(ma);
+        if (anh == null) {
+            nv.setAnh(nv1.getAnh());
         } else {
-            nv.setAnh(nhanVien.getAnh());
+            nv.setAnh(anh);
         }
         nv.setVaiTro(vaiTro);
 

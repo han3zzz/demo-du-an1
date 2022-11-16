@@ -14,6 +14,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.math.BigDecimal;
 import java.util.List;
 import static org.apache.poi.hssf.usermodel.HeaderFooter.file;
 import repositories.HoaDonChiTietRepositories;
@@ -29,7 +30,7 @@ public class TaoHoaDonServices {
         HoaDon hd = hdr.fill(maHD);
         HoaDonChiTietRepositories hoaDonChiTietRepositories = new HoaDonChiTietRepositories();
         List<HoaDonChiTiet> services = hoaDonChiTietRepositories.getALL(maHD);
-       String patch =  "D:\\PRO1041\\hoadon\\"+maHD+".txt" ;
+       String patch =  "D:\\PRO1041\\hoadon\\"+maHD+".pdf" ;
         File file = new File(patch);
         OutputStream outputStream = new FileOutputStream(file);
         OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
@@ -38,9 +39,10 @@ public class TaoHoaDonServices {
         outputStreamWriter.write("                            48 Ngo 99 Cau Dien , HN                          \n");
         outputStreamWriter.write("------------------------------------------------------------------------------\n");
         outputStreamWriter.write("                             Hoa Don Thanh Toan                             \n");
+        outputStreamWriter.write("------------------------------------------------------------------------------\n");
         outputStreamWriter.write("                                                                            \n");
         outputStreamWriter.write("                                                                            \n");
-        outputStreamWriter.write("  Ma HD      : " +hd.getMaHD() +                        "                   \n");
+        outputStreamWriter.write("  Hoa don      : " +hd.getMaHD() +                        "                   \n");
         outputStreamWriter.write("  Ngay ban   : " +hd.getNgaySua()+                        "                   \n");
         outputStreamWriter.write("  Nhan vien  : " +hd.getNhanVien().getMaNV()+           "                   \n");
         outputStreamWriter.write("  Khach hang : " +hd.getKhachHang().getTenKH()+         "                   \n");
@@ -60,6 +62,7 @@ public class TaoHoaDonServices {
         outputStreamWriter.write("-----------------------------------------------------------------------------\n");
         outputStreamWriter.write("                                                 Tong tien : " +hd.getTongTien()+" \n");
         outputStreamWriter.write("                                                 Giam gia : " +hd.getGiamGia()+"   \n");
+        outputStreamWriter.write("                                                 Thanh tien : " +hd.getGiamGia().subtract(hd.getGiamGia())+"   \n");
         outputStreamWriter.write("                                                                            \n");
         outputStreamWriter.write("                                                                            \n");
         outputStreamWriter.write("                      ----Cam on va hen gap lai !----                       \n");
