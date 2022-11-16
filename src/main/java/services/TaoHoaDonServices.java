@@ -30,22 +30,24 @@ public class TaoHoaDonServices {
         HoaDon hd = hdr.fill(maHD);
         HoaDonChiTietRepositories hoaDonChiTietRepositories = new HoaDonChiTietRepositories();
         List<HoaDonChiTiet> services = hoaDonChiTietRepositories.getALL(maHD);
-       String patch =  "D:\\PRO1041\\hoadon\\"+maHD+".pdf" ;
+       String patch =  "D:\\PRO1041\\hoadon\\"+maHD+".txt" ;
         File file = new File(patch);
         OutputStream outputStream = new FileOutputStream(file);
         OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
-        outputStreamWriter.write("------------------------------------------------------------------------------\n");
-        outputStreamWriter.write("                                  F-Phone                                     \n");
+        outputStreamWriter.write("-----------|----------------------------------------------------------|-------\n");
+        outputStreamWriter.write("                                  F-PHONE                                     \n");
         outputStreamWriter.write("                            48 Ngo 99 Cau Dien , HN                          \n");
         outputStreamWriter.write("------------------------------------------------------------------------------\n");
-        outputStreamWriter.write("                             Hoa Don Thanh Toan                             \n");
+        outputStreamWriter.write("                                                                            \n");
+        outputStreamWriter.write("                            ***Hoa Don Thanh Toan***                            \n");
+        outputStreamWriter.write("                                                                            \n");
         outputStreamWriter.write("------------------------------------------------------------------------------\n");
         outputStreamWriter.write("                                                                            \n");
         outputStreamWriter.write("                                                                            \n");
-        outputStreamWriter.write("  Hoa don      : " +hd.getMaHD() +                        "                   \n");
-        outputStreamWriter.write("  Ngay ban   : " +hd.getNgaySua()+                        "                   \n");
-        outputStreamWriter.write("  Nhan vien  : " +hd.getNhanVien().getMaNV()+           "                   \n");
-        outputStreamWriter.write("  Khach hang : " +hd.getKhachHang().getTenKH()+         "                   \n");
+        outputStreamWriter.write("  Hoa don      : " +hd.getMaHD() +                        "                  \n");
+        outputStreamWriter.write("  Ngay ban     : " +hd.getNgaySua()+                        "                 \n");
+        outputStreamWriter.write("  Nhan vien    : " +hd.getNhanVien().getMaNV()+           "                   \n");
+        outputStreamWriter.write("  Khach hang   : " +hd.getKhachHang().getTenKH()+         "                   \n");
         outputStreamWriter.write("-----------------------------------------------------------------------------\n");
         outputStreamWriter.write("                                                                            \n");
         outputStreamWriter.write("                                                                            \n");
@@ -54,20 +56,23 @@ public class TaoHoaDonServices {
         outputStreamWriter.write("                                                                            \n");
         for (HoaDonChiTiet service : services) {
         outputStreamWriter.write(""+service.getMaImei().getSanPham().getTenSP() +"                            \n"); 
-        outputStreamWriter.write("                        "+ service.getMaImei().getMaImei() +"              1        " + service.getDonGia()+ " \n");    
+        outputStreamWriter.write("                        "+ service.getMaImei().getMaImei() +"              1        " + service.getDonGia()+ " \n");
+         outputStreamWriter.write("                                                                            \n");
+        outputStreamWriter.write("-----------------------------------------------------------------------------\n");
         }
         outputStreamWriter.write("                                                                            \n");
         outputStreamWriter.write("                                                                            \n");
+        outputStreamWriter.write("                                                 Tong tien  : " +hd.getTongTien()+" \n");
+        outputStreamWriter.write("                                                 Giam gia   : " +hd.getGiamGia()+"   \n");
+        outputStreamWriter.write("                                                 Thanh tien : " +hd.getTongTien().subtract(hd.getGiamGia())+"   \n");
+        outputStreamWriter.write("                                                                            \n");
+        outputStreamWriter.write("                                                                            \n");
         outputStreamWriter.write("                                                                            \n");
         outputStreamWriter.write("-----------------------------------------------------------------------------\n");
-        outputStreamWriter.write("                                                 Tong tien : " +hd.getTongTien()+" \n");
-        outputStreamWriter.write("                                                 Giam gia : " +hd.getGiamGia()+"   \n");
-        outputStreamWriter.write("                                                 Thanh tien : " +hd.getGiamGia().subtract(hd.getGiamGia())+"   \n");
-        outputStreamWriter.write("                                                                            \n");
         outputStreamWriter.write("                                                                            \n");
         outputStreamWriter.write("                      ----Cam on va hen gap lai !----                       \n");
         outputStreamWriter.write("                                                                            \n");
-        outputStreamWriter.write("-----------------------------------------------------------------------------\n");
+        outputStreamWriter.write("-----------|----------------------------------------------------------|------\n");
         outputStreamWriter.flush();
     }
        
