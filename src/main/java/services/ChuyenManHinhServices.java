@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import views.DoiMatKhauPanel;
 import views.QLBanHangPanel;
 import views.QLChiTietSanPhamPanel;
+import views.QLKhuyenMaiPanel;
 import views.QLNhanVienPanel;
 
 /**
@@ -91,6 +92,9 @@ public class ChuyenManHinhServices {
                     break;
                     case "banhang":
                     node = new QLBanHangPanel();
+                    break;
+                    case "khuyenmai":
+                    node = new QLKhuyenMaiPanel();
                     break;
                 default:
 //                    node = new QLChiTietSanPhamPanel();

@@ -81,6 +81,7 @@ public class MainForm extends javax.swing.JFrame {
         listItems.add(new MenuServices("doimatkhau", doimatkhau, btnDoiMatKhau));
         listItems.add(new MenuServices("nhanvien", nhanvien, btnQLNhanVien));
         listItems.add(new MenuServices("banhang", banhang, btnQLBanHang));
+        listItems.add(new MenuServices("khuyenmai", khuyenmai, btnQLKhuyenMai));
         
         chuyenManHinhServices.setEvent(listItems);
 
@@ -122,7 +123,7 @@ public class MainForm extends javax.swing.JFrame {
         kGradientPanel16 = new keeptoo.KGradientPanel();
         jLabel7 = new javax.swing.JLabel();
         kGradientPanel17 = new keeptoo.KGradientPanel();
-        jLabel8 = new javax.swing.JLabel();
+        btnQLKhuyenMai = new javax.swing.JLabel();
         kGradientPanel18 = new keeptoo.KGradientPanel();
         jLabel9 = new javax.swing.JLabel();
         kGradientPanel19 = new keeptoo.KGradientPanel();
@@ -138,6 +139,7 @@ public class MainForm extends javax.swing.JFrame {
         doimatkhau = new javax.swing.JPanel();
         nhanvien = new javax.swing.JPanel();
         banhang = new javax.swing.JPanel();
+        khuyenmai = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -311,14 +313,14 @@ public class MainForm extends javax.swing.JFrame {
         kGradientPanel17.setkGradientFocus(300);
         kGradientPanel17.setkStartColor(new java.awt.Color(204, 204, 0));
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_gift_card_30px_1.png"))); // NOI18N
-        jLabel8.setText("Quản Lý Khuyến Mãi");
-        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnQLKhuyenMai.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnQLKhuyenMai.setForeground(new java.awt.Color(255, 255, 255));
+        btnQLKhuyenMai.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnQLKhuyenMai.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_gift_card_30px_1.png"))); // NOI18N
+        btnQLKhuyenMai.setText("Quản Lý Khuyến Mãi");
+        btnQLKhuyenMai.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel8MousePressed(evt);
+                btnQLKhuyenMaiMousePressed(evt);
             }
         });
 
@@ -326,11 +328,11 @@ public class MainForm extends javax.swing.JFrame {
         kGradientPanel17.setLayout(kGradientPanel17Layout);
         kGradientPanel17Layout.setHorizontalGroup(
             kGradientPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnQLKhuyenMai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         kGradientPanel17Layout.setVerticalGroup(
             kGradientPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+            .addComponent(btnQLKhuyenMai, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
         );
 
         kGradientPanel18.setkEndColor(new java.awt.Color(204, 102, 0));
@@ -562,6 +564,21 @@ public class MainForm extends javax.swing.JFrame {
 
         giaodien.add(banhang, "banhang");
 
+        khuyenmai.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout khuyenmaiLayout = new javax.swing.GroupLayout(khuyenmai);
+        khuyenmai.setLayout(khuyenmaiLayout);
+        khuyenmaiLayout.setHorizontalGroup(
+            khuyenmaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1260, Short.MAX_VALUE)
+        );
+        khuyenmaiLayout.setVerticalGroup(
+            khuyenmaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 781, Short.MAX_VALUE)
+        );
+
+        giaodien.add(khuyenmai, "khuyenmai");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -648,10 +665,10 @@ public class MainForm extends javax.swing.JFrame {
          QLBanHangPanel.windowClosed();
     }//GEN-LAST:event_jLabel7MousePressed
 
-    private void jLabel8MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MousePressed
+    private void btnQLKhuyenMaiMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQLKhuyenMaiMousePressed
         // TODO add your handling code here:
          QLBanHangPanel.windowClosed();
-    }//GEN-LAST:event_jLabel8MousePressed
+    }//GEN-LAST:event_btnQLKhuyenMaiMousePressed
 
     private void jLabel9MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MousePressed
         // TODO add your handling code here:
@@ -698,6 +715,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JLabel btnDangXuat;
     private javax.swing.JLabel btnDoiMatKhau;
     private javax.swing.JLabel btnQLBanHang;
+    private javax.swing.JLabel btnQLKhuyenMai;
     private javax.swing.JLabel btnQLNhanVien;
     private javax.swing.JLabel btnQLSanPham;
     private javax.swing.JPanel doimatkhau;
@@ -707,7 +725,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private keeptoo.KGradientPanel kGradientPanel1;
@@ -721,6 +738,7 @@ public class MainForm extends javax.swing.JFrame {
     private keeptoo.KGradientPanel kGradientPanel20;
     private keeptoo.KGradientPanel kGradientPanel3;
     private keeptoo.KGradientPanel kGradientPanel4;
+    private javax.swing.JPanel khuyenmai;
     private javax.swing.JLabel lbChao;
     private javax.swing.JLabel lbChucVu;
     private javax.swing.JPanel main;
