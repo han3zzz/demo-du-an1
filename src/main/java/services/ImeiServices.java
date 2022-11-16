@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class ImeiServices {
     public static List<String> list ;
-
+    public static List<String> listXoa ;
     public static List<String> getList() {
         return list;
     }
@@ -20,6 +20,15 @@ public class ImeiServices {
     public static void setList(List<String> list) {
         ImeiServices.list = list;
     }
+
+    public static List<String> getListXoa() {
+        return listXoa;
+    }
+
+    public static void setListXoa(List<String> listXoa) {
+        ImeiServices.listXoa = listXoa;
+    }
+    
     
     
 }

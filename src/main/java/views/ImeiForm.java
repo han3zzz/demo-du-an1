@@ -325,8 +325,12 @@ public class ImeiForm extends javax.swing.JFrame {
             return;
         }
         List<String> list = new ArrayList();
-        list.removeAll(list);
+        
         DefaultTableModel model = (DefaultTableModel) tbImei.getModel();
+        List<String> listXoa = new ArrayList();
+        String imei = tbImei.getValueAt(index, 0).toString();
+        listXoa.add(imei);
+        services.setListXoa(listXoa);
         model.removeRow(index);
         loadSoLuong();
         for (int i = 0; i < tbImei.getRowCount(); i++) {
