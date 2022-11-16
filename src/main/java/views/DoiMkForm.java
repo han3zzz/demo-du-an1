@@ -144,11 +144,11 @@ public class DoiMkForm extends javax.swing.JFrame {
         String NhapLai = txtNhapLai.getText();
         
         if(DoiMkSv.CheckTonTai(MkCu, ma) == false){
-            JOptionPane.showMessageDialog(this, "Mật Khẩu Cũ Chưa Chính Xác");
+            JOptionPane.showMessageDialog(this, "Mật Khẩu Cũ Chưa Giống Nhau");
             return;
         }
         if(!MkMoi.equals(NhapLai)){
-            JOptionPane.showMessageDialog(this, "Mật Khâu Mới Chưa Chính Xác");
+            JOptionPane.showMessageDialog(this, "Mật Khâu Mới Chưa Khớp ! Nhập Lại Mật Khẩu Mới");
             return;
         }
         DoiMkSv.DoiMk(ma, MkMoi);
