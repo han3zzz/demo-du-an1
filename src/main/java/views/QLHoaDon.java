@@ -230,25 +230,7 @@ public class QLHoaDon extends javax.swing.JFrame {
             model.addRow(data);
         }
 
-//
-//            DefaultTableModel model = (DefaultTableModel) tbHoaDon.getModel();
-//            model.setRowCount(0);
-//            List<HoaDon> hoaDons = hoaDonService.layAllHoaDon();
-//            List<NhanVien> nhanViens = nhanVienService.layAllNhanVien();
-//            List<KhachHang> khachHangs = khachHangService.layAllKhachHang();
-//            String tenKhachHang = "";
-//            String tenNhanVien = "";
-//            for (HoaDon hoaDon : hoaDons) {
-//                for (KhachHang khachHang : khachHangs) {
-//                    if (hoaDon.getMaKhachHang().equals(khachHang.getMaKhachHang())) {
-//                        tenKhachHang = khachHang.getTenKhachHang();
-//                    }
-//                }
-//                for (NhanVien nhanVien : nhanViens) {
-//                    if (hoaDon.getMaNhanVien().equals(nhanVien.getMaNhanVien())) {
-//                        tenNhanVien = nhanVien.getTenNhanVien();
-//                    }
-//                }
+
 
     }//GEN-LAST:event_tbHoaDonMouseClicked
 
@@ -306,19 +288,7 @@ public class QLHoaDon extends javax.swing.JFrame {
 //                        tenNhanVien = nhanVien.getTenNhanVien();
 //                    }
 //                }
-//                Object[] data = new Object[]{
-//                    hoaDon.getMaHoaDon(),
-//                    tenNhanVien,
-//                    tenKhachHang,
-//                    hoaDon.getNgayTao(),
-//                    hoaDon.getTongTien(),
-//                    hoaDon.getTrangThai()
-//                };
-//                model.addRow(data);
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(QLHoaDonChiTiet.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+
     }//GEN-LAST:event_tbHoaDonChiTietMouseClicked
 
     /**
