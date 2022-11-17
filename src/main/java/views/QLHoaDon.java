@@ -10,9 +10,15 @@ import domainmodels.HoaDonChiTiet;
 import domainmodels.KhachHang;
 import domainmodels.NhanVien;
 import domainmodels.SanPham;
+import java.awt.Component;
+import java.awt.Image;
 import java.math.BigDecimal;
 import java.util.List;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import services.ChiTietSPServices;
 import services.HoaDonChiTietServices;
 import services.HoaDonServices;
@@ -59,7 +65,7 @@ public class QLHoaDon extends javax.swing.JFrame {
     }
 
     public void loadHoaDonChiTiet() {
-
+        tbHoaDonChiTiet.getColumn("Ảnh").setCellRenderer(new myTableCellRender());
         DefaultTableModel model = (DefaultTableModel) tbHoaDon.getModel();
         model.setRowCount(0);
         List<HoaDon> hoaDons = hoaDonServices.getALL();
@@ -93,6 +99,16 @@ public class QLHoaDon extends javax.swing.JFrame {
             };
             model.addRow(data);
 
+        }
+    }
+
+    class myTableCellRender implements TableCellRenderer {
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            tbHoaDonChiTiet.setRowHeight(70);
+
+            return (Component) value;
         }
     }
 
@@ -216,20 +232,23 @@ public class QLHoaDon extends javax.swing.JFrame {
         List<ChiTietSPViewModels> chiTietSPs = chiTietSPServices.getALL();
         String anh = "";
         for (HoaDonChiTiet hdct : hdcts) {
+            JLabel label = new JLabel();
             for (ChiTietSPViewModels chiTietSP : chiTietSPs) {
                 if (chiTietSP.getAnh().equals(hdct.getMaImei().getAnh())) {
-                    anh = chiTietSP.getAnh();
+                    ImageIcon icon = new ImageIcon(chiTietSP.getAnh());
+                    Image img = icon.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+                    label.setIcon(new ImageIcon(img));
                 }
             }
+
             Object[] data = new Object[]{
-                anh,
-                hdct.getMaImei(),
+                label,
+                hdct.getMaImei().getMaImei(),
                 hdct.getSoLuong(),
                 hdct.getDonGia()
             };
             model.addRow(data);
         }
-
 
 
     }//GEN-LAST:event_tbHoaDonMouseClicked
