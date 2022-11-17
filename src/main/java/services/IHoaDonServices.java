@@ -20,6 +20,9 @@ public interface IHoaDonServices {
     public boolean delete(String ma);
     public HoaDon seachbyMa(String ma);
     public HoaDon fill(String maHD);
-    public void themHD(String maHD , Date ngayMua , Date ngayTao , String maNV , String maKH ,Integer trangThai);
-    public void suaHD(String maHD , Date ngaySua ,String ghiChu , BigDecimal tongTien , BigDecimal giamGia ,Integer trangThai);
+//    public void themHD(String maHD , Date ngayMua , Date ngayTao , String maNV , String maKH ,Integer trangThai);
+    public void suaHD(String maHD ,String ghiChu , BigDecimal tongTien , BigDecimal giamGia ,Integer trangThai ,String makm);
+    public void updateNgaySua(Date ngaySua,String maHD);
+    public void updateNgayTT(Date ngayTT,String maHD);
+    public HoaDon layMa();
 }

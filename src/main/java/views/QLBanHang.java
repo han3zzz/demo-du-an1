@@ -1166,7 +1166,7 @@ public class QLBanHang extends javax.swing.JFrame implements Runnable, ThreadFac
             Double giamGiadb = Double.parseDouble(txtGiamGia.getText());
             BigDecimal giamgia = BigDecimal.valueOf(giamGiadb);
 
-            hoaDonServices.suaHD(maHD, date, ghiChu, tongTien, giamgia, 2);
+//            hoaDonServices.suaHD(maHD, ghiChu, tongTien, giamgia, 2);
 
             HoaDonChiTiet hdct = new HoaDonChiTiet();
             String imei = "";
@@ -1251,7 +1251,7 @@ public class QLBanHang extends javax.swing.JFrame implements Runnable, ThreadFac
             ZonedDateTime now = ZonedDateTime.now();
             String ngayTao = dtf.format(now);
             Date date = new SimpleDateFormat("MM-dd-yyyy").parse(ngayTao);
-            hoaDonServices.suaHD(maHD, date, ghiChu, BigDecimal.valueOf(0), BigDecimal.valueOf(0), 1);
+//            hoaDonServices.suaHD(maHD, ghiChu, BigDecimal.valueOf(0), BigDecimal.valueOf(0), 1);
             for (int i = 0; i < rowGioHang; i++) {
                 String imei = tbGioHang.getValueAt(i, 2).toString();
                 hoaDonChiTietServies.delete(imei, maHD);

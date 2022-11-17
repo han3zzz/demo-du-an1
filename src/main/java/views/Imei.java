@@ -7,7 +7,14 @@ package views;
 import domainmodels.ChiTietSP;
 import domainmodels.HoaDon;
 import domainmodels.HoaDonChiTiet;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import services.ChiTietSPServices;
 import services.GetImeiByMaSPServices;
@@ -144,41 +151,49 @@ public class Imei extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddMouseClicked
 
     private void btnAddMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMousePressed
+        try {
             GetImeiByMaSPServices getImeiByMaSPServices = new GetImeiByMaSPServices();
-              QLBanHangPanel.loadSoLuongSanPham(1);
-                String imei = (String) cbbImei.getSelectedItem();
-              ChiTietSP c = chiTietSPServices.seachbyMa(imei);
-              chiTietSPServices.updateImeiTrangThai(imei,2);
-              QLBanHangPanel.loadGioHang(c);
-              HoaDonChiTiet hdct = new HoaDonChiTiet();
-              HoaDon hd = null ;
-              List<HoaDon> hoaDons = hoaDonServices.getALL();
-              for (HoaDon hoaDon : hoaDons) {
-                  if (hoaDon.getMaHD().equals(getImeiByMaSPServices.getMaHD())) {
-                      hd = hoaDon;
-                  }
+            QLBanHangPanel.loadSoLuongSanPham(1);
+            String imei = (String) cbbImei.getSelectedItem();
+            ChiTietSP c = chiTietSPServices.seachbyMa(imei);
+            chiTietSPServices.updateImeiTrangThai(imei,2);
+            QLBanHangPanel.loadGioHang(c);
+            HoaDonChiTiet hdct = new HoaDonChiTiet();
+            HoaDon hd = null ;
+            List<HoaDon> hoaDons = hoaDonServices.getALL();
+            for (HoaDon hoaDon : hoaDons) {
+                if (hoaDon.getMaHD().equals(getImeiByMaSPServices.getMaHD())) {
+                    hd = hoaDon;
+                }
+            }
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+            ZonedDateTime now = ZonedDateTime.now();
+            Date date = new SimpleDateFormat("MM-dd-yyyy").parse(dtf.format(now));
+            hoaDonServices.updateNgaySua(date, hd.getMaHD());
+            ChiTietSP chiTietSP = null ;
+            List<ChiTietSP> chiTietSPs = chiTietSPServices.getImei();
+            for (ChiTietSP chiTietSP1 : chiTietSPs) {
+                if (chiTietSP1.getMaImei().equals(imei)) {
+                    chiTietSP = chiTietSP1;
+                }
+            }
+            hdct.setMaHD(hd);
+            hdct.setMaImei(chiTietSP);
+            hdct.setSoLuong(1);
+            hdct.setDonGia(c.getGiaBan());
+            hoaDonChiTietServies.add(hdct);
+            Integer tongTien = 0 ;
+            String tongTienstr = "";
+            List<HoaDonChiTiet> hdcts = hoaDonChiTietServies.getALL(getImeiByMaSPServices.getMaHD());
+            for (HoaDonChiTiet hdct1 : hdcts) {
+                tongTienstr = String.valueOf(hdct1.getDonGia());
+                tongTien += Integer.parseInt(tongTienstr);
+            }
+            QLBanHangPanel.loadTongTien(String.valueOf(tongTien));
+            this.dispose();
+        } catch (ParseException ex) {
+            Logger.getLogger(Imei.class.getName()).log(Level.SEVERE, null, ex);
         }
-              ChiTietSP chiTietSP = null ;
-              List<ChiTietSP> chiTietSPs = chiTietSPServices.getImei();
-              for (ChiTietSP chiTietSP1 : chiTietSPs) {
-                  if (chiTietSP1.getMaImei().equals(imei)) {
-                      chiTietSP = chiTietSP1;
-                  }
-        }
-              hdct.setMaHD(hd);
-              hdct.setMaImei(chiTietSP);
-              hdct.setSoLuong(1);
-              hdct.setDonGia(c.getGiaBan());
-              hoaDonChiTietServies.add(hdct);
-              Integer tongTien = 0 ;
-              String tongTienstr = "";
-              List<HoaDonChiTiet> hdcts = hoaDonChiTietServies.getALL(getImeiByMaSPServices.getMaHD());
-              for (HoaDonChiTiet hdct1 : hdcts) {
-                  tongTienstr = String.valueOf(hdct1.getDonGia());
-                  tongTien += Integer.parseInt(tongTienstr);    
-        }
-              QLBanHangPanel.loadTongTien(String.valueOf(tongTien));
-              this.dispose();
     }//GEN-LAST:event_btnAddMousePressed
 
     /**

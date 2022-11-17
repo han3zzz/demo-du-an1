@@ -4,6 +4,10 @@
  */
 package views;
 
+import javax.swing.JOptionPane;
+import services.DoiMkSevice;
+import services.PhanQuyenServices;
+
 /**
  *
  * @author HANGOCHAN
@@ -13,10 +17,15 @@ public class DoiMatKhauPanel extends javax.swing.JPanel {
     /**
      * Creates new form DoiMatKhauPanel
      */
+    private DoiMkSevice DoiMkSv =  new DoiMkSevice();
     public DoiMatKhauPanel() {
         initComponents();
     }
-
+    public void clear(){
+        txtMkCu.setText("");
+        txtMkMoi.setText("");
+        txtNhapLai.setText("");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,27 +36,103 @@ public class DoiMatKhauPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        txtMkCu = new javax.swing.JPasswordField();
+        jLabel3 = new javax.swing.JLabel();
+        txtMkMoi = new javax.swing.JPasswordField();
+        jLabel4 = new javax.swing.JLabel();
+        txtNhapLai = new javax.swing.JPasswordField();
+        kGradientPanel17 = new keeptoo.KGradientPanel();
+        btnQuenMk = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel1.setText("doi mat khau");
+        jLabel2.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
+        jLabel2.setText("Nhập mật khẩu cũ");
+
+        jLabel3.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
+        jLabel3.setText("Nhập mật khẩu mới");
+
+        jLabel4.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
+        jLabel4.setText("Nhập lại mật khẩu mới");
+
+        txtNhapLai.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNhapLaiActionPerformed(evt);
+            }
+        });
+
+        btnQuenMk.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnQuenMk.setForeground(new java.awt.Color(255, 255, 255));
+        btnQuenMk.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnQuenMk.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_update_30px.png"))); // NOI18N
+        btnQuenMk.setText("Đổi Mật Khẩu");
+        btnQuenMk.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnQuenMkMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnQuenMkMousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout kGradientPanel17Layout = new javax.swing.GroupLayout(kGradientPanel17);
+        kGradientPanel17.setLayout(kGradientPanel17Layout);
+        kGradientPanel17Layout.setHorizontalGroup(
+            kGradientPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnQuenMk, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+        );
+        kGradientPanel17Layout.setVerticalGroup(
+            kGradientPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnQuenMk, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(166, 166, 166)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(279, Short.MAX_VALUE))
+                .addGap(285, 285, 285)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel2))
+                        .addGap(45, 45, 45)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtMkCu, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtMkMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNhapLai, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(kGradientPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39)))
+                .addContainerGap(437, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(194, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(75, 75, 75))
+                .addContainerGap(268, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(jLabel2)
+                        .addGap(15, 15, 15))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtMkCu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtMkMoi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(3, 3, 3))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtNhapLai, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(31, 31, 31)
+                .addComponent(kGradientPanel17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(222, 222, 222))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -62,9 +147,45 @@ public class DoiMatKhauPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnQuenMkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQuenMkMouseClicked
+
+    }//GEN-LAST:event_btnQuenMkMouseClicked
+
+    private void btnQuenMkMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQuenMkMousePressed
+        // TODO add your handling code here:
+        PhanQuyenServices PQ = new PhanQuyenServices();
+                String ma = PQ.getMa();
+        String MkCu = txtMkCu.getText();
+        String MkMoi = txtMkMoi.getText();
+        String NhapLai = txtNhapLai.getText();
+
+        if(DoiMkSv.CheckTonTai(MkCu, ma) == false){
+            JOptionPane.showMessageDialog(this, "Mật khẩu cũ chưa chính xác !");
+            return;
+        }
+        if(!MkMoi.equals(NhapLai)){
+            JOptionPane.showMessageDialog(this, "Mật khẩu mới và Nhập lại mật khẩu mới chưa giống nhau !");
+            return;
+        }
+        DoiMkSv.DoiMk(ma, MkMoi);
+        JOptionPane.showMessageDialog(this, "Đổi mật khẩu thành công !");
+        clear();
+    }//GEN-LAST:event_btnQuenMkMousePressed
+
+    private void txtNhapLaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNhapLaiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNhapLaiActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel btnQuenMk;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private keeptoo.KGradientPanel kGradientPanel17;
+    private javax.swing.JPasswordField txtMkCu;
+    private javax.swing.JPasswordField txtMkMoi;
+    private javax.swing.JPasswordField txtNhapLai;
     // End of variables declaration//GEN-END:variables
 }

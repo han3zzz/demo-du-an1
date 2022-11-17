@@ -82,6 +82,7 @@ public class MainForm extends javax.swing.JFrame {
         listItems.add(new MenuServices("nhanvien", nhanvien, btnQLNhanVien));
         listItems.add(new MenuServices("banhang", banhang, btnQLBanHang));
         listItems.add(new MenuServices("khuyenmai", khuyenmai, btnQLKhuyenMai));
+        listItems.add(new MenuServices("khachhang", khachhang, btnKhachHang));
         
         chuyenManHinhServices.setEvent(listItems);
 
@@ -111,7 +112,7 @@ public class MainForm extends javax.swing.JFrame {
         kGradientPanel1 = new keeptoo.KGradientPanel();
         jLabel1 = new javax.swing.JLabel();
         kGradientPanel3 = new keeptoo.KGradientPanel();
-        jLabel3 = new javax.swing.JLabel();
+        btnKhachHang = new javax.swing.JLabel();
         kGradientPanel4 = new keeptoo.KGradientPanel();
         btnQLSanPham = new javax.swing.JLabel();
         kGradientPanel12 = new keeptoo.KGradientPanel();
@@ -140,6 +141,7 @@ public class MainForm extends javax.swing.JFrame {
         nhanvien = new javax.swing.JPanel();
         banhang = new javax.swing.JPanel();
         khuyenmai = new javax.swing.JPanel();
+        khachhang = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -159,14 +161,14 @@ public class MainForm extends javax.swing.JFrame {
         kGradientPanel3.setkGradientFocus(300);
         kGradientPanel3.setkStartColor(new java.awt.Color(204, 204, 0));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_users_30px.png"))); // NOI18N
-        jLabel3.setText("Quản Lý Khách Hàng");
-        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnKhachHang.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnKhachHang.setForeground(new java.awt.Color(255, 255, 255));
+        btnKhachHang.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnKhachHang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_users_30px.png"))); // NOI18N
+        btnKhachHang.setText("Quản Lý Khách Hàng");
+        btnKhachHang.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel3MousePressed(evt);
+                btnKhachHangMousePressed(evt);
             }
         });
 
@@ -176,12 +178,12 @@ public class MainForm extends javax.swing.JFrame {
             kGradientPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(kGradientPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
+                .addComponent(btnKhachHang, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
                 .addContainerGap())
         );
         kGradientPanel3Layout.setVerticalGroup(
             kGradientPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+            .addComponent(btnKhachHang, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
         );
 
         kGradientPanel4.setkEndColor(new java.awt.Color(204, 102, 0));
@@ -245,6 +247,11 @@ public class MainForm extends javax.swing.JFrame {
         btnQLBanHang.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnQLBanHang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_click_&_collect_30px.png"))); // NOI18N
         btnQLBanHang.setText("Quản Lý Bán Hàng");
+        btnQLBanHang.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnQLBanHangMousePressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout kGradientPanel14Layout = new javax.swing.GroupLayout(kGradientPanel14);
         kGradientPanel14.setLayout(kGradientPanel14Layout);
@@ -579,6 +586,21 @@ public class MainForm extends javax.swing.JFrame {
 
         giaodien.add(khuyenmai, "khuyenmai");
 
+        khachhang.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout khachhangLayout = new javax.swing.GroupLayout(khachhang);
+        khachhang.setLayout(khachhangLayout);
+        khachhangLayout.setHorizontalGroup(
+            khachhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1260, Short.MAX_VALUE)
+        );
+        khachhangLayout.setVerticalGroup(
+            khachhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 781, Short.MAX_VALUE)
+        );
+
+        giaodien.add(khachhang, "khachhang");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -650,10 +672,10 @@ public class MainForm extends javax.swing.JFrame {
          QLBanHangPanel.windowClosed();
     }//GEN-LAST:event_btnDoiMatKhauMousePressed
 
-    private void jLabel3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MousePressed
+    private void btnKhachHangMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnKhachHangMousePressed
         // TODO add your handling code here:
          QLBanHangPanel.windowClosed();
-    }//GEN-LAST:event_jLabel3MousePressed
+    }//GEN-LAST:event_btnKhachHangMousePressed
 
     private void jLabel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MousePressed
         // TODO add your handling code here:
@@ -674,6 +696,13 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here:
          QLBanHangPanel.windowClosed();
     }//GEN-LAST:event_jLabel9MousePressed
+
+    private void btnQLBanHangMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQLBanHangMousePressed
+        // TODO add your handling code here:
+             QLBanHangPanel.windowClosed();
+            
+        
+    }//GEN-LAST:event_btnQLBanHangMousePressed
 
     /**
      * @param args the command line arguments
@@ -714,6 +743,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JPanel banhang;
     private javax.swing.JLabel btnDangXuat;
     private javax.swing.JLabel btnDoiMatKhau;
+    private javax.swing.JLabel btnKhachHang;
     private javax.swing.JLabel btnQLBanHang;
     private javax.swing.JLabel btnQLKhuyenMai;
     private javax.swing.JLabel btnQLNhanVien;
@@ -722,7 +752,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JPanel giaodien;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
@@ -738,6 +767,7 @@ public class MainForm extends javax.swing.JFrame {
     private keeptoo.KGradientPanel kGradientPanel20;
     private keeptoo.KGradientPanel kGradientPanel3;
     private keeptoo.KGradientPanel kGradientPanel4;
+    private javax.swing.JPanel khachhang;
     private javax.swing.JPanel khuyenmai;
     private javax.swing.JLabel lbChao;
     private javax.swing.JLabel lbChucVu;

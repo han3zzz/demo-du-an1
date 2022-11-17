@@ -22,6 +22,10 @@ public class QuenMatKhauForm extends javax.swing.JFrame {
         
         services = new QuenMatKhauServices();
     }
+    public void clear(){
+        txtMa.setText("");
+        txtEmail.setText("");
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -41,7 +45,7 @@ public class QuenMatKhauForm extends javax.swing.JFrame {
         kGradientPanel2 = new keeptoo.KGradientPanel();
         btnQuenMatKhau = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -134,6 +138,7 @@ public class QuenMatKhauForm extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnQuenMatKhauMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQuenMatKhauMouseClicked
@@ -153,6 +158,7 @@ public class QuenMatKhauForm extends javax.swing.JFrame {
             services.capNhatPass(ma);
             services.guiMail(ma, email);
             JOptionPane.showMessageDialog(this, "Đã gửi mật khẩu mới về mail");
+            clear();
         }
         
     }//GEN-LAST:event_btnQuenMatKhauMousePressed

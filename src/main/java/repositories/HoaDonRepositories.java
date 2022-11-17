@@ -38,34 +38,55 @@ public class HoaDonRepositories {
             return false;
         }
     }
-    public void themHD(String maHD , Date ngayMua , Date ngayTao , String maNV , String maKH ,Integer trangThai){
+//    public void themHD(String maHD , Date ngayMua , Date ngayTao , String maNV , String maKH ,Integer trangThai){
+//        Session session = HibernateConfig.getFACTORY().openSession();
+//        Transaction transaction = session.beginTransaction();
+//        Query q = session.createQuery("Insert into ChiTietSP(MaHD,NgayMua,NgayTao,MaNV,MaKH,TrangThai) values (:mahd,:ngaymua,:ngaytao,:manv,:makh,:trangthai)");
+//        q.setParameter("mahd", maHD);
+//        q.setParameter("ngaymua", ngayMua);
+//        q.setParameter("ngaytao", ngayTao);
+//        q.setParameter("manv", maNV);
+//        q.setParameter("makh", maKH);
+//        q.setParameter("trangthai", trangThai);
+//        int index = q.executeUpdate();
+//        transaction.commit();
+//        session.close();
+//        
+//    }
+    public void suaHD(String maHD ,String ghiChu , BigDecimal tongTien , BigDecimal giamGia ,Integer trangThai , String maKM){
         Session session = HibernateConfig.getFACTORY().openSession();
         Transaction transaction = session.beginTransaction();
-        Query q = session.createQuery("Insert into ChiTietSP(MaHD,NgayMua,NgayTao,MaNV,MaKH,TrangThai) values (:mahd,:ngaymua,:ngaytao,:manv,:makh,:trangthai)");
-        q.setParameter("mahd", maHD);
-        q.setParameter("ngaymua", ngayMua);
-        q.setParameter("ngaytao", ngayTao);
-        q.setParameter("manv", maNV);
-        q.setParameter("makh", maKH);
-        q.setParameter("trangthai", trangThai);
-        int index = q.executeUpdate();
-        transaction.commit();
-        session.close();
-        
-    }
-    public void suaHD(String maHD , Date ngaySua ,String ghiChu , BigDecimal tongTien , BigDecimal giamGia ,Integer trangThai){
-        Session session = HibernateConfig.getFACTORY().openSession();
-        Transaction transaction = session.beginTransaction();
-        Query q = session.createQuery("UPDATE HoaDon SET GhiChu = :ghichu , TongTien = :tongtien , GiamGia = :giamgia , TrangThai = :trangThai where MaHD = :mahd");
+        Query q = session.createQuery("UPDATE HoaDon SET GhiChu = :ghichu , TongTien = :tongtien , GiamGia = :giamgia , TrangThai = :trangThai , MaKM = :makm where MaHD = :mahd");
         q.setParameter("mahd", maHD);
         q.setParameter("ghichu", ghiChu);
         q.setParameter("tongtien", tongTien);
         q.setParameter("giamgia", giamGia);
         q.setParameter("trangThai", trangThai);
+        q.setParameter("makm", maKM);
         int index = q.executeUpdate();
         transaction.commit();
         session.close();
         
+    }
+    public void updateNgaySua(Date ngaySua,String maHD){
+        Session session = HibernateConfig.getFACTORY().openSession();
+        Transaction transaction = session.beginTransaction();
+        Query q = session.createQuery("UPDATE HoaDon SET NgaySua = :ngaysua where MaHD = :mahd");
+        q.setParameter("ngaysua", ngaySua);
+        q.setParameter("mahd", maHD);
+        int index = q.executeUpdate();
+        transaction.commit();
+        session.close();
+    }
+    public void updateNgayTT(Date ngaymua,String maHD){
+        Session session = HibernateConfig.getFACTORY().openSession();
+        Transaction transaction = session.beginTransaction();
+        Query q = session.createQuery("UPDATE HoaDon SET NgayMua = :ngaysua where MaHD = :mahd");
+        q.setParameter("ngaysua", ngaymua);
+        q.setParameter("mahd", maHD);
+        int index = q.executeUpdate();
+        transaction.commit();
+        session.close();
     }
     public boolean update(HoaDon hoaDon){
         Transaction transaction = null;
@@ -111,4 +132,11 @@ public class HoaDonRepositories {
         List<HoaDon> list = q.getResultList();
         return list.get(0);
     }
+    public HoaDon layMa(){
+        Session session = HibernateConfig.getFACTORY().openSession();
+        Query q = session.createQuery("From HoaDon where MaHD in (Select 'HD'+ Cast(Max(Cast(SUBSTRING(MaHD,3,Len(MaHD) - 2) as int)) as string) from HoaDon)");
+        List<HoaDon> list = q.getResultList();
+        return  list.get(0);
+    }
+    
 }

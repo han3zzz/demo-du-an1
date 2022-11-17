@@ -51,13 +51,28 @@ public class HoaDonServices implements IHoaDonServices{
         return hdr.fill(maHD);
     }
 
+//    @Override
+//    public void themHD(String maHD, Date ngayMua, Date ngayTao, String maNV, String maKH, Integer trangThai) {
+//         hdr.themHD(maHD, ngayMua, ngayTao, maNV, maKH, trangThai);
+//    }
+
     @Override
-    public void themHD(String maHD, Date ngayMua, Date ngayTao, String maNV, String maKH, Integer trangThai) {
-         hdr.themHD(maHD, ngayMua, ngayTao, maNV, maKH, trangThai);
+    public void suaHD(String maHD, String ghiChu, BigDecimal tongTien, BigDecimal giamGia, Integer trangThai ,String makm) {
+        hdr.suaHD(maHD, ghiChu, tongTien, giamGia, trangThai , makm);
     }
 
     @Override
-    public void suaHD(String maHD, Date ngaySua, String ghiChu, BigDecimal tongTien, BigDecimal giamGia, Integer trangThai) {
-        hdr.suaHD(maHD, ngaySua, ghiChu, tongTien, giamGia, trangThai);
+    public void updateNgaySua(Date ngaySua, String maHD) {
+        hdr.updateNgaySua(ngaySua, maHD);
+    }
+
+    @Override
+    public void updateNgayTT(Date ngayTT, String maHD) {
+        hdr.updateNgayTT(ngayTT, maHD);
+    }
+
+    @Override
+    public HoaDon layMa() {
+        return hdr.layMa();
     }
 }
