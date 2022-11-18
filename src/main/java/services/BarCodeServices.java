@@ -17,7 +17,7 @@ import java.nio.file.Paths;
 public class BarCodeServices {
     public void taoBarCode(String imei){
         try {
-            String patch = "Desktop\\"+imei+".jpg";
+            String patch = "D:\\"+imei+".jpg";
             Code128Writer writer = new Code128Writer();
             BitMatrix matrix = writer.encode(imei, BarcodeFormat.CODE_128, 1500, 700);
             
