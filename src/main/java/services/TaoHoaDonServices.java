@@ -34,7 +34,7 @@ public class TaoHoaDonServices {
         String sdf = new SimpleDateFormat("dd/MM/yyyy").format(date);
         HoaDonChiTietRepositories hoaDonChiTietRepositories = new HoaDonChiTietRepositories();
         List<HoaDonChiTiet> services = hoaDonChiTietRepositories.getALL(maHD);
-       String patch =  "D:\\"+maHD+".txt" ;
+       String patch =  "D:\\PRO1041\\barcode"+maHD+".txt" ;
         File file = new File(patch);
         OutputStream outputStream = new FileOutputStream(file);
         OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
