@@ -537,7 +537,7 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
                     tongTien += Integer.parseInt(tongTienstr);
                 }
                 txtTongTien.setText(String.valueOf(tongTien));
-
+                txtTienThanhToan.setText(String.valueOf(tongTien));
                 hienThiSanPham();
 
             }
