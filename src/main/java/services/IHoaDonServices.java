@@ -25,4 +25,6 @@ public interface IHoaDonServices {
     public void updateNgaySua(Date ngaySua,String maHD);
     public void updateNgayTT(Date ngayTT,String maHD);
     public HoaDon layMa();
+    public List<HoaDon> countHoaDontheoNgay(Integer trangThai , Date ngay);
+    public List<HoaDon> countHoaDon(Integer trangThai);
 }

@@ -75,4 +75,14 @@ public class HoaDonServices implements IHoaDonServices{
     public HoaDon layMa() {
         return hdr.layMa();
     }
+
+    @Override
+    public List<HoaDon> countHoaDontheoNgay(Integer trangThai, Date ngay) {
+        return hdr.countHoaDontheoNgay(trangThai, ngay);
+    }
+
+    @Override
+    public List<HoaDon> countHoaDon(Integer trangThai) {
+        return  hdr.countHoaDon(trangThai);
+    }
 }

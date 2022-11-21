@@ -354,12 +354,14 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
         List<HoaDon> hoaDons = hoaDonServices.getALL();
 
         for (HoaDon hoaDon : hoaDons) {
-            Object[] data = new Object[]{
-                hoaDon.getMaHD()
-            };
+            if (hoaDon.getTrangThai() == 0) {
+                Object[] data = new Object[]{
+                    hoaDon.getMaHD()
+                };
 
-            model.addRow(data);
-            changeTable(tbHoaDon, 0);
+                model.addRow(data);
+                changeTable(tbHoaDon, 0);
+            }
 
         }
 
@@ -623,8 +625,6 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
         jLabel3 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         tbHoaDon = new javax.swing.JTable();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -756,7 +756,7 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
                 {null}
             },
             new String [] {
-                "Hóa Đơn"
+                "Hóa Đơn Treo"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -778,14 +778,6 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
             }
         });
         jScrollPane4.setViewportView(tbHoaDon);
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_green_square_20px.png"))); // NOI18N
-        jLabel4.setText("Đã thanh toán");
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_red_square_20px.png"))); // NOI18N
-        jLabel5.setText("Đã hủy");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_blue_square_20px.png"))); // NOI18N
@@ -1137,23 +1129,16 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
                                 .addComponent(txtMaHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(banhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0))
         );
         banhangLayout.setVerticalGroup(
             banhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(banhangLayout.createSequentialGroup()
-                .addGroup(banhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(banhangLayout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, banhangLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel4)))
+                .addGap(42, 42, 42)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
                 .addGroup(banhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, banhangLayout.createSequentialGroup()
                         .addGap(0, 45, Short.MAX_VALUE)
@@ -1176,8 +1161,7 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(banhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, banhangLayout.createSequentialGroup()
-                            .addComponent(jLabel5)
-                            .addGap(0, 0, 0)
+                            .addGap(20, 20, 20)
                             .addComponent(jLabel6)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 637, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1492,6 +1476,10 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
                 JOptionPane.showMessageDialog(this, "Tiền khách đưa phải là số nguyên dương!");
                 return;
             }
+            if (txtTienKhachDua.getText().length() > 10) {
+                JOptionPane.showMessageDialog(this, "Tiền khách đưa phải nhỏ hơn 9999999999 !");
+                return;
+            }
             Integer tienKhachDua = Integer.parseInt(txtTienKhachDua.getText());
             if (tienKhachDua < 0) {
                 JOptionPane.showMessageDialog(this, "Tiền khách đưa phải lớn hơn hoặc bằng 0 !");
@@ -1791,8 +1779,6 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;

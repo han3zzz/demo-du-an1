@@ -19,6 +19,7 @@ import views.QLChiTietSanPhamPanel;
 import views.QLKhachHangPanel;
 import views.QLKhuyenMaiPanel;
 import views.QLNhanVienPanel;
+import views.QLThongKePanel;
 
 /**
  *
@@ -99,6 +100,9 @@ public class ChuyenManHinhServices {
                     break;
                     case "khachhang":
                     node = new QLKhachHangPanel();
+                    break;
+                    case "thongke":
+                    node = new QLThongKePanel();
                     break;
                 default:
 //                    node = new QLChiTietSanPhamPanel();

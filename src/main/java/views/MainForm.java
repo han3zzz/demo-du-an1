@@ -60,7 +60,6 @@ public class MainForm extends javax.swing.JFrame {
     /**
      * Creates new form MainForm
      */
-    
     CardLayout cardLayout;
     CardLayout cl;
     CardLayout c2;
@@ -69,34 +68,67 @@ public class MainForm extends javax.swing.JFrame {
     private IQLBoNhoTrongServices boNhoTrongServices;
     private IChiTietSPServices chiTietSPServices;
     private ChuyenManHinhServices chuyenManHinhServices;
+    private PhanQuyenServices pqs;
 
     public MainForm() {
         initComponents();
 
         setTitle("Hệ Thống Bán Điện Thoại");
-        chuyenManHinhServices = new ChuyenManHinhServices(main);
-//        chuyenManHinhServices.setView(sanpham, btnQLSanPham);
-        List<MenuServices> listItems = new ArrayList<>();
-        listItems.add(new MenuServices("sanpham", sanpham, btnQLSanPham));
-        listItems.add(new MenuServices("doimatkhau", doimatkhau, btnDoiMatKhau));
-        listItems.add(new MenuServices("nhanvien", nhanvien, btnQLNhanVien));
-        listItems.add(new MenuServices("banhang", banhang, btnQLBanHang));
-        listItems.add(new MenuServices("khuyenmai", khuyenmai, btnQLKhuyenMai));
-        listItems.add(new MenuServices("khachhang", khachhang, btnKhachHang));
-        
-        chuyenManHinhServices.setEvent(listItems);
 
+        pqs = new PhanQuyenServices();
         cardLayout = (CardLayout) giaodien.getLayout();
-        PhanQuyenServices pqs = new PhanQuyenServices();
+
         lbChao.setText("Xin chào : " + pqs.getHoTen());
         String chucVu = "";
         if (pqs.getVaiTro() == 0) {
             chucVu = "Quản lý";
+
         } else {
             chucVu = "Nhân viên";
+            btnQLNhanVien.setEnabled(false);
+            btnQLSanPham.setEnabled(false);
+            btnThongKe.setEnabled(false);
+            btnQLKhuyenMai.setEnabled(false);
         }
         lbChucVu.setText("Chức vụ : " + chucVu);
+        chuyenManHinhServices = new ChuyenManHinhServices(main);
+//        chuyenManHinhServices.setView(sanpham, btnQLSanPham);
+        List<MenuServices> listItems = new ArrayList<>();
+        if (pqs.getVaiTro() == 0) {
+            listItems.add(new MenuServices("sanpham", sanpham, btnQLSanPham));
+            listItems.add(new MenuServices("doimatkhau", doimatkhau, btnDoiMatKhau));
+            listItems.add(new MenuServices("nhanvien", nhanvien, btnQLNhanVien));
+            listItems.add(new MenuServices("banhang", banhang, btnQLBanHang));
+            listItems.add(new MenuServices("khuyenmai", khuyenmai, btnQLKhuyenMai));
+            listItems.add(new MenuServices("khachhang", khachhang, btnKhachHang));
+            listItems.add(new MenuServices("thongke", thongke, btnThongKe));
+        } else {
+            btnQLNhanVien.setEnabled(false);
+            btnQLSanPham.setEnabled(false);
+            btnThongKe.setEnabled(false);
+            btnQLKhuyenMai.setEnabled(false);
+            listItems.add(new MenuServices("doimatkhau", doimatkhau, btnDoiMatKhau));
+            listItems.add(new MenuServices("banhang", banhang, btnQLBanHang));
+            listItems.add(new MenuServices("khachhang", khachhang, btnKhachHang));
+        }
 
+        chuyenManHinhServices.setEvent(listItems);
+        pqs = new PhanQuyenServices();
+        cardLayout = (CardLayout) giaodien.getLayout();
+
+//        lbChao.setText("Xin chào : " + pqs.getHoTen());
+//        String chucVu = "";
+//        if (pqs.getVaiTro() == 0) {
+//            chucVu = "Quản lý";
+//
+//        } else {
+//            chucVu = "Nhân viên";
+//            btnQLNhanVien.setEnabled(false);
+//            btnQLSanPham.setEnabled(false);
+//            btnThongKe.setEnabled(false);
+//            btnQLKhuyenMai.setEnabled(false);
+//        }
+//        lbChucVu.setText("Chức vụ : " + chucVu);
     }
 
     /**
@@ -122,7 +154,7 @@ public class MainForm extends javax.swing.JFrame {
         kGradientPanel15 = new keeptoo.KGradientPanel();
         jLabel6 = new javax.swing.JLabel();
         kGradientPanel16 = new keeptoo.KGradientPanel();
-        jLabel7 = new javax.swing.JLabel();
+        btnThongKe = new javax.swing.JLabel();
         kGradientPanel17 = new keeptoo.KGradientPanel();
         btnQLKhuyenMai = new javax.swing.JLabel();
         kGradientPanel18 = new keeptoo.KGradientPanel();
@@ -142,6 +174,7 @@ public class MainForm extends javax.swing.JFrame {
         banhang = new javax.swing.JPanel();
         khuyenmai = new javax.swing.JPanel();
         khachhang = new javax.swing.JPanel();
+        thongke = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -294,14 +327,14 @@ public class MainForm extends javax.swing.JFrame {
         kGradientPanel16.setkGradientFocus(300);
         kGradientPanel16.setkStartColor(new java.awt.Color(204, 204, 0));
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 17)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_analytics_30px.png"))); // NOI18N
-        jLabel7.setText("Thống Kê Doanh Thu");
-        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnThongKe.setFont(new java.awt.Font("Segoe UI", 1, 17)); // NOI18N
+        btnThongKe.setForeground(new java.awt.Color(255, 255, 255));
+        btnThongKe.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnThongKe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_analytics_30px.png"))); // NOI18N
+        btnThongKe.setText("Thống Kê Doanh Thu");
+        btnThongKe.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel7MousePressed(evt);
+                btnThongKeMousePressed(evt);
             }
         });
 
@@ -309,11 +342,11 @@ public class MainForm extends javax.swing.JFrame {
         kGradientPanel16.setLayout(kGradientPanel16Layout);
         kGradientPanel16Layout.setHorizontalGroup(
             kGradientPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnThongKe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         kGradientPanel16Layout.setVerticalGroup(
             kGradientPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+            .addComponent(btnThongKe, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
         );
 
         kGradientPanel17.setkEndColor(new java.awt.Color(204, 102, 0));
@@ -601,6 +634,21 @@ public class MainForm extends javax.swing.JFrame {
 
         giaodien.add(khachhang, "khachhang");
 
+        thongke.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout thongkeLayout = new javax.swing.GroupLayout(thongke);
+        thongke.setLayout(thongkeLayout);
+        thongkeLayout.setHorizontalGroup(
+            thongkeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1260, Short.MAX_VALUE)
+        );
+        thongkeLayout.setVerticalGroup(
+            thongkeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 781, Short.MAX_VALUE)
+        );
+
+        giaodien.add(thongke, "thongke");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -639,7 +687,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void btnDangXuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDangXuatMouseClicked
         // TODO add your handling code here:
-         QLBanHangPanel.windowClosed();
+        QLBanHangPanel.windowClosed();
         int check = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn đăng xuất ?");
         if (check != JOptionPane.YES_OPTION) {
             return;
@@ -653,8 +701,12 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here:
 //       new QLChiTietSanPham().setVisible(true);
 //       cardLayout.show(giaodien, "sanpham");
-       QLBanHangPanel.windowClosed();
-        
+
+        QLBanHangPanel.windowClosed();
+        if (btnQLSanPham.isEnabled() == false) {
+            JOptionPane.showMessageDialog(this, "Bạn không có quyền sử dụng chức năng này !");
+            return;
+        }
     }//GEN-LAST:event_btnQLSanPhamMousePressed
 
     private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
@@ -665,43 +717,55 @@ public class MainForm extends javax.swing.JFrame {
     private void btnQLNhanVienMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQLNhanVienMousePressed
         // TODO add your handling code here:
         QLBanHangPanel.windowClosed();
+        if (btnQLNhanVien.isEnabled() == false) {
+            JOptionPane.showMessageDialog(this, "Bạn không có quyền sử dụng chức năng này !");
+            return;
+        }
     }//GEN-LAST:event_btnQLNhanVienMousePressed
 
     private void btnDoiMatKhauMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDoiMatKhauMousePressed
         // TODO add your handling code here:
-         QLBanHangPanel.windowClosed();
+        QLBanHangPanel.windowClosed();
     }//GEN-LAST:event_btnDoiMatKhauMousePressed
 
     private void btnKhachHangMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnKhachHangMousePressed
         // TODO add your handling code here:
-         QLBanHangPanel.windowClosed();
+        QLBanHangPanel.windowClosed();
     }//GEN-LAST:event_btnKhachHangMousePressed
 
     private void jLabel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MousePressed
         // TODO add your handling code here:
-         QLBanHangPanel.windowClosed();
+        QLBanHangPanel.windowClosed();
     }//GEN-LAST:event_jLabel6MousePressed
 
-    private void jLabel7MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MousePressed
+    private void btnThongKeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThongKeMousePressed
         // TODO add your handling code here:
-         QLBanHangPanel.windowClosed();
-    }//GEN-LAST:event_jLabel7MousePressed
+        QLBanHangPanel.windowClosed();
+        if (btnThongKe.isEnabled() == false) {
+            JOptionPane.showMessageDialog(this, "Bạn không có quyền sử dụng chức năng này !");
+            return;
+        }
+    }//GEN-LAST:event_btnThongKeMousePressed
 
     private void btnQLKhuyenMaiMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQLKhuyenMaiMousePressed
         // TODO add your handling code here:
-         QLBanHangPanel.windowClosed();
+        QLBanHangPanel.windowClosed();
+        if (btnQLKhuyenMai.isEnabled() == false) {
+            JOptionPane.showMessageDialog(this, "Bạn không có quyền sử dụng chức năng này !");
+            return;
+        }
     }//GEN-LAST:event_btnQLKhuyenMaiMousePressed
 
     private void jLabel9MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MousePressed
         // TODO add your handling code here:
-         QLBanHangPanel.windowClosed();
+        QLBanHangPanel.windowClosed();
     }//GEN-LAST:event_jLabel9MousePressed
 
     private void btnQLBanHangMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQLBanHangMousePressed
         // TODO add your handling code here:
-             QLBanHangPanel.windowClosed();
-            
-        
+        QLBanHangPanel.windowClosed();
+
+
     }//GEN-LAST:event_btnQLBanHangMousePressed
 
     /**
@@ -748,12 +812,12 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JLabel btnQLKhuyenMai;
     private javax.swing.JLabel btnQLNhanVien;
     private javax.swing.JLabel btnQLSanPham;
+    private javax.swing.JLabel btnThongKe;
     private javax.swing.JPanel doimatkhau;
     private javax.swing.JPanel giaodien;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private keeptoo.KGradientPanel kGradientPanel1;
@@ -774,5 +838,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JPanel main;
     private javax.swing.JPanel nhanvien;
     private javax.swing.JPanel sanpham;
+    private javax.swing.JPanel thongke;
     // End of variables declaration//GEN-END:variables
 }

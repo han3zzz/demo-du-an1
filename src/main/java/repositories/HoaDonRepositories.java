@@ -18,21 +18,23 @@ import utilities.HibernateConfig;
  * @author HANGOCHAN
  */
 public class HoaDonRepositories {
-    public List<HoaDon> getALL(){
+
+    public List<HoaDon> getALL() {
         Session session = HibernateConfig.getFACTORY().openSession();
         Query q = session.createQuery("From HoaDon");
         List<HoaDon> list = q.getResultList();
         return list;
     }
-    public boolean add(HoaDon m){
-        
-        Transaction transaction = null ;
-        try (Session s = HibernateConfig.getFACTORY().openSession()){
+
+    public boolean add(HoaDon m) {
+
+        Transaction transaction = null;
+        try ( Session s = HibernateConfig.getFACTORY().openSession()) {
             transaction = s.beginTransaction();
             s.save(m);
             transaction.commit();
             return true;
-            
+
         } catch (Exception e) {
             transaction.rollback();
             return false;
@@ -53,7 +55,8 @@ public class HoaDonRepositories {
 //        session.close();
 //        
 //    }
-    public void suaHD(String maHD ,String ghiChu , BigDecimal tongTien , BigDecimal giamGia ,Integer trangThai , String maKM){
+
+    public void suaHD(String maHD, String ghiChu, BigDecimal tongTien, BigDecimal giamGia, Integer trangThai, String maKM) {
         Session session = HibernateConfig.getFACTORY().openSession();
         Transaction transaction = session.beginTransaction();
         Query q = session.createQuery("UPDATE HoaDon SET GhiChu = :ghichu , TongTien = :tongtien , GiamGia = :giamgia , TrangThai = :trangThai , MaKM = :makm where MaHD = :mahd");
@@ -66,9 +69,10 @@ public class HoaDonRepositories {
         int index = q.executeUpdate();
         transaction.commit();
         session.close();
-        
+
     }
-    public void updateNgaySua(Date ngaySua,String maHD){
+
+    public void updateNgaySua(Date ngaySua, String maHD) {
         Session session = HibernateConfig.getFACTORY().openSession();
         Transaction transaction = session.beginTransaction();
         Query q = session.createQuery("UPDATE HoaDon SET NgaySua = :ngaysua where MaHD = :mahd");
@@ -78,7 +82,8 @@ public class HoaDonRepositories {
         transaction.commit();
         session.close();
     }
-    public void updateNgayTT(Date ngaymua,String maHD){
+
+    public void updateNgayTT(Date ngaymua, String maHD) {
         Session session = HibernateConfig.getFACTORY().openSession();
         Transaction transaction = session.beginTransaction();
         Query q = session.createQuery("UPDATE HoaDon SET NgayMua = :ngaysua where MaHD = :mahd");
@@ -88,34 +93,37 @@ public class HoaDonRepositories {
         transaction.commit();
         session.close();
     }
-    public boolean update(HoaDon hoaDon){
+
+    public boolean update(HoaDon hoaDon) {
         Transaction transaction = null;
-        try(Session s = HibernateConfig.getFACTORY().openSession()){
-            transaction= s.beginTransaction();
+        try ( Session s = HibernateConfig.getFACTORY().openSession()) {
+            transaction = s.beginTransaction();
             s.update(hoaDon);
             transaction.commit();
             return true;
-        }catch(Exception e){
+        } catch (Exception e) {
             transaction.rollback();
             return false;
         }
     }
-    public boolean delete(String ma){
+
+    public boolean delete(String ma) {
         Transaction transaction = null;
-        try(Session s = HibernateConfig.getFACTORY().openSession()){
+        try ( Session s = HibernateConfig.getFACTORY().openSession()) {
             HoaDon nv = s.get(HoaDon.class, ma);
             nv.setTrangThai(1);
-            transaction= s.beginTransaction();
+            transaction = s.beginTransaction();
             s.update(nv);
             transaction.commit();
             return true;
-        }catch(Exception e){
+        } catch (Exception e) {
             transaction.rollback();
             return false;
         }
-        
+
     }
-    public HoaDon seachbyMa(String ma){
+
+    public HoaDon seachbyMa(String ma) {
         Session session = HibernateConfig.getFACTORY().openSession();
         Query q = session.createQuery("From HoaDon where MaHD = :ma");
         q.setParameter("ma", ma);
@@ -125,18 +133,38 @@ public class HoaDonRepositories {
         }
         return list.get(0);
     }
-    public HoaDon fill(String ma){
+
+    public HoaDon fill(String ma) {
         Session session = HibernateConfig.getFACTORY().openSession();
         Query q = session.createQuery("From HoaDon where MaHD = :masp");
         q.setParameter("masp", ma);
         List<HoaDon> list = q.getResultList();
         return list.get(0);
     }
-    public HoaDon layMa(){
+
+    public HoaDon layMa() {
         Session session = HibernateConfig.getFACTORY().openSession();
         Query q = session.createQuery("From HoaDon where MaHD in (Select 'HD'+ Cast(Max(Cast(SUBSTRING(MaHD,3,Len(MaHD) - 2) as int)) as string) from HoaDon)");
         List<HoaDon> list = q.getResultList();
-        return  list.get(0);
+        return list.get(0);
     }
-    
+
+    public List<HoaDon> countHoaDontheoNgay(Integer trangThai, Date ngay) {
+        Session session = HibernateConfig.getFACTORY().openSession();
+        Query q = session.createQuery("From HoaDon where TrangThai = :trangthai and NgayMua = :ngaymua");
+        q.setParameter("trangthai", trangThai);
+        q.setParameter("ngaymua", ngay);
+        List<HoaDon> list = q.getResultList();
+        return list;
+    }
+    public List<HoaDon> countHoaDon(Integer trangThai) {
+        Session session = HibernateConfig.getFACTORY().openSession();
+        Query q = session.createQuery("From HoaDon where TrangThai = :trangthai");
+        q.setParameter("trangthai", trangThai);
+        List<HoaDon> list = q.getResultList();
+        return list;
+    }
+
+  
+
 }
