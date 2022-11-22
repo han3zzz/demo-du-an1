@@ -16,4 +16,6 @@ public interface IHoaDonChiTietServies {
     public boolean add(HoaDonChiTiet m);
     public boolean update(HoaDonChiTiet hoaDon);
     public void delete(String imei ,String mahd);
+    public HoaDonChiTiet seachbyMaImei(String ma);
+    public void updateImei(String ma , String maImei , String maImeiMoi);
 }

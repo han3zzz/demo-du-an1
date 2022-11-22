@@ -41,7 +41,7 @@ public class KhachHang implements Serializable{
     
     @OneToMany(mappedBy = "khachHang", fetch = FetchType.LAZY)
     private List<HoaDon> hoaDons;
-    @OneToMany(mappedBy = "nhanVien", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "khachHang", fetch = FetchType.LAZY)
     private List<BaoHanh> baoHanhs;
 
     public String getMaKH() {

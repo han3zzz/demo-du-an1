@@ -38,4 +38,14 @@ public class HoaDonChiTietServices implements IHoaDonChiTietServies{
     public void delete(String imei, String mahd) {
         hdctr.delete(imei, mahd);
     }
+
+    @Override
+    public HoaDonChiTiet seachbyMaImei(String ma) {
+        return hdctr.seachbyMaImei(ma);
+    }
+
+    @Override
+    public void updateImei(String ma, String maImei, String maImeiMoi) {
+        hdctr.updateImei(ma, maImei, maImeiMoi);
+    }
 }

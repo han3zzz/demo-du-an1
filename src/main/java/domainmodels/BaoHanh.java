@@ -35,8 +35,8 @@ public class BaoHanh implements Serializable{
 
     
     @ManyToOne
-    @JoinColumn(name = "MaNV" , nullable = false)
-    private NhanVien nhanVien;
+    @JoinColumn(name = "MaKH" , nullable = false)
+    private KhachHang khachHang;
     @OneToMany(mappedBy = "maBH", fetch = FetchType.LAZY)
     private List<BaoHanhChiTiet> baoHanhChiTiets;
 
@@ -47,7 +47,6 @@ public class BaoHanh implements Serializable{
     public void setMaBH(String maBH) {
         this.maBH = maBH;
     }
-
 
     public Date getNgayTao() {
         return ngayTao;
@@ -73,12 +72,12 @@ public class BaoHanh implements Serializable{
         this.trangThai = trangThai;
     }
 
-    public NhanVien getNhanVien() {
-        return nhanVien;
+    public KhachHang getKhachHang() {
+        return khachHang;
     }
 
-    public void setNhanVien(NhanVien nhanVien) {
-        this.nhanVien = nhanVien;
+    public void setKhachHang(KhachHang khachHang) {
+        this.khachHang = khachHang;
     }
 
     public List<BaoHanhChiTiet> getBaoHanhChiTiets() {
@@ -89,6 +88,7 @@ public class BaoHanh implements Serializable{
         this.baoHanhChiTiets = baoHanhChiTiets;
     }
 
+   
     
     
 }

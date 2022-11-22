@@ -103,6 +103,7 @@ public class MainForm extends javax.swing.JFrame {
             listItems.add(new MenuServices("khachhang", khachhang, btnKhachHang));
             listItems.add(new MenuServices("thongke", thongke, btnThongKe));
             listItems.add(new MenuServices("hoadon", hoadon, btnQLHoaDon));
+            listItems.add(new MenuServices("baohanh", baohanh, btnQLBaoHanh));
         } else {
             btnQLNhanVien.setEnabled(false);
             btnQLSanPham.setEnabled(false);
@@ -112,6 +113,7 @@ public class MainForm extends javax.swing.JFrame {
             listItems.add(new MenuServices("banhang", banhang, btnQLBanHang));
             listItems.add(new MenuServices("khachhang", khachhang, btnKhachHang));
             listItems.add(new MenuServices("hoadon", hoadon, btnQLHoaDon));
+            listItems.add(new MenuServices("baohanh", baohanh, btnQLBaoHanh));
         }
 
         chuyenManHinhServices.setEvent(listItems);
@@ -722,6 +724,7 @@ public class MainForm extends javax.swing.JFrame {
     private void btnDangXuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDangXuatMouseClicked
         // TODO add your handling code here:
         QLBanHangPanel.windowClosed();
+         QLBaoHanhPanel.windowClosed();
         int check = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn đăng xuất ?");
         if (check != JOptionPane.YES_OPTION) {
             return;
@@ -737,6 +740,7 @@ public class MainForm extends javax.swing.JFrame {
 //       cardLayout.show(giaodien, "sanpham");
 
         QLBanHangPanel.windowClosed();
+         QLBaoHanhPanel.windowClosed();
         if (btnQLSanPham.isEnabled() == false) {
             JOptionPane.showMessageDialog(this, "Bạn không có quyền sử dụng chức năng này !");
             return;
@@ -751,6 +755,7 @@ public class MainForm extends javax.swing.JFrame {
     private void btnQLNhanVienMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQLNhanVienMousePressed
         // TODO add your handling code here:
         QLBanHangPanel.windowClosed();
+         QLBaoHanhPanel.windowClosed();
         if (btnQLNhanVien.isEnabled() == false) {
             JOptionPane.showMessageDialog(this, "Bạn không có quyền sử dụng chức năng này !");
             return;
@@ -760,21 +765,25 @@ public class MainForm extends javax.swing.JFrame {
     private void btnDoiMatKhauMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDoiMatKhauMousePressed
         // TODO add your handling code here:
         QLBanHangPanel.windowClosed();
+         QLBaoHanhPanel.windowClosed();
     }//GEN-LAST:event_btnDoiMatKhauMousePressed
 
     private void btnKhachHangMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnKhachHangMousePressed
         // TODO add your handling code here:
         QLBanHangPanel.windowClosed();
+         QLBaoHanhPanel.windowClosed();
     }//GEN-LAST:event_btnKhachHangMousePressed
 
     private void btnQLHoaDonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQLHoaDonMousePressed
         // TODO add your handling code here:
         QLBanHangPanel.windowClosed();
+         QLBaoHanhPanel.windowClosed();
     }//GEN-LAST:event_btnQLHoaDonMousePressed
 
     private void btnThongKeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThongKeMousePressed
         // TODO add your handling code here:
         QLBanHangPanel.windowClosed();
+         QLBaoHanhPanel.windowClosed();
         if (btnThongKe.isEnabled() == false) {
             JOptionPane.showMessageDialog(this, "Bạn không có quyền sử dụng chức năng này !");
             return;
@@ -784,6 +793,7 @@ public class MainForm extends javax.swing.JFrame {
     private void btnQLKhuyenMaiMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQLKhuyenMaiMousePressed
         // TODO add your handling code here:
         QLBanHangPanel.windowClosed();
+        QLBaoHanhPanel.windowClosed();
         if (btnQLKhuyenMai.isEnabled() == false) {
             JOptionPane.showMessageDialog(this, "Bạn không có quyền sử dụng chức năng này !");
             return;
@@ -798,6 +808,7 @@ public class MainForm extends javax.swing.JFrame {
     private void btnQLBanHangMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQLBanHangMousePressed
         // TODO add your handling code here:
         QLBanHangPanel.windowClosed();
+         QLBaoHanhPanel.windowClosed();
 
 
     }//GEN-LAST:event_btnQLBanHangMousePressed

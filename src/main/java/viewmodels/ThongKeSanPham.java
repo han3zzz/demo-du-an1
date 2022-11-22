@@ -8,19 +8,10 @@ package viewmodels;
  *
  * @author HANGOCHAN
  */
-public class ThongKeTheoNgay {
+public class ThongKeSanPham {
     private String maSP ;
     private String tenSP ;
     private Integer soLuongBan ;
-
-    public ThongKeTheoNgay() {
-    }
-
-    public ThongKeTheoNgay(String maSP, String tenSP, Integer soLuongBan) {
-        this.maSP = maSP;
-        this.tenSP = tenSP;
-        this.soLuongBan = soLuongBan;
-    }
 
     public String getMaSP() {
         return maSP;
@@ -45,7 +36,6 @@ public class ThongKeTheoNgay {
     public void setSoLuongBan(Integer soLuongBan) {
         this.soLuongBan = soLuongBan;
     }
-    
     
     
 }

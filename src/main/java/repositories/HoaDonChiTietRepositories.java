@@ -70,4 +70,25 @@ public class HoaDonChiTietRepositories {
         }
         return list.get(0);
     }
+    public HoaDonChiTiet seachbyMaImei(String ma){
+        Session session = HibernateConfig.getFACTORY().openSession();
+        Query q = session.createQuery("From HoaDonChiTiet where MaImei = :ma");
+        q.setParameter("ma", ma);
+        List<HoaDonChiTiet> list = q.getResultList();
+        if (list.size() == 0) {
+            return null;
+        }
+        return list.get(0);
+    }
+    public void updateImei(String ma , String maImei , String maImeiMoi){
+        Session session = HibernateConfig.getFACTORY().openSession();
+        Transaction transaction = session.beginTransaction();
+        Query q = session.createQuery("UPDATE HoaDonChiTiet SET MaImei = :maImeiMoi where MaImei = :maImei and MaHD = : maHD");
+        q.setParameter("maImeiMoi", maImeiMoi);
+        q.setParameter("maImei", maImei);
+        q.setParameter("maHD", ma);
+        int index = q.executeUpdate();
+        transaction.commit();
+        session.close();
+    }
 }

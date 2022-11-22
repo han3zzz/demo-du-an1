@@ -28,8 +28,6 @@ public class QLBaoHanh extends javax.swing.JFrame {
 
         baohanh = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tbBaoHanh = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         kGradientPanel1 = new keeptoo.KGradientPanel();
@@ -40,14 +38,18 @@ public class QLBaoHanh extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        lbAnh = new javax.swing.JLabel();
         kGradientPanel2 = new keeptoo.KGradientPanel();
         jLabel12 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        kGradientPanel3 = new keeptoo.KGradientPanel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        txtMa = new javax.swing.JLabel();
+        txtTen = new javax.swing.JLabel();
+        txtMaImei = new javax.swing.JLabel();
+        txtNgayBatDau = new javax.swing.JLabel();
+        txtNgayKetThuc = new javax.swing.JLabel();
+        txtTrangThai = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -65,34 +67,11 @@ public class QLBaoHanh extends javax.swing.JFrame {
             .addGap(0, 190, Short.MAX_VALUE)
         );
 
-        baohanh.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 360, 190));
-
-        tbBaoHanh.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Mã Bảo Hành", "Ngày Bắt Đầu", "Ngày Kết Thúc", "Trạng Thái"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(tbBaoHanh);
-
-        baohanh.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 360, 990, 240));
-        baohanh.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 280, 230, 30));
+        baohanh.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 80, 360, 190));
+        baohanh.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 100, 230, 30));
 
         jLabel1.setText("Imei");
-        baohanh.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, 40, 30));
+        baohanh.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 100, 40, 30));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -110,34 +89,34 @@ public class QLBaoHanh extends javax.swing.JFrame {
             .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
         );
 
-        baohanh.add(kGradientPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 280, 80, 30));
+        baohanh.add(kGradientPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 100, 80, 30));
 
-        jLabel2.setFont(new java.awt.Font("Bahnschrift", 1, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Bahnschrift", 1, 22)); // NOI18N
         jLabel2.setText("Thông Tin Bảo Hành");
-        baohanh.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 50, 190, 30));
+        baohanh.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 180, 250, 30));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel3.setText("Tên Sản Phẩm : ");
-        baohanh.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 120, -1, -1));
+        baohanh.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 250, -1, -1));
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel4.setText("Mã Imei : ");
-        baohanh.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 140, 70, -1));
+        baohanh.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 270, 90, -1));
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel5.setText("Ngày Bắt Ðầu : ");
-        baohanh.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 160, -1, -1));
+        baohanh.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 290, -1, -1));
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel6.setText("Ngày Kết Thúc : ");
-        baohanh.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 180, 120, 20));
+        baohanh.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 310, 130, 20));
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel7.setText("Trạng Thái : ");
-        baohanh.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 200, 100, -1));
+        baohanh.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 330, 100, -1));
 
-        jLabel8.setText("jLabel8");
-        baohanh.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 70, 180, 190));
+        lbAnh.setText("jLabel8");
+        baohanh.add(lbAnh, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 200, 180, 190));
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
@@ -155,39 +134,36 @@ public class QLBaoHanh extends javax.swing.JFrame {
             .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
         );
 
-        baohanh.add(kGradientPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 280, 100, 40));
+        baohanh.add(kGradientPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 410, 100, 40));
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel9.setText("Mã Bảo Hành : ");
-        baohanh.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 100, 110, -1));
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel9.setText("Mã Sản Phẩm : ");
+        baohanh.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 230, 120, -1));
 
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel11.setText("Imei đổi : ");
-        baohanh.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 220, 90, 30));
+        baohanh.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 350, 90, 30));
 
-        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setText("Chọn");
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        baohanh.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 350, 200, 30));
 
-        javax.swing.GroupLayout kGradientPanel3Layout = new javax.swing.GroupLayout(kGradientPanel3);
-        kGradientPanel3.setLayout(kGradientPanel3Layout);
-        kGradientPanel3Layout.setHorizontalGroup(
-            kGradientPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kGradientPanel3Layout.createSequentialGroup()
-                .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        kGradientPanel3Layout.setVerticalGroup(
-            kGradientPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-        );
+        txtMa.setText("jLabel8");
+        baohanh.add(txtMa, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 230, 150, 20));
 
-        baohanh.add(kGradientPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 220, 50, 30));
+        txtTen.setText("jLabel8");
+        baohanh.add(txtTen, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 250, 160, 20));
 
-        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel14.setText("Danh sách bảo hành");
-        baohanh.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 330, 190, 30));
+        txtMaImei.setText("jLabel8");
+        baohanh.add(txtMaImei, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 270, 150, 20));
+
+        txtNgayBatDau.setText("jLabel8");
+        baohanh.add(txtNgayBatDau, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 290, 140, 20));
+
+        txtNgayKetThuc.setText("jLabel8");
+        baohanh.add(txtNgayKetThuc, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 310, 160, 20));
+
+        txtTrangThai.setText("jLabel8");
+        baohanh.add(txtTrangThai, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 330, 150, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -244,26 +220,28 @@ public class QLBaoHanh extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel baohanh;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
     private keeptoo.KGradientPanel kGradientPanel1;
     private keeptoo.KGradientPanel kGradientPanel2;
-    private keeptoo.KGradientPanel kGradientPanel3;
-    private javax.swing.JTable tbBaoHanh;
+    private javax.swing.JLabel lbAnh;
+    private javax.swing.JLabel txtMa;
+    private javax.swing.JLabel txtMaImei;
+    private javax.swing.JLabel txtNgayBatDau;
+    private javax.swing.JLabel txtNgayKetThuc;
+    private javax.swing.JLabel txtTen;
+    private javax.swing.JLabel txtTrangThai;
     // End of variables declaration//GEN-END:variables
 }

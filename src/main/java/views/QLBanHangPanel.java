@@ -14,6 +14,8 @@ import com.google.zxing.NotFoundException;
 import com.google.zxing.Result;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
+import domainmodels.BaoHanh;
+import domainmodels.BaoHanhChiTiet;
 import domainmodels.ChiTietSP;
 import domainmodels.HoaDon;
 import domainmodels.HoaDonChiTiet;
@@ -36,6 +38,7 @@ import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -59,11 +62,15 @@ import services.IHoaDonChiTietServies;
 import services.IHoaDonServices;
 import services.IKhachHangService;
 import services.INhanVienServices;
+import services.IQLBaoHanhChiTietServices;
+import services.IQLBaoHanhServices;
 import services.IQLKhuyenMaiServices;
 import services.IQLSanPhamServices;
 import services.KhachHangService;
 import services.NhanVienServices;
 import services.PhanQuyenServices;
+import services.QLBaoHanhChiTietServices;
+import services.QLBaoHanhServices;
 import services.QLKhuyenMaiServices;
 import services.QLSanPhamServices;
 import services.TaoHoaDonServices;
@@ -90,6 +97,9 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
     private IHoaDonChiTietServies hoaDonChiTietServies;
     private IQLKhuyenMaiServices khuyenMaiServices;
     private IKhachHangService khachHangService;
+    private IQLBaoHanhServices baoHanhServices;
+    private IQLBaoHanhChiTietServices baoHanhChiTietServices;
+    private String maBH;
 
     public QLBanHangPanel() {
         initComponents();
@@ -103,6 +113,9 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
         hoaDonChiTietServies = new HoaDonChiTietServices();
         khuyenMaiServices = new QLKhuyenMaiServices();
         khachHangService = new KhachHangService();
+        baoHanhServices = new QLBaoHanhServices();
+        baoHanhChiTietServices = new QLBaoHanhChiTietServices();
+
         tbHoaDon.setDefaultRenderer(Object.class, new MyTableCell());
         tbHoaDon.addComponentListener(new ComponentAdapter() {
             @Override
@@ -139,6 +152,29 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
         Integer sofinal = Integer.parseInt(so) + 1;
         String maMoi = "HD" + sofinal;
         txtMaHD.setText(maMoi);
+    }
+
+    public void loadMaBH() {
+
+        String ma = "";
+        List<BaoHanh> baoHanhs = baoHanhServices.getALL();
+        if (baoHanhs.size() == 0) {
+            ma = "BH0";
+        } else {
+            BaoHanh hd = baoHanhServices.layMa();
+//          
+            ma = hd.getMaBH();
+        }
+
+        String mangString[] = ma.split("");
+        String so = "";
+        for (int i = 2; i < mangString.length; i++) {
+            so += mangString[i];
+        }
+
+        Integer sofinal = Integer.parseInt(so) + 1;
+        maBH = "BH" + sofinal;
+//        txtMaHD.setText(maMoi);
     }
 
     public void cbbKhachHang() {
@@ -198,10 +234,10 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
         for (NhanVien nhanVien : nhanViens) {
             if (maNV.equals(nhanVien.getMaNV())) {
                 nv = nhanVien;
-              
+
             }
         }
-        
+
         hd.setMaHD(maHD);
         hd.setTenNguoiNhan(tenKH);
         hd.setSdt(sdt);
@@ -1442,9 +1478,9 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
             return;
         }
         if (txtTienKhachDua.getText().length() > 10) {
-                JOptionPane.showMessageDialog(this, "Tiền khách đưa phải nhỏ hơn 9999999999 !");
-                return;
-            }
+            JOptionPane.showMessageDialog(this, "Tiền khách đưa phải nhỏ hơn 9999999999 !");
+            return;
+        }
         Integer tienKhachDua = Integer.parseInt(txtTienKhachDua.getText());
         if (tienKhachDua < 0) {
             JOptionPane.showMessageDialog(this, "Tiền khách đưa phải lớn hơn hoặc bằng 0 !");
@@ -1500,7 +1536,7 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
                 return;
             }
             Integer tienKhachDua = Integer.parseInt(txtTienKhachDua.getText());
-            
+
             if (tienKhachDua > 999999999) {
                 JOptionPane.showMessageDialog(this, "Tiền khách đưa phải lớn hơn hoặc bằng 0 !");
                 return;
@@ -1535,11 +1571,63 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
             hoaDonServices.suaHD(maHD, ghiChu, tongTien, giamgia, 2, makm);
 
             HoaDonChiTiet hdct = new HoaDonChiTiet();
+            BaoHanh baoHanh = new BaoHanh();
+            BaoHanhChiTiet bhct = new BaoHanhChiTiet();
+            HoaDon hd = hoaDonServices.fill(maHD);
+            loadMaBH();
+
+            baoHanh.setMaBH(maBH);
+            baoHanh.setKhachHang(hd.getKhachHang());
+            baoHanh.setNgayTao(date);
+            baoHanh.setTrangThai(0);
+            baoHanhServices.add(baoHanh);
             String imei = "";
             BigDecimal donGia = null;
+
+            Calendar c1 = Calendar.getInstance();
+
+            for (int i = 0; i < rowGioHang; i++) {
+                c1.setTime(date);
+                imei = tbGioHang.getValueAt(i, 2).toString();
+                ChiTietSP c = null;
+                List<ChiTietSP> chiTietSPs = chiTietSPServices.getImei();
+                for (ChiTietSP chiTietSP : chiTietSPs) {
+                    if (imei.equals(chiTietSP.getMaImei())) {
+                        c = chiTietSP;
+
+                    }
+                }
+                if (c.getThoiGianBH() == 0) {
+
+                } else {
+                    if (c.getThoiGianBH() == 30) {
+                        c1.add(Calendar.MONTH, 1);
+                    }
+                    if (c.getThoiGianBH() == 90) {
+                        c1.add(Calendar.MONTH, 3);
+                    }
+                    if (c.getThoiGianBH() == 180) {
+                        c1.add(Calendar.MONTH, 6);
+                    }
+                    if (c.getThoiGianBH() == 360) {
+                        c1.add(Calendar.MONTH, 12);
+                    }
+
+                    String d = new SimpleDateFormat("MM-dd-yyyy").format(c1.getTime());
+                    Date date2 = new SimpleDateFormat("MM-dd-yyyy").parse(d);
+                    bhct.setMaImei(c);
+                    bhct.setMaBH(baoHanh);
+                    bhct.setNgayBatDau(date);
+                    bhct.setNgayKetThuc(date2);
+                    baoHanhChiTietServices.add(bhct);
+                }
+
+            }
+
             for (int i = 0; i < rowGioHang; i++) {
 
                 imei = tbGioHang.getValueAt(i, 2).toString();
+
                 Double donGiaDb = Double.parseDouble(tbGioHang.getValueAt(i, 4).toString());
                 donGia = BigDecimal.valueOf(donGiaDb);
                 HoaDon hd1 = null;
@@ -1558,10 +1646,12 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
 
                     }
                 }
+
                 hdct.setMaHD(hd1);
                 hdct.setMaImei(c);
                 hdct.setSoLuong(1);
                 hdct.setDonGia(donGia);
+
                 List<HoaDonChiTiet> list = hoaDonChiTietServies.getALL(maHD);
                 for (HoaDonChiTiet hoaDonChiTiet : list) {
                     if (imei.equals(hoaDonChiTiet.getMaImei().getMaImei())) {
@@ -1584,6 +1674,7 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
 
                         return;
                     }
+
                 }
                 hoaDonChiTietServies.add(hdct);
 
