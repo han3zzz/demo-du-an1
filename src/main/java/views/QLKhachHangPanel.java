@@ -33,7 +33,30 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
         service = new KhachHangService();
         hienThi();
     }
+    public void loadMaKH() {
+
+        String ma = "";
+        List<KhachHang> khachHangs = service.getALL();
+        if (khachHangs.size() == 0) {
+            ma = "KH0";
+        } else {
+            KhachHang sp = service.layMa();
+//          
+            ma = sp.getMaKH();
+        }
+
+        String mangString[] = ma.split("");
+        String so = "";
+        for (int i = 2; i < mangString.length; i++) {
+            so += mangString[i];
+        }
+
+        Integer sofinal = Integer.parseInt(so) + 1;
+        String maMoi = "KH" + sofinal;
+        txtMa.setText(maMoi);
+    }
     public void hienThi() {
+        loadMaKH();
         DefaultTableModel model = (DefaultTableModel) tbbBang.getModel();
         model.setRowCount(0);
         List<KhachHang> lst = service.getALL();
@@ -93,7 +116,7 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
     }
 
     public void clear() {
-        txtMa.setText("");
+        hienThi();
         txtTen.setText("");
         txtNgaySinh.setDate(null);
         txtsdt.setText("");
@@ -143,10 +166,10 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
         btnDelete = new javax.swing.JLabel();
         kGradientPanel7 = new keeptoo.KGradientPanel();
         btnUpdate = new javax.swing.JLabel();
-        txtMa = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtQueQuan = new javax.swing.JTextArea();
         txtNgaySinh = new com.toedter.calendar.JDateChooser();
+        txtMa = new javax.swing.JLabel();
 
         nhanvien.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -281,15 +304,12 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
             .addComponent(btnUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
         );
 
-        txtMa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMaActionPerformed(evt);
-            }
-        });
-
         txtQueQuan.setColumns(20);
         txtQueQuan.setRows(5);
         jScrollPane2.setViewportView(txtQueQuan);
+
+        txtMa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtMa.setText("jLabel1");
 
         javax.swing.GroupLayout nhanvienLayout = new javax.swing.GroupLayout(nhanvien);
         nhanvien.setLayout(nhanvienLayout);
@@ -301,7 +321,6 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(nhanvienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel13)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(nhanvienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, nhanvienLayout.createSequentialGroup()
                             .addComponent(jLabel14)
@@ -310,13 +329,14 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, nhanvienLayout.createSequentialGroup()
                             .addGroup(nhanvienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel28)
-                                .addComponent(jLabel25))
+                                .addComponent(jLabel25)
+                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(31, 31, 31)
                             .addGroup(nhanvienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtMa)
                                 .addComponent(txtTen)
                                 .addComponent(jScrollPane2)
-                                .addComponent(txtsdt, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(txtsdt)
+                                .addComponent(txtMa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(nhanvienLayout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(kGradientPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -336,9 +356,11 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(nhanvienLayout.createSequentialGroup()
                         .addGap(132, 132, 132)
-                        .addGroup(nhanvienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtMa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(nhanvienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(nhanvienLayout.createSequentialGroup()
+                                .addGap(4, 4, 4)
+                                .addComponent(txtMa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(nhanvienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -361,8 +383,7 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
                                 .addComponent(kGradientPanel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(kGradientPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(kGradientPanel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(kGradientPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(kGradientPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(56, 56, 56))
         );
 
@@ -477,10 +498,6 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnUpdateMousePressed
 
-    private void txtMaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtMaActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnAdd;
@@ -500,7 +517,7 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
     private keeptoo.KGradientPanel kGradientPanel7;
     private javax.swing.JPanel nhanvien;
     private javax.swing.JTable tbbBang;
-    private javax.swing.JTextField txtMa;
+    private javax.swing.JLabel txtMa;
     private com.toedter.calendar.JDateChooser txtNgaySinh;
     private javax.swing.JTextArea txtQueQuan;
     private javax.swing.JTextField txtTen;

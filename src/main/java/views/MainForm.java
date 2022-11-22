@@ -102,6 +102,7 @@ public class MainForm extends javax.swing.JFrame {
             listItems.add(new MenuServices("khuyenmai", khuyenmai, btnQLKhuyenMai));
             listItems.add(new MenuServices("khachhang", khachhang, btnKhachHang));
             listItems.add(new MenuServices("thongke", thongke, btnThongKe));
+            listItems.add(new MenuServices("hoadon", hoadon, btnQLHoaDon));
         } else {
             btnQLNhanVien.setEnabled(false);
             btnQLSanPham.setEnabled(false);
@@ -152,13 +153,13 @@ public class MainForm extends javax.swing.JFrame {
         kGradientPanel14 = new keeptoo.KGradientPanel();
         btnQLBanHang = new javax.swing.JLabel();
         kGradientPanel15 = new keeptoo.KGradientPanel();
-        jLabel6 = new javax.swing.JLabel();
+        btnQLHoaDon = new javax.swing.JLabel();
         kGradientPanel16 = new keeptoo.KGradientPanel();
         btnThongKe = new javax.swing.JLabel();
         kGradientPanel17 = new keeptoo.KGradientPanel();
         btnQLKhuyenMai = new javax.swing.JLabel();
         kGradientPanel18 = new keeptoo.KGradientPanel();
-        jLabel9 = new javax.swing.JLabel();
+        btnQLBaoHanh = new javax.swing.JLabel();
         kGradientPanel19 = new keeptoo.KGradientPanel();
         btnDoiMatKhau = new javax.swing.JLabel();
         kGradientPanel20 = new keeptoo.KGradientPanel();
@@ -175,6 +176,8 @@ public class MainForm extends javax.swing.JFrame {
         khuyenmai = new javax.swing.JPanel();
         khachhang = new javax.swing.JPanel();
         thongke = new javax.swing.JPanel();
+        hoadon = new javax.swing.JPanel();
+        baohanh = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -301,14 +304,14 @@ public class MainForm extends javax.swing.JFrame {
         kGradientPanel15.setkGradientFocus(300);
         kGradientPanel15.setkStartColor(new java.awt.Color(204, 204, 0));
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_purchase_order_30px.png"))); // NOI18N
-        jLabel6.setText("Quản Lý Hóa Đơn");
-        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnQLHoaDon.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnQLHoaDon.setForeground(new java.awt.Color(255, 255, 255));
+        btnQLHoaDon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnQLHoaDon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_purchase_order_30px.png"))); // NOI18N
+        btnQLHoaDon.setText("Quản Lý Hóa Đơn");
+        btnQLHoaDon.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel6MousePressed(evt);
+                btnQLHoaDonMousePressed(evt);
             }
         });
 
@@ -316,11 +319,11 @@ public class MainForm extends javax.swing.JFrame {
         kGradientPanel15.setLayout(kGradientPanel15Layout);
         kGradientPanel15Layout.setHorizontalGroup(
             kGradientPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnQLHoaDon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         kGradientPanel15Layout.setVerticalGroup(
             kGradientPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+            .addComponent(btnQLHoaDon, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
         );
 
         kGradientPanel16.setkEndColor(new java.awt.Color(204, 102, 0));
@@ -379,14 +382,14 @@ public class MainForm extends javax.swing.JFrame {
         kGradientPanel18.setkGradientFocus(300);
         kGradientPanel18.setkStartColor(new java.awt.Color(204, 204, 0));
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_refresh_barcode_30px.png"))); // NOI18N
-        jLabel9.setText("Quản Lý Bảo Hành");
-        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnQLBaoHanh.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnQLBaoHanh.setForeground(new java.awt.Color(255, 255, 255));
+        btnQLBaoHanh.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnQLBaoHanh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_refresh_barcode_30px.png"))); // NOI18N
+        btnQLBaoHanh.setText("Quản Lý Bảo Hành");
+        btnQLBaoHanh.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel9MousePressed(evt);
+                btnQLBaoHanhMousePressed(evt);
             }
         });
 
@@ -394,11 +397,11 @@ public class MainForm extends javax.swing.JFrame {
         kGradientPanel18.setLayout(kGradientPanel18Layout);
         kGradientPanel18Layout.setHorizontalGroup(
             kGradientPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnQLBaoHanh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         kGradientPanel18Layout.setVerticalGroup(
             kGradientPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+            .addComponent(btnQLBaoHanh, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
         );
 
         kGradientPanel19.setkEndColor(new java.awt.Color(204, 102, 0));
@@ -649,6 +652,36 @@ public class MainForm extends javax.swing.JFrame {
 
         giaodien.add(thongke, "thongke");
 
+        hoadon.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout hoadonLayout = new javax.swing.GroupLayout(hoadon);
+        hoadon.setLayout(hoadonLayout);
+        hoadonLayout.setHorizontalGroup(
+            hoadonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1260, Short.MAX_VALUE)
+        );
+        hoadonLayout.setVerticalGroup(
+            hoadonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 781, Short.MAX_VALUE)
+        );
+
+        giaodien.add(hoadon, "hoadon");
+
+        baohanh.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout baohanhLayout = new javax.swing.GroupLayout(baohanh);
+        baohanh.setLayout(baohanhLayout);
+        baohanhLayout.setHorizontalGroup(
+            baohanhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1260, Short.MAX_VALUE)
+        );
+        baohanhLayout.setVerticalGroup(
+            baohanhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 781, Short.MAX_VALUE)
+        );
+
+        giaodien.add(baohanh, "baohanh");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -733,10 +766,10 @@ public class MainForm extends javax.swing.JFrame {
         QLBanHangPanel.windowClosed();
     }//GEN-LAST:event_btnKhachHangMousePressed
 
-    private void jLabel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MousePressed
+    private void btnQLHoaDonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQLHoaDonMousePressed
         // TODO add your handling code here:
         QLBanHangPanel.windowClosed();
-    }//GEN-LAST:event_jLabel6MousePressed
+    }//GEN-LAST:event_btnQLHoaDonMousePressed
 
     private void btnThongKeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThongKeMousePressed
         // TODO add your handling code here:
@@ -756,10 +789,10 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnQLKhuyenMaiMousePressed
 
-    private void jLabel9MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MousePressed
+    private void btnQLBaoHanhMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQLBaoHanhMousePressed
         // TODO add your handling code here:
         QLBanHangPanel.windowClosed();
-    }//GEN-LAST:event_jLabel9MousePressed
+    }//GEN-LAST:event_btnQLBaoHanhMousePressed
 
     private void btnQLBanHangMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQLBanHangMousePressed
         // TODO add your handling code here:
@@ -805,20 +838,22 @@ public class MainForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel banhang;
+    private javax.swing.JPanel baohanh;
     private javax.swing.JLabel btnDangXuat;
     private javax.swing.JLabel btnDoiMatKhau;
     private javax.swing.JLabel btnKhachHang;
     private javax.swing.JLabel btnQLBanHang;
+    private javax.swing.JLabel btnQLBaoHanh;
+    private javax.swing.JLabel btnQLHoaDon;
     private javax.swing.JLabel btnQLKhuyenMai;
     private javax.swing.JLabel btnQLNhanVien;
     private javax.swing.JLabel btnQLSanPham;
     private javax.swing.JLabel btnThongKe;
     private javax.swing.JPanel doimatkhau;
     private javax.swing.JPanel giaodien;
+    private javax.swing.JPanel hoadon;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private keeptoo.KGradientPanel kGradientPanel1;
     private keeptoo.KGradientPanel kGradientPanel12;

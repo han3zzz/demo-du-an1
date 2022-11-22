@@ -5,6 +5,7 @@
 package domainmodels;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -27,6 +28,10 @@ public class BaoHanhChiTiet implements Serializable{
     @ManyToOne
     @JoinColumn(name = "MaBH", nullable = false)
     private BaoHanh maBH ;
+    @Column(name = "NgayBatDau")
+    private Date ngayBatDau ;
+    @Column(name = "NgayKetThuc")
+    private Date ngayKetThuc ;
     @Column(name = "GhiChu")
     private String ghiChu ;
 
@@ -46,6 +51,22 @@ public class BaoHanhChiTiet implements Serializable{
         this.maBH = maBH;
     }
 
+    public Date getNgayBatDau() {
+        return ngayBatDau;
+    }
+
+    public void setNgayBatDau(Date ngayBatDau) {
+        this.ngayBatDau = ngayBatDau;
+    }
+
+    public Date getNgayKetThuc() {
+        return ngayKetThuc;
+    }
+
+    public void setNgayKetThuc(Date ngayKetThuc) {
+        this.ngayKetThuc = ngayKetThuc;
+    }
+
     public String getGhiChu() {
         return ghiChu;
     }
@@ -53,6 +74,8 @@ public class BaoHanhChiTiet implements Serializable{
     public void setGhiChu(String ghiChu) {
         this.ghiChu = ghiChu;
     }
+
+    
     
     
     

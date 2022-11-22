@@ -77,4 +77,10 @@ public class DanhMucRepositories {
         }
         return list.get(0);
     }
+    public DanhMuc layMa() {
+        Session session = HibernateConfig.getFACTORY().openSession();
+        Query q = session.createQuery("From DanhMuc where MaDM in (Select 'DM'+ Cast(Max(Cast(SUBSTRING(MaDM,3,Len(MaDM) - 2) as int)) as string) from DanhMuc)");
+        List<DanhMuc> list = q.getResultList();
+        return list.get(0);
+    }
 }

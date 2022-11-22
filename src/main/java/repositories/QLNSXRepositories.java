@@ -72,4 +72,10 @@ public class QLNSXRepositories {
         }
         return list.get(0);
     }
+    public NSX layMa() {
+        Session session = HibernateConfig.getFACTORY().openSession();
+        Query q = session.createQuery("From NSX where MaNSX in (Select 'NS'+ Cast(Max(Cast(SUBSTRING(MaNSX,3,Len(MaNSX) - 2) as int)) as string) from NSX)");
+        List<NSX> list = q.getResultList();
+        return list.get(0);
+    }
 }

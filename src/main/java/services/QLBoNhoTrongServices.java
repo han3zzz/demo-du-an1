@@ -42,4 +42,9 @@ public class QLBoNhoTrongServices implements IQLBoNhoTrongServices{
     public BoNhoTrong seachbyMa(String ma) {
         return bntr.seachbyMa(ma);
     }
+
+    @Override
+    public BoNhoTrong layMa() {
+        return bntr.layMa();
+    }
 }

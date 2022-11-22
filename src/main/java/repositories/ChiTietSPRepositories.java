@@ -133,5 +133,13 @@ public class ChiTietSPRepositories {
         transaction.commit();
         session.close();
     }
+    public List<ChiTietSP> getImei(String imei){
+        Session session = HibernateConfig.getFACTORY().openSession();
+        Transaction transaction = session.beginTransaction();
+        Query q = session.createQuery("FROM ChiTietSP where MaImei like :maImei and TrangThai = 0");
+        q.setParameter("maImei", "%"+imei+"%");
+        List<ChiTietSP> chiTietSPs = q.getResultList();
+        return chiTietSPs;
+    }
     
 }

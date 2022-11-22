@@ -72,4 +72,10 @@ public class QLMauSacRepositories {
         }
         return list.get(0);
     }
+    public MauSac layMa() {
+        Session session = HibernateConfig.getFACTORY().openSession();
+        Query q = session.createQuery("From MauSac where MaMauSac in (Select 'MS'+ Cast(Max(Cast(SUBSTRING(MaMauSac,3,Len(MaMauSac) - 2) as int)) as string) from MauSac)");
+        List<MauSac> list = q.getResultList();
+        return list.get(0);
+    }
 }

@@ -18,4 +18,5 @@ public interface IKhachHangService {
     public boolean delete(String ma);
     public KhachHang seachbyMa(String ma);
     public KhachHang fill(String maKH);
+    public KhachHang layMa();
 }

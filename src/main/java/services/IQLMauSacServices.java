@@ -17,4 +17,5 @@ public interface IQLMauSacServices {
     public boolean update(MauSac m);
     public boolean delete(MauSac m);
     public MauSac seachbyMa(String ma);
+    public MauSac layMa();
 }

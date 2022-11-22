@@ -5,10 +5,12 @@
 package services;
 
 import domainmodels.HoaDon;
+import domainmodels.HoaDonChiTiet;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import repositories.HoaDonRepositories;
+import viewmodels.ThongKeTheoNgay;
 
 /**
  *
@@ -85,4 +87,10 @@ public class HoaDonServices implements IHoaDonServices{
     public List<HoaDon> countHoaDon(Integer trangThai) {
         return  hdr.countHoaDon(trangThai);
     }
+
+    
+    
+    
+
+    
 }

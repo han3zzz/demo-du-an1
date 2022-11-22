@@ -26,8 +26,6 @@ public class BaoHanh implements Serializable{
     @Id
     @Column(name = "MaBH", nullable = false)
     private String maBH ;
-    @Column(name = "NgayBH")
-    private Date ngayBH ;
     @Column(name = "NgayTao")
     private Date ngayTao ;
     @Column(name = "NgaySua")
@@ -50,13 +48,6 @@ public class BaoHanh implements Serializable{
         this.maBH = maBH;
     }
 
-    public Date getNgayBH() {
-        return ngayBH;
-    }
-
-    public void setNgayBH(Date ngayBH) {
-        this.ngayBH = ngayBH;
-    }
 
     public Date getNgayTao() {
         return ngayTao;

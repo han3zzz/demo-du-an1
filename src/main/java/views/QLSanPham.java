@@ -76,6 +76,29 @@ public class QLSanPham extends javax.swing.JFrame {
         loadCbbBoNhoTrong();
         loadCbbMauSac();
         load();
+       
+    }
+    public void loadMaSP() {
+
+        String ma = "";
+        List<SanPham> sanPhams = sanPhamServices.getALL();
+        if (sanPhams.size() == 0) {
+            ma = "SP0";
+        } else {
+            SanPham sp = sanPhamServices.layMa();
+//          
+            ma = sp.getMaSP();
+        }
+
+        String mangString[] = ma.split("");
+        String so = "";
+        for (int i = 2; i < mangString.length; i++) {
+            so += mangString[i];
+        }
+
+        Integer sofinal = Integer.parseInt(so) + 1;
+        String maMoi = "SP" + sofinal;
+        txtMa.setText(maMoi);
     }
     public void loadCbbNSX(){
         List<NSX> nsxs = nSXServices.getALL();
@@ -116,6 +139,7 @@ public class QLSanPham extends javax.swing.JFrame {
     
 
     public void load() {
+        loadMaSP();
         DefaultTableModel model = (DefaultTableModel) tbQLSanPham.getModel();
         model.setRowCount(0);
         List<SanPham> list = sanPhamServices.getALL();
@@ -399,7 +423,6 @@ public class QLSanPham extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtMa = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtTen = new javax.swing.JTextField();
@@ -439,6 +462,7 @@ public class QLSanPham extends javax.swing.JFrame {
         txtPin = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         txtXuatXu = new javax.swing.JTextField();
+        txtMa = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -682,6 +706,8 @@ public class QLSanPham extends javax.swing.JFrame {
         jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel18.setText("Xuất Xứ");
 
+        txtMa.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -708,10 +734,10 @@ public class QLSanPham extends javax.swing.JFrame {
                                     .addComponent(jLabel6))
                                 .addGap(18, 18, 18)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(cbbdanhMuc, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtMa, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
+                            .addComponent(cbbdanhMuc, 0, 227, Short.MAX_VALUE)
                             .addComponent(txtTen, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbbNSX, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(cbbNSX, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtMa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
@@ -784,10 +810,13 @@ public class QLSanPham extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(txtMa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txtMa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(4, 4, 4)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1255,7 +1284,7 @@ public class QLSanPham extends javax.swing.JFrame {
     private keeptoo.KGradientPanel kGradientPanel4;
     private javax.swing.JTable tbQLSanPham;
     private javax.swing.JTextField txtCpu;
-    private javax.swing.JTextField txtMa;
+    private javax.swing.JLabel txtMa;
     private javax.swing.JTextField txtManHinh;
     private javax.swing.JTextField txtPin;
     private javax.swing.JTextField txtTen;

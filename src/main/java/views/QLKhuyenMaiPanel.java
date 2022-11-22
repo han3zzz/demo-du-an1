@@ -33,8 +33,31 @@ public class QLKhuyenMaiPanel extends javax.swing.JPanel {
         khuyenMaiServices = new QLKhuyenMaiServices();
         load();
     }
+    public void loadMaKM() {
+
+        String ma = "";
+        List<KhuyenMai> khuyenMais = khuyenMaiServices.getAll();
+        if (khuyenMais.size() == 0) {
+            ma = "KM0";
+        } else {
+            KhuyenMai sp = khuyenMaiServices.layMa();
+//          
+            ma = sp.getMaKM();
+        }
+
+        String mangString[] = ma.split("");
+        String so = "";
+        for (int i = 2; i < mangString.length; i++) {
+            so += mangString[i];
+        }
+
+        Integer sofinal = Integer.parseInt(so) + 1;
+        String maMoi = "KM" + sofinal;
+        txtMa.setText(maMoi);
+    }
     
      public void load() {
+         loadMaKM();
         DefaultTableModel model = (DefaultTableModel) tbbang.getModel();
         model.setRowCount(0);
         List<KhuyenMai> khuyenMais = khuyenMaiServices.getAll();
@@ -59,7 +82,7 @@ public class QLKhuyenMaiPanel extends javax.swing.JPanel {
 
     }
     public void clear(){
-        txtnakm.setText("");
+        load();
         txttenkm.setText("");
         cbbtrietkhau.setSelectedItem(10);
         txtngaybatdau.setDate(null);
@@ -70,7 +93,7 @@ public class QLKhuyenMaiPanel extends javax.swing.JPanel {
     }
 
     public KhuyenMai LayTT() throws ParseException {
-        String maKM = txtnakm.getText();
+        String maKM = txtMa.getText();
         String tenKM = txttenkm.getText();
         String chietKhau = (String) cbbtrietkhau.getSelectedItem();
         Integer ck = Integer.parseInt(chietKhau);
@@ -114,7 +137,7 @@ public class QLKhuyenMaiPanel extends javax.swing.JPanel {
         String trangThai = tbbang.getValueAt(index, 5).toString();
         cbbtrangthai.setSelectedItem(trangThai);
 
-        txtnakm.setText(ma);
+        txtMa.setText(ma);
         txttenkm.setText(ten);
         
         txtngaybatdau.setDate(date);
@@ -134,7 +157,6 @@ public class QLKhuyenMaiPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbbang = new javax.swing.JTable();
         jLabel13 = new javax.swing.JLabel();
-        txtnakm = new javax.swing.JTextField();
         txttenkm = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
@@ -153,6 +175,7 @@ public class QLKhuyenMaiPanel extends javax.swing.JPanel {
         txtngayketthuc = new com.toedter.calendar.JDateChooser();
         jLabel29 = new javax.swing.JLabel();
         cbbtrangthai = new javax.swing.JComboBox<>();
+        txtMa = new javax.swing.JLabel();
 
         khuyenmai.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -187,12 +210,6 @@ public class QLKhuyenMaiPanel extends javax.swing.JPanel {
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel13.setText("Mã KM");
-
-        txtnakm.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtnakmActionPerformed(evt);
-            }
-        });
 
         txttenkm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -324,6 +341,9 @@ public class QLKhuyenMaiPanel extends javax.swing.JPanel {
 
         cbbtrangthai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đang Khuyến Mãi", "Dừng Khuyến Mãi" }));
 
+        txtMa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtMa.setText("jLabel1");
+
         javax.swing.GroupLayout khuyenmaiLayout = new javax.swing.GroupLayout(khuyenmai);
         khuyenmai.setLayout(khuyenmaiLayout);
         khuyenmaiLayout.setHorizontalGroup(
@@ -342,9 +362,9 @@ public class QLKhuyenMaiPanel extends javax.swing.JPanel {
                                     .addComponent(jLabel28))
                                 .addGap(48, 48, 48)
                                 .addGroup(khuyenmaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(cbbtrietkhau, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cbbtrietkhau, 0, 208, Short.MAX_VALUE)
                                     .addComponent(txttenkm)
-                                    .addComponent(txtnakm, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(txtMa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(khuyenmaiLayout.createSequentialGroup()
                                 .addGroup(khuyenmaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel26)
@@ -372,10 +392,12 @@ public class QLKhuyenMaiPanel extends javax.swing.JPanel {
             khuyenmaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, khuyenmaiLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(khuyenmaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(khuyenmaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtnakm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(khuyenmaiLayout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(txtMa, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(khuyenmaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txttenkm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -441,10 +463,6 @@ public class QLKhuyenMaiPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_tbbangMouseReleased
 
-    private void txtnakmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnakmActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtnakmActionPerformed
-
     private void txttenkmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txttenkmActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txttenkmActionPerformed
@@ -456,7 +474,7 @@ public class QLKhuyenMaiPanel extends javax.swing.JPanel {
     private void btnAddMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMousePressed
         try {
             // TODO add your handling code here:
-            if (txtnakm.getText().trim().isEmpty() || txttenkm.getText().trim().isEmpty() || txtngaybatdau.getDate() == null || txtngayketthuc.getDate() == null) {
+            if (txtMa.getText().trim().isEmpty() || txttenkm.getText().trim().isEmpty() || txtngaybatdau.getDate() == null || txtngayketthuc.getDate() == null) {
                 JOptionPane.showMessageDialog(this, "Không được bỏ trống !!");
                 return;
 
@@ -593,7 +611,7 @@ public class QLKhuyenMaiPanel extends javax.swing.JPanel {
     private keeptoo.KGradientPanel kGradientPanel7;
     private javax.swing.JPanel khuyenmai;
     private static javax.swing.JTable tbbang;
-    private javax.swing.JTextField txtnakm;
+    private javax.swing.JLabel txtMa;
     private com.toedter.calendar.JDateChooser txtngaybatdau;
     private com.toedter.calendar.JDateChooser txtngayketthuc;
     private javax.swing.JTextField txttenkm;

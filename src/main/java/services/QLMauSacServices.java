@@ -43,4 +43,9 @@ public class QLMauSacServices implements IQLMauSacServices{
     public MauSac seachbyMa(String ma) {
         return msr.seachbyMa(ma);
     }
+
+    @Override
+    public MauSac layMa() {
+        return msr.layMa();
+    }
 }

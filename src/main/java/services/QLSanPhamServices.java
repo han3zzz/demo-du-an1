@@ -5,8 +5,10 @@
 package services;
 
 import domainmodels.SanPham;
+import java.util.Date;
 import java.util.List;
 import repositories.QLSanPhamRepositories;
+import viewmodels.ThongKeTheoNgay;
 
 /**
  *
@@ -43,4 +45,11 @@ public class QLSanPhamServices implements IQLSanPhamServices{
     public SanPham seachbyMa(String ma) {
         return spr.seachbyMa(ma);
     }
+
+    @Override
+    public SanPham layMa() {
+        return spr.layMa();
+    }
+
+   
 }

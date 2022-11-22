@@ -78,4 +78,10 @@ public class KhachHangRepositores {
         List<KhachHang> list = q.getResultList();
         return list.get(0);
     }
+    public KhachHang layMa() {
+        Session session = HibernateConfig.getFACTORY().openSession();
+        Query q = session.createQuery("From KhachHang where MaKH in (Select 'KH'+ Cast(Max(Cast(SUBSTRING(MaKH,3,Len(MaKH) - 2) as int)) as string) from KhachHang)");
+        List<KhachHang> list = q.getResultList();
+        return list.get(0);
+    }
 }

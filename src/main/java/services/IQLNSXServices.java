@@ -17,4 +17,5 @@ public interface IQLNSXServices {
     public boolean update(NSX nsx);
     public boolean delete(NSX nsx);
     public NSX seachbyMa(String ma);
+    public NSX layMa();
 }

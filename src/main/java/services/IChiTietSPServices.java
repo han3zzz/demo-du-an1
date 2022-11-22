@@ -26,4 +26,5 @@ public interface IChiTietSPServices {
     public void xoaImei(String ma);
     public List<ChiTietSP> count(String maSP);
     public void updateImeiTrangThai(String ma , Integer trangThai);
+    public List<ChiTietSP> getImei(String imei);
 }

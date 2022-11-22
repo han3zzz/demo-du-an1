@@ -126,4 +126,9 @@ public class ChiTietSPServices implements IChiTietSPServices{
    
 
 }
+
+    @Override
+    public List<ChiTietSP> getImei(String imei) {
+        return ctspr.getImei(imei);
+    }
 }

@@ -17,4 +17,5 @@ public interface IQLBoNhoTrongServices {
     public boolean update(BoNhoTrong m);
     public boolean delete(BoNhoTrong m);
     public BoNhoTrong seachbyMa(String ma);
+    public BoNhoTrong layMa();
 }

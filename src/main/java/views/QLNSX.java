@@ -32,12 +32,35 @@ public class QLNSX extends javax.swing.JFrame {
         services = new QLNSXServices();
         load();
     }
+    public void loadMaNSX() {
+
+        String ma = "";
+        List<NSX> nsxs = services.getALL();
+        if (nsxs.size() == 0) {
+            ma = "NS0";
+        } else {
+            NSX sp = services.layMa();
+//          
+            ma = sp.getMaNSX();
+        }
+
+        String mangString[] = ma.split("");
+        String so = "";
+        for (int i = 2; i < mangString.length; i++) {
+            so += mangString[i];
+        }
+
+        Integer sofinal = Integer.parseInt(so) + 1;
+        String maMoi = "NS" + sofinal;
+        txtMa.setText(maMoi);
+    }
     public void loadCbbNSX(){
         List<NSX> items = services.getALL();
         QLSanPham.loadCbbNsx(items);
     }
     
     public void load() {
+        loadMaNSX();
         DefaultTableModel model = (DefaultTableModel) tbNSX.getModel();
         model.setRowCount(0);
         List<NSX> list = services.getALL();
@@ -112,7 +135,6 @@ public class QLNSX extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtMa = new javax.swing.JTextField();
         txtTen = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbNSX = new javax.swing.JTable();
@@ -124,6 +146,7 @@ public class QLNSX extends javax.swing.JFrame {
         btnDelete = new javax.swing.JLabel();
         kGradientPanel4 = new keeptoo.KGradientPanel();
         btnSearch = new javax.swing.JLabel();
+        txtMa = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -251,6 +274,9 @@ public class QLNSX extends javax.swing.JFrame {
             .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
         );
 
+        txtMa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtMa.setText("jLabel4");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -273,8 +299,8 @@ public class QLNSX extends javax.swing.JFrame {
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(31, 31, 31)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtMa, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
-                            .addComponent(txtTen)))
+                            .addComponent(txtTen, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
+                            .addComponent(txtMa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(75, 75, 75)
                         .addComponent(kGradientPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -292,9 +318,9 @@ public class QLNSX extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtMa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtMa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -307,7 +333,7 @@ public class QLNSX extends javax.swing.JFrame {
                     .addComponent(kGradientPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -513,7 +539,7 @@ public class QLNSX extends javax.swing.JFrame {
     private keeptoo.KGradientPanel kGradientPanel3;
     private keeptoo.KGradientPanel kGradientPanel4;
     private javax.swing.JTable tbNSX;
-    private javax.swing.JTextField txtMa;
+    private javax.swing.JLabel txtMa;
     private javax.swing.JTextField txtTen;
     // End of variables declaration//GEN-END:variables
 }

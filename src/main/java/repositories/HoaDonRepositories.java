@@ -12,6 +12,7 @@ import javax.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import utilities.HibernateConfig;
+import viewmodels.ThongKeTheoNgay;
 
 /**
  *
@@ -164,6 +165,7 @@ public class HoaDonRepositories {
         List<HoaDon> list = q.getResultList();
         return list;
     }
+    
 
   
 

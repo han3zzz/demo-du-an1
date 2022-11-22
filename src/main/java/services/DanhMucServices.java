@@ -45,4 +45,9 @@ public class DanhMucServices implements IDanhMucServices {
         return repo.seachbyMa(ma);
     }
 
+    @Override
+    public DanhMuc layMa() {
+       return repo.layMa();
+    }
+
 }

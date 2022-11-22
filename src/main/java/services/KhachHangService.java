@@ -48,6 +48,11 @@ public class KhachHangService implements IKhachHangService{
     public KhachHang fill(String maKH) {
         return khr.fill(maKH);
     }
+
+    @Override
+    public KhachHang layMa() {
+        return khr.layMa();
+    }
     
      
 

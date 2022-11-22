@@ -5,7 +5,9 @@
 package services;
 
 import domainmodels.SanPham;
+import java.util.Date;
 import java.util.List;
+import viewmodels.ThongKeTheoNgay;
 
 /**
  *
@@ -17,5 +19,7 @@ public interface IQLSanPhamServices {
     public boolean update(SanPham sanPham);
     public boolean delete(SanPham sanPham);
     public SanPham seachbyMa(String ma);
+    public SanPham layMa();
+    
     
 }

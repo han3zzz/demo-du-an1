@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import services.ChiTietSPServices;
 import services.GetImeiByMaSPServices;
@@ -38,6 +39,7 @@ public class Imei extends javax.swing.JFrame {
     private IChiTietSPServices chiTietSPServices;
     private IHoaDonServices hoaDonServices;
     private IHoaDonChiTietServies hoaDonChiTietServies;
+
     public Imei() {
         initComponents();
 
@@ -73,6 +75,8 @@ public class Imei extends javax.swing.JFrame {
         btnAdd = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         cbbImei = new javax.swing.JComboBox<>();
+        txtTimkiem = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -104,25 +108,43 @@ public class Imei extends javax.swing.JFrame {
 
         cbbImei.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        txtTimkiem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimkiemKeyReleased(evt);
+            }
+        });
+
+        jLabel1.setText("Search");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(cbbImei, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(54, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(178, Short.MAX_VALUE)
                 .addComponent(kGradientPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(157, 157, 157))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtTimkiem)
+                    .addComponent(cbbImei, 0, 242, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(73, 73, 73)
+                .addGap(33, 33, 33)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtTimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbbImei, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -156,10 +178,10 @@ public class Imei extends javax.swing.JFrame {
             QLBanHangPanel.loadSoLuongSanPham(1);
             String imei = (String) cbbImei.getSelectedItem();
             ChiTietSP c = chiTietSPServices.seachbyMa(imei);
-            chiTietSPServices.updateImeiTrangThai(imei,2);
+            chiTietSPServices.updateImeiTrangThai(imei, 2);
             QLBanHangPanel.loadGioHang(c);
             HoaDonChiTiet hdct = new HoaDonChiTiet();
-            HoaDon hd = null ;
+            HoaDon hd = null;
             List<HoaDon> hoaDons = hoaDonServices.getALL();
             for (HoaDon hoaDon : hoaDons) {
                 if (hoaDon.getMaHD().equals(getImeiByMaSPServices.getMaHD())) {
@@ -170,7 +192,7 @@ public class Imei extends javax.swing.JFrame {
             ZonedDateTime now = ZonedDateTime.now();
             Date date = new SimpleDateFormat("MM-dd-yyyy").parse(dtf.format(now));
             hoaDonServices.updateNgaySua(date, hd.getMaHD());
-            ChiTietSP chiTietSP = null ;
+            ChiTietSP chiTietSP = null;
             List<ChiTietSP> chiTietSPs = chiTietSPServices.getImei();
             for (ChiTietSP chiTietSP1 : chiTietSPs) {
                 if (chiTietSP1.getMaImei().equals(imei)) {
@@ -182,7 +204,7 @@ public class Imei extends javax.swing.JFrame {
             hdct.setSoLuong(1);
             hdct.setDonGia(c.getGiaBan());
             hoaDonChiTietServies.add(hdct);
-            Integer tongTien = 0 ;
+            Integer tongTien = 0;
             String tongTienstr = "";
             List<HoaDonChiTiet> hdcts = hoaDonChiTietServies.getALL(getImeiByMaSPServices.getMaHD());
             for (HoaDonChiTiet hdct1 : hdcts) {
@@ -195,6 +217,29 @@ public class Imei extends javax.swing.JFrame {
             Logger.getLogger(Imei.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnAddMousePressed
+
+    private void txtTimkiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimkiemKeyReleased
+        // TODO add your handling code here:
+        String checkSo = "^[0-9]*$";
+        if (!txtTimkiem.getText().matches(checkSo)) {
+            JOptionPane.showMessageDialog(this, "Imei phải là số !");
+            txtTimkiem.setText("");
+            return;
+        }
+        if (txtTimkiem.getText().length() > 15) {
+            JOptionPane.showMessageDialog(this, "Imei vượt quá độ dài tìm kiếm !");
+            return;
+        }
+        List<ChiTietSP> list = chiTietSPServices.getImei(txtTimkiem.getText());
+        if (txtTimkiem.getText().equals("")) {
+            hienThi();
+        } else {
+            cbbImei.removeAllItems();;
+            for (ChiTietSP chiTietSP : list) {
+                cbbImei.addItem(chiTietSP.getMaImei());
+            }
+        }
+    }//GEN-LAST:event_txtTimkiemKeyReleased
 
     /**
      * @param args the command line arguments
@@ -234,8 +279,10 @@ public class Imei extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnAdd;
     private javax.swing.JComboBox<String> cbbImei;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private keeptoo.KGradientPanel kGradientPanel2;
+    private javax.swing.JTextField txtTimkiem;
     // End of variables declaration//GEN-END:variables
 }

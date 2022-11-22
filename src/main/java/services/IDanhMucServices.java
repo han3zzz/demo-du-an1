@@ -17,4 +17,5 @@ public interface IDanhMucServices  {
     public boolean update(DanhMuc d);
     public boolean delete(DanhMuc d);
     public DanhMuc seachbyMa(String ma);
+    public DanhMuc layMa();
 }

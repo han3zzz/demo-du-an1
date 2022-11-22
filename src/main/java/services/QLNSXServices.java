@@ -44,4 +44,9 @@ public class QLNSXServices implements IQLNSXServices{
     public NSX seachbyMa(String ma) {
         return nsxr.seachbyMa(ma);
     }
+
+    @Override
+    public NSX layMa() {
+        return nsxr.layMa();
+    }
 }

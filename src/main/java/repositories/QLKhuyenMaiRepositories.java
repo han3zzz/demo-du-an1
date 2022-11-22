@@ -74,5 +74,11 @@ public class QLKhuyenMaiRepositories {
         }
         return list.get(0);
     }
+    public KhuyenMai layMa() {
+        Session session = HibernateConfig.getFACTORY().openSession();
+        Query q = session.createQuery("From KhuyenMai where MaKM in (Select 'KM'+ Cast(Max(Cast(SUBSTRING(MaKM,3,Len(MaKM) - 2) as int)) as string) from KhuyenMai)");
+        List<KhuyenMai> list = q.getResultList();
+        return list.get(0);
+    }
     
 }
