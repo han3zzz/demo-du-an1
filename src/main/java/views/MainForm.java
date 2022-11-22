@@ -111,6 +111,7 @@ public class MainForm extends javax.swing.JFrame {
             listItems.add(new MenuServices("doimatkhau", doimatkhau, btnDoiMatKhau));
             listItems.add(new MenuServices("banhang", banhang, btnQLBanHang));
             listItems.add(new MenuServices("khachhang", khachhang, btnKhachHang));
+            listItems.add(new MenuServices("hoadon", hoadon, btnQLHoaDon));
         }
 
         chuyenManHinhServices.setEvent(listItems);
