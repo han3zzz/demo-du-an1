@@ -498,7 +498,7 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {
-                Logger.getLogger(QLBanHang.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(QLBanHangPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
             Result result = null;
             BufferedImage image = null;
@@ -521,7 +521,7 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
             }
             if (result != null) {
 //               txtKetQua.setText(result.getText());
-                System.out.println(result.getText());
+//                System.out.println(result.getText());
                 int index = tbHoaDon.getSelectedRow();
                 if (index == -1) {
                     JOptionPane.showMessageDialog(this, "Vui lòng chọn hóa đơn trước khi thêm sản phẩm vào giỏ hàng !");

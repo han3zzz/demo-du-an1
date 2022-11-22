@@ -802,13 +802,16 @@ public class MainForm extends javax.swing.JFrame {
 
     private void btnQLBaoHanhMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQLBaoHanhMousePressed
         // TODO add your handling code here:
+//         QLBaoHanhPanel.windowClosed();
         QLBanHangPanel.windowClosed();
+        QLBaoHanhPanel.windowClosed();
     }//GEN-LAST:event_btnQLBaoHanhMousePressed
 
     private void btnQLBanHangMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQLBanHangMousePressed
         // TODO add your handling code here:
+        QLBaoHanhPanel.windowClosed();
         QLBanHangPanel.windowClosed();
-         QLBaoHanhPanel.windowClosed();
+//         
 
 
     }//GEN-LAST:event_btnQLBanHangMousePressed

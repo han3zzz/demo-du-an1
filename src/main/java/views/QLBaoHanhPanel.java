@@ -55,8 +55,8 @@ public class QLBaoHanhPanel extends javax.swing.JPanel implements Runnable, Thre
     /**
      * Creates new form QLBaoHanhPanel
      */
-    private WebcamPanel panel = null;
-    private static Webcam webcam = null;
+    private WebcamPanel panel1 = null;
+    private static Webcam webcam1 = null;
     private Executor executor = Executors.newSingleThreadExecutor(this);
     private IQLBaoHanhServices baoHanhServices;
     private IQLBaoHanhChiTietServices baoHanhChiTietServices;
@@ -73,22 +73,23 @@ public class QLBaoHanhPanel extends javax.swing.JPanel implements Runnable, Thre
         cbbImei.removeAllItems();
     }
      public static void windowClosed() {
-        if (webcam == null) {
+        if (webcam1 == null) {
             return;
         }
-        webcam.close();
+        webcam1.close();
+        
     }
 
     private void initWebcam() {
 
         Dimension size = WebcamResolution.QVGA.getSize();
-        webcam = Webcam.getWebcams().get(0);
-        webcam.setViewSize(size);
+        webcam1 = Webcam.getWebcams().get(0);
+        webcam1.setViewSize(size);
 
-        panel = new WebcamPanel(webcam);
-        panel.setPreferredSize(size);
-        panel.setFPSDisplayed(true);
-        jPanel1.add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 440, 250));
+        panel1 = new WebcamPanel(webcam1);
+        panel1.setPreferredSize(size);
+        panel1.setFPSDisplayed(true);
+        jPanel1.add(panel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 440, 250));
         executor.execute(this);
 
     }
@@ -99,13 +100,13 @@ public class QLBaoHanhPanel extends javax.swing.JPanel implements Runnable, Thre
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {
-                Logger.getLogger(QLBanHang.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(QLBaoHanhPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
             Result result = null;
             BufferedImage image = null;
 
-            if (webcam.isOpen()) {
-                if ((image = webcam.getImage()) == null) {
+            if (webcam1.isOpen()) {
+                if ((image = webcam1.getImage()) == null) {
                     continue;
                 }
             }
@@ -121,18 +122,16 @@ public class QLBaoHanhPanel extends javax.swing.JPanel implements Runnable, Thre
                 //khong co du lieu
             }
             if (result != null) {
-                try {
-                    //               txtKetQua.setText(result.getText());
-//                System.out.println(result.getText());
-                    ChiTietSP chiTietSP1 = chiTietSPServices.seachbyMa(result.getText());
-                    if (chiTietSP1.getTrangThai() == 3) {
-                        JOptionPane.showMessageDialog(this, "Sản phẩm này đã được bảo hành !");
-                        return;
-                    }
+                try {                  
                     BaoHanhChiTiet bhct = baoHanhChiTietServices.seachbyMa(result.getText());
                     if (bhct == null) {
                         JOptionPane.showMessageDialog(this, "Sản phẩm này không được bảo hành !");
-                        return;
+                        continue;
+                    }
+                    ChiTietSP chiTietSP1 = chiTietSPServices.seachbyMa(result.getText());
+                    if (chiTietSP1.getTrangThai() == 3) {
+                        JOptionPane.showMessageDialog(this, "Sản phẩm này đã được bảo hành !");
+                        continue;
                     }
                     ChiTietSP c = chiTietSPServices.seachbyMa(result.getText());
                     String maSP = c.getSanPham().getMaSP();
