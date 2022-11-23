@@ -5,7 +5,9 @@
 package services;
 
 import domainmodels.KhachHang;
+import java.util.Date;
 import java.util.List;
+import viewmodels.ThongKeKhachHang;
 
 /**
  *
@@ -19,4 +21,8 @@ public interface IKhachHangService {
     public KhachHang seachbyMa(String ma);
     public KhachHang fill(String maKH);
     public KhachHang layMa();
+    public List<KhachHang> phanTrang(Integer limitPage ,Integer posion);
+    public List<ThongKeKhachHang> thongKeTheoNgay(Date date);
+    public List<ThongKeKhachHang> thongKeTheoThang(Integer thang , Integer nam);
+    public List<ThongKeKhachHang> thongKeTheoNam(Integer nam);
 }

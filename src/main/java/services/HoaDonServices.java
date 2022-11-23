@@ -10,7 +10,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import repositories.HoaDonRepositories;
-import viewmodels.ThongKeTheoNgay;
+import viewmodels.ThongKeSanPham;
+
 
 /**
  *
@@ -87,6 +88,33 @@ public class HoaDonServices implements IHoaDonServices{
     public List<HoaDon> countHoaDon(Integer trangThai) {
         return  hdr.countHoaDon(trangThai);
     }
+
+    @Override
+    public List<HoaDon> countHoaDonHuytheoNgay(Integer trangThai, Date ngay) {
+        return hdr.countHoaDonHuytheoNgay(trangThai, ngay);
+    }
+
+    @Override
+    public List<HoaDon> countHoaDontheoThang(Integer trangThai, Integer thang, Integer nam) {
+        return hdr.countHoaDontheoThang(trangThai, thang, nam);
+    }
+
+    @Override
+    public List<HoaDon> countHoaDonHuytheoThang(Integer trangThai, Integer thang, Integer nam) {
+        return hdr.countHoaDonHuytheoThang(trangThai, thang, nam);
+    }
+
+    @Override
+    public List<HoaDon> countHoaDontheoNam(Integer trangThai, Integer nam) {
+        return hdr.countHoaDontheoNam(trangThai, nam);
+    }
+
+    @Override
+    public List<HoaDon> countHoaDonHuytheoNam(Integer trangThai, Integer nam) {
+        return hdr.countHoaDonHuytheoNam(trangThai, nam);
+    }
+
+   
 
     
     

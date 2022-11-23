@@ -18,5 +18,6 @@ public interface IQLKhuyenMaiServices {
     public boolean delete(KhuyenMai khuyenMai);
     public KhuyenMai seachbyMa(String ma);
     public KhuyenMai layMa();
+    public  List<KhuyenMai> getAllByMa(String ma);
     
 }

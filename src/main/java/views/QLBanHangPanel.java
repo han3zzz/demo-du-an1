@@ -1583,6 +1583,7 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
             baoHanhServices.add(baoHanh);
             String imei = "";
             BigDecimal donGia = null;
+            BigDecimal giamgia1 = null;
 
             Calendar c1 = Calendar.getInstance();
 
@@ -1630,6 +1631,40 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
 
                 Double donGiaDb = Double.parseDouble(tbGioHang.getValueAt(i, 4).toString());
                 donGia = BigDecimal.valueOf(donGiaDb);
+                Integer chietKhau = 0;
+                HoaDon hoaDon11 = hoaDonServices.seachbyMa(maHD);
+                
+                List<HoaDonChiTiet> list1 = hoaDonChiTietServies.getALL(maHD);
+                for (HoaDonChiTiet hoaDonChiTiet : list1) {
+                    if (hoaDon11.getKhuyenMai() == null) {
+                    chietKhau = 0;
+                    HoaDonChiTiet hdct1 = hoaDonChiTietServies.seachbyMaImei(hoaDonChiTiet.getMaImei().getMaImei());
+                    String donGiaString = String.valueOf(hdct1.getDonGia());
+                    Double giamgiadb = Double.parseDouble(donGiaString) * (chietKhau * 0.01);
+                    hoaDonChiTietServies.updateGiamGia(maHD, hoaDonChiTiet.getMaImei().getMaImei(), BigDecimal.valueOf(giamgiadb));
+                    continue;
+                    
+                }
+                    chietKhau = hoaDon11.getKhuyenMai().getChietKhau();
+                    HoaDonChiTiet hdct1 = hoaDonChiTietServies.seachbyMaImei(hoaDonChiTiet.getMaImei().getMaImei());
+                    String donGiaString = String.valueOf(hdct1.getDonGia());
+                    Double giamgiadb = Double.parseDouble(donGiaString) * (chietKhau * 0.01);
+                    hoaDonChiTietServies.updateGiamGia(maHD, hoaDonChiTiet.getMaImei().getMaImei(), BigDecimal.valueOf(giamgiadb));
+
+                }
+//                if (hoaDon11.getKhuyenMai() == null) {
+//                    return;
+//                }
+//                else{
+//                    
+//                }
+
+//                 System.out.println(donGiaString);
+//                 System.out.println(hoaDon11.getKhuyenMai().getChietKhau());
+//                 System.out.println(Double.parseDouble(donGiaString));
+//                 System.out.println(hoaDon11.getKhuyenMai().getChietKhau() * 0.01);
+//                System.out.println(giamgiadb);
+//                System.out.println(giamgiadb);
                 HoaDon hd1 = null;
                 List<HoaDon> hoaDons = hoaDonServices.getALL();
                 for (HoaDon hoaDon : hoaDons) {
@@ -1647,11 +1682,11 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
                     }
                 }
 
-                hdct.setMaHD(hd1);
-                hdct.setMaImei(c);
-                hdct.setSoLuong(1);
-                hdct.setDonGia(donGia);
-
+//                hdct.setMaHD(hd1);
+//                hdct.setMaImei(c);
+//                hdct.setSoLuong(1);
+//                hdct.setDonGia(donGia);
+//                hdct.setGiamGia(BigDecimal.valueOf(1000));
                 List<HoaDonChiTiet> list = hoaDonChiTietServies.getALL(maHD);
                 for (HoaDonChiTiet hoaDonChiTiet : list) {
                     if (imei.equals(hoaDonChiTiet.getMaImei().getMaImei())) {
@@ -1676,8 +1711,8 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
                     }
 
                 }
-                hoaDonChiTietServies.add(hdct);
 
+//                hoaDonChiTietServies.add(hdct);
             }
 
         } catch (ParseException ex) {

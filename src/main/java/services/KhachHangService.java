@@ -5,8 +5,10 @@
 package services;
 
 import domainmodels.KhachHang;
+import java.util.Date;
 import java.util.List;
 import repositories.KhachHangRepositores;
+import viewmodels.ThongKeKhachHang;
 
 /**
  *
@@ -52,6 +54,26 @@ public class KhachHangService implements IKhachHangService{
     @Override
     public KhachHang layMa() {
         return khr.layMa();
+    }
+
+    @Override
+    public List<KhachHang> phanTrang(Integer limitPage, Integer posion) {
+        return khr.phanTrang(limitPage, posion);
+    }
+
+    @Override
+    public List<ThongKeKhachHang> thongKeTheoNgay(Date date) {
+        return khr.thongKeTheoNgay(date);
+    }
+
+    @Override
+    public List<ThongKeKhachHang> thongKeTheoThang(Integer thang, Integer nam) {
+        return khr.thongKeTheoThang(thang, nam);
+    }
+
+    @Override
+    public List<ThongKeKhachHang> thongKeTheoNam(Integer nam) {
+        return khr.thongKeTheoNam(nam);
     }
     
      

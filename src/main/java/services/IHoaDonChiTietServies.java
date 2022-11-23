@@ -5,7 +5,11 @@
 package services;
 
 import domainmodels.HoaDonChiTiet;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
+import viewmodels.ThongKeDoanhThu;
+import viewmodels.ThongKeSanPham;
 
 /**
  *
@@ -18,4 +22,14 @@ public interface IHoaDonChiTietServies {
     public void delete(String imei ,String mahd);
     public HoaDonChiTiet seachbyMaImei(String ma);
     public void updateImei(String ma , String maImei , String maImeiMoi);
+    public List<ThongKeSanPham> thongKeTheoNgay(Date date);
+    public List<ThongKeSanPham> thongKeSoLuongDaBanTheoNgay(Date date);
+    public List<ThongKeDoanhThu> thongKeDoanhThuTheoNgay(Date date);
+    public void updateGiamGia(String ma , String maImei , BigDecimal giamGia);
+    public List<ThongKeSanPham> thongKeTheoThang(Integer thang , Integer nam);
+    public List<ThongKeSanPham> thongKeSoLuongDaBanTheoThang(Integer thang , Integer nam);
+    public List<ThongKeDoanhThu> thongKeDoanhThuTheoThang(Integer thang , Integer nam);
+    public List<ThongKeSanPham> thongKeTheoNam(Integer nam);
+    public List<ThongKeSanPham> thongKeSoLuongDaBanTheoNam(Integer nam);
+    public List<ThongKeDoanhThu> thongKeDoanhThuTheoNam(Integer nam);
 }

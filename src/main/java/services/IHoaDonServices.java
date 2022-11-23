@@ -8,7 +8,8 @@ import domainmodels.HoaDon;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import viewmodels.ThongKeTheoNgay;
+import viewmodels.ThongKeSanPham;
+
 
 /**
  *
@@ -28,4 +29,9 @@ public interface IHoaDonServices {
     public HoaDon layMa();
     public List<HoaDon> countHoaDontheoNgay(Integer trangThai , Date ngay);
     public List<HoaDon> countHoaDon(Integer trangThai);
+    public List<HoaDon> countHoaDonHuytheoNgay(Integer trangThai, Date ngay);
+    public List<HoaDon> countHoaDontheoThang(Integer trangThai, Integer thang , Integer nam);
+    public List<HoaDon> countHoaDonHuytheoThang(Integer trangThai, Integer thang , Integer nam);
+    public List<HoaDon> countHoaDontheoNam(Integer trangThai,  Integer nam);
+    public List<HoaDon> countHoaDonHuytheoNam(Integer trangThai, Integer nam);
 }

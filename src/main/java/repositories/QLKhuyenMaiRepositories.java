@@ -80,5 +80,13 @@ public class QLKhuyenMaiRepositories {
         List<KhuyenMai> list = q.getResultList();
         return list.get(0);
     }
+    public  List<KhuyenMai> getAllByMa(String ma){
+        Session session = HibernateConfig.getFACTORY().openSession();
+        Query q = session.createQuery("From KhuyenMai where MaKM = :ma");
+        q.setParameter("ma", ma);
+        List<KhuyenMai> list = q.getResultList();
+        return list;
+        
+    }
     
 }

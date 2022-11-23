@@ -49,6 +49,11 @@ public class QLKhuyenMaiServices implements IQLKhuyenMaiServices{
     public KhuyenMai layMa() {
         return  repo.layMa();
     }
+
+    @Override
+    public List<KhuyenMai> getAllByMa(String ma) {
+        return repo.getAllByMa(ma);
+    }
     
     
 }

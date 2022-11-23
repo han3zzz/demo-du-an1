@@ -11,7 +11,16 @@ package viewmodels;
 public class ThongKeSanPham {
     private String maSP ;
     private String tenSP ;
-    private Integer soLuongBan ;
+    private Long soLuongBan ;
+
+    public ThongKeSanPham() {
+    }
+
+    public ThongKeSanPham(String maSP, String tenSP, Long soLuongBan) {
+        this.maSP = maSP;
+        this.tenSP = tenSP;
+        this.soLuongBan = soLuongBan;
+    }
 
     public String getMaSP() {
         return maSP;
@@ -29,13 +38,15 @@ public class ThongKeSanPham {
         this.tenSP = tenSP;
     }
 
-    public Integer getSoLuongBan() {
+    public Long getSoLuongBan() {
         return soLuongBan;
     }
 
-    public void setSoLuongBan(Integer soLuongBan) {
+    public void setSoLuongBan(Long soLuongBan) {
         this.soLuongBan = soLuongBan;
     }
+
+    
     
     
 }

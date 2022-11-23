@@ -5,11 +5,13 @@
 package repositories;
 
 import domainmodels.KhachHang;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import utilities.HibernateConfig;
+import viewmodels.ThongKeKhachHang;
 
 /**
  *
@@ -83,5 +85,55 @@ public class KhachHangRepositores {
         Query q = session.createQuery("From KhachHang where MaKH in (Select 'KH'+ Cast(Max(Cast(SUBSTRING(MaKH,3,Len(MaKH) - 2) as int)) as string) from KhachHang)");
         List<KhachHang> list = q.getResultList();
         return list.get(0);
+    }
+    public List<KhachHang> phanTrang(Integer limitPage ,Integer posion){
+        Session s = HibernateConfig.getFACTORY().openSession();
+        Query query = s.createQuery("From KhachHang").setFirstResult(posion).setMaxResults(limitPage);
+        List<KhachHang> list = query.getResultList();
+        return list;
+        
+    }
+    public List<ThongKeKhachHang> thongKeTheoNgay(Date date){
+        Session s = HibernateConfig.getFACTORY().openSession();
+       
+        Query query = s.createQuery("Select new viewmodels.ThongKeKhachHang(e.khachHang.maKH , e.khachHang.tenKH , COUNT(e.maHD)) FROM HoaDon e "
+                + "Where e.maHD.trangThai = 2 and ngayMua = :ngay "    
+                + "Group by e.khachHang.maKH , e.khachHang.tenKH "
+                + "Order by COUNT(e.maHD) DESC");
+        query.setParameter("ngay", date);
+        query.setMaxResults(5);
+//        query.setFirstResult(0);
+//        query.setMaxResults(10);
+        List<ThongKeKhachHang> list = query.getResultList();
+        return list;
+    }
+    public List<ThongKeKhachHang> thongKeTheoThang(Integer thang , Integer nam){
+        Session s = HibernateConfig.getFACTORY().openSession();
+       
+        Query query = s.createQuery("Select new viewmodels.ThongKeKhachHang(e.khachHang.maKH , e.khachHang.tenKH , COUNT(e.maHD)) FROM HoaDon e "
+                + "Where e.maHD.trangThai = 2 and MONTH(ngayMua) = :ngay and YEAR(ngayMua) = :nam "    
+                + "Group by e.khachHang.maKH , e.khachHang.tenKH "
+                + "Order by COUNT(e.maHD) DESC");
+        query.setParameter("ngay", thang);
+        query.setParameter("nam", nam);
+        query.setMaxResults(5);
+//        query.setFirstResult(0);
+//        query.setMaxResults(10);
+        List<ThongKeKhachHang> list = query.getResultList();
+        return list;
+    }
+    public List<ThongKeKhachHang> thongKeTheoNam( Integer nam){
+        Session s = HibernateConfig.getFACTORY().openSession();
+       
+        Query query = s.createQuery("Select new viewmodels.ThongKeKhachHang(e.khachHang.maKH , e.khachHang.tenKH , COUNT(e.maHD)) FROM HoaDon e "
+                + "Where e.maHD.trangThai = 2 and YEAR(ngayMua) = :nam "    
+                + "Group by e.khachHang.maKH , e.khachHang.tenKH "
+                + "Order by COUNT(e.maHD) DESC");
+        query.setParameter("nam", nam);
+        query.setMaxResults(5);
+//        query.setFirstResult(0);
+//        query.setMaxResults(10);
+        List<ThongKeKhachHang> list = query.getResultList();
+        return list;
     }
 }

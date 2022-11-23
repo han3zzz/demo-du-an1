@@ -5,21 +5,40 @@
 package views;
 
 import domainmodels.HoaDon;
+import domainmodels.KhuyenMai;
 import domainmodels.SanPham;
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.data.category.DefaultCategoryDataset;
 import services.HoaDonChiTietServices;
 import services.HoaDonServices;
 import services.IHoaDonChiTietServies;
 import services.IHoaDonServices;
+import services.IKhachHangService;
+import services.IQLKhuyenMaiServices;
 import services.IQLSanPhamServices;
+import services.KhachHangService;
+import services.QLKhuyenMaiServices;
 import services.QLSanPhamServices;
+import viewmodels.ThongKeDoanhThu;
+import viewmodels.ThongKeKhachHang;
+import viewmodels.ThongKeSanPham;
 
 /**
  *
@@ -30,61 +49,132 @@ public class QLThongKePanel extends javax.swing.JPanel {
     /**
      * Creates new form QLThongKePanel
      */
-     private IHoaDonServices hoaDonServices;
+    private IHoaDonServices hoaDonServices;
     private IHoaDonChiTietServies hoaDonChiTietServies;
     private IQLSanPhamServices sanPhamServices;
+    private IKhachHangService khachHangService;
+    private IQLKhuyenMaiServices khuyenMaiServices;
+
     public QLThongKePanel() {
         initComponents();
-        
-         hoaDonServices = new HoaDonServices();
+
+        hoaDonServices = new HoaDonServices();
         hoaDonChiTietServies = new HoaDonChiTietServices();
         sanPhamServices = new QLSanPhamServices();
-        hienThiThongKe();
-//        hienThiTop5TheoNgay();
+        khachHangService = new KhachHangService();
+        khuyenMaiServices = new QLKhuyenMaiServices();
+        hienThiTop5TheoNgay();
+        hienThiDoanhThu();
+        txtDate.setMaxSelectableDate(new Date());
+        cbbThang.setVisible(false);
+            cbbNam.setVisible(false);
+            btnThongKeThang.setVisible(false);
+            btnThongKeNam.setVisible(false);
+           
     }
-//    public void hienThiTop5TheoNgay(){
-//         try {
-//             DefaultTableModel model = (DefaultTableModel) tbSanPham.getModel();
-//             model.setRowCount(0);
-//             Date date = new SimpleDateFormat("MM-dd-yyyy").parse("17-11-2022");
-//             List<ThongKeTheoNgay> sanPhams = hoaDonServices.thongKeTheoNgays(date);
-//             for (ThongKeTheoNgay sanPham : sanPhams) {
-//                 Object[] data = new Object[]{
-//                     sanPham.getMaSP(),
-//                     sanPham.getTenSP(),
-//                     sanPham.getSoLuongBan()
-//                 };
-//                 model.addRow(data);
-//             }} catch (ParseException ex) {
-//             Logger.getLogger(QLThongKePanel.class.getName()).log(Level.SEVERE, null, ex);
-//         }
-//    }
-    public void hienThiThongKe() {
-//            Date date = new SimpleDateFormat("MM-dd-yyyy").parse("11-17-2022");
-        List<HoaDon> hoaDons = hoaDonServices.countHoaDon(2);
-        txtSoLuongDaBan.setText(String.valueOf(hoaDons.size()));
 
-        List<HoaDon> hoaDons1 = hoaDonServices.countHoaDon(1);
-        txtHoaDonHuy.setText(String.valueOf(hoaDons1.size()));
-        Double doanhThudb = 0.0;
-        Double giamGiadb = 0.0 ;
-        for (HoaDon hoaDon : hoaDons) {
-            String doanhThuString = String.valueOf(hoaDon.getTongTien());
-            Double doanhThuDouble = Double.parseDouble(doanhThuString);
-            doanhThudb += doanhThuDouble;
-            String giamGiaString = String.valueOf(hoaDon.getGiamGia());
-            Double giamGiaDouble = Double.parseDouble(giamGiaString);
-            giamGiadb += giamGiaDouble;
-            
-            
+    public void hienThiTop5TheoNgay() {
+        try {
+            DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+            DefaultTableModel model = (DefaultTableModel) tbSanPham.getModel();
+            model.setRowCount(0);
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+            ZonedDateTime now = ZonedDateTime.now();
+            String ngayHomNay = dtf.format(now);
+
+            Date date = new SimpleDateFormat("MM-dd-yyyy").parse(ngayHomNay);
+            List<ThongKeSanPham> thongKeSanPhams = hoaDonChiTietServies.thongKeSoLuongDaBanTheoNgay(date);
+            Integer soLuongDaBan = 0;
+            for (ThongKeSanPham thongKeSanPham : thongKeSanPhams) {
+                soLuongDaBan += thongKeSanPham.getSoLuongBan().intValue();
+            }
+            txtSLDaBan.setText(String.valueOf(soLuongDaBan));
+            List<ThongKeSanPham> sanPhams = hoaDonChiTietServies.thongKeTheoNgay(date);
+            for (ThongKeSanPham sanPham : sanPhams) {
+                dataset.setValue(sanPham.getSoLuongBan(), "Quantity", sanPham.getTenSP());
+                Object[] data = new Object[]{
+                    sanPham.getMaSP(),
+                    sanPham.getTenSP(),
+                    sanPham.getSoLuongBan()
+                };
+                model.addRow(data);
+            }
+            JFreeChart chart = ChartFactory.createBarChart("Số Lượng Bán ", "", "Số lượng bán", dataset, PlotOrientation.VERTICAL, false, true, false);
+            CategoryPlot categoryPlot = chart.getCategoryPlot();
+            categoryPlot.setBackgroundPaint(Color.WHITE);
+            BarRenderer renderer = (BarRenderer) categoryPlot.getRenderer();
+            Color rColor3 = new Color(204, 0, 51);
+            renderer.setSeriesPaint(0, rColor3);
+            ChartPanel barpChartPanel = new ChartPanel(chart);
+            jPanel1.removeAll();
+            jPanel1.add(barpChartPanel, BorderLayout.CENTER);
+            jPanel1.validate();
+            DefaultTableModel model1 = (DefaultTableModel) tbKhachHang.getModel();
+            model1.setRowCount(0);
+            List<ThongKeKhachHang> thongKeKhachHangs = khachHangService.thongKeTheoNgay(date);
+            for (ThongKeKhachHang thongKeKhachHang : thongKeKhachHangs) {
+                Object[] data = new Object[]{
+                    thongKeKhachHang.getMaKH(),
+                    thongKeKhachHang.getTenKH(),
+                    thongKeKhachHang.getSoLanMua()
+                };
+                model1.addRow(data);
+            }
+
+        } catch (ParseException ex) {
+            Logger.getLogger(QLThongKePanel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        long number = Double.valueOf(doanhThudb).longValue();
-        Double loinhuandb = doanhThudb - giamGiadb;
-        long number1 = Double.valueOf(loinhuandb).longValue();
-        txtDoanhThu.setText(String.valueOf(number));
-        
-//        txtLoinhuan.setText(String.valueOf(number1));
+    }
 
+    public void hienThiDoanhThu() {
+        try {
+            DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+            ZonedDateTime now = ZonedDateTime.now();
+            String ngayHomNay = dtf.format(now);
+
+            Date date = new SimpleDateFormat("MM-dd-yyyy").parse(ngayHomNay);
+            String date1 = new SimpleDateFormat("dd/MM/yyyy").format(date);
+            txtThongKe.setText("Thống kê ngày " + date1);
+            List<HoaDon> hoaDons = hoaDonServices.countHoaDontheoNgay(2, date);
+            txtSoLuongDaBan.setText(String.valueOf(hoaDons.size()));
+
+            List<HoaDon> b = hoaDonServices.countHoaDonHuytheoNgay(1, date);
+            txtHoaDonHuy.setText(String.valueOf(b.size()));
+            List<ThongKeDoanhThu> list = hoaDonChiTietServies.thongKeDoanhThuTheoNgay(date);
+            String doanhthuString = "";
+            Double doanhThudb = 0.0;
+            String giamGiaString = "";
+            Double giamGiadb = 0.0;
+            Double doanhThudb1 = 0.0;
+
+            for (ThongKeDoanhThu thongKeDoanhThu : list) {
+
+                dataset.setValue(thongKeDoanhThu.getDoanhThu().subtract(thongKeDoanhThu.getGiamGia()), "Price", thongKeDoanhThu.getTenSP());
+                doanhthuString = String.valueOf(thongKeDoanhThu.getDoanhThu());
+                giamGiaString = String.valueOf(thongKeDoanhThu.getGiamGia());
+                doanhThudb += Double.parseDouble(doanhthuString);
+                giamGiadb += Double.parseDouble(giamGiaString);
+//                giamGiaString = String.valueOf(thongKeDoanhThu.getGiamGia());
+//                giamGiadb += Double.parseDouble(giamGiaString);
+            }
+            Long doanhThu = doanhThudb.longValue() - giamGiadb.longValue();
+            txtDoanhThu.setText(String.valueOf(doanhThu));
+
+            JFreeChart chart = ChartFactory.createBarChart("Doanh Thu", "", "Tiền doanh thu", dataset, PlotOrientation.VERTICAL, false, true, false);
+            CategoryPlot categoryPlot = chart.getCategoryPlot();
+            categoryPlot.setBackgroundPaint(Color.WHITE);
+            BarRenderer renderer = (BarRenderer) categoryPlot.getRenderer();
+            Color rColor3 = new Color(204, 0, 51);
+            renderer.setSeriesPaint(0, rColor3);
+            ChartPanel barpChartPanel = new ChartPanel(chart);
+            jPanel4.removeAll();
+            jPanel4.add(barpChartPanel, BorderLayout.CENTER);
+            jPanel4.validate();
+
+        } catch (ParseException ex) {
+            Logger.getLogger(QLThongKePanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -108,7 +198,7 @@ public class QLThongKePanel extends javax.swing.JPanel {
         txtDoanhThu = new javax.swing.JLabel();
         kGradientPanel4 = new keeptoo.KGradientPanel();
         jLabel11 = new javax.swing.JLabel();
-        txtLoinhuan = new javax.swing.JLabel();
+        txtSLDaBan = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -119,8 +209,22 @@ public class QLThongKePanel extends javax.swing.JPanel {
         jLabel8 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbKhachHang = new javax.swing.JTable();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbbThongKe = new javax.swing.JComboBox<>();
         txtThongKe = new javax.swing.JLabel();
+        jTabbedPane2 = new javax.swing.JTabbedPane();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        txtDate = new com.toedter.calendar.JDateChooser();
+        kGradientPanel5 = new keeptoo.KGradientPanel();
+        btnTheoNgay = new javax.swing.JLabel();
+        cbbThang = new javax.swing.JComboBox<>();
+        cbbNam = new javax.swing.JComboBox<>();
+        kGradientPanel6 = new keeptoo.KGradientPanel();
+        btnThongKeThang = new javax.swing.JLabel();
+        kGradientPanel7 = new keeptoo.KGradientPanel();
+        btnThongKeNam = new javax.swing.JLabel();
 
         thongke.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -195,11 +299,12 @@ public class QLThongKePanel extends javax.swing.JPanel {
         );
 
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_cash_50px.png"))); // NOI18N
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_Price_Tag_Euro_50px.png"))); // NOI18N
 
-        txtLoinhuan.setFont(new java.awt.Font("Bahnschrift", 1, 18)); // NOI18N
-        txtLoinhuan.setForeground(new java.awt.Color(255, 255, 255));
-        txtLoinhuan.setText("0");
+        txtSLDaBan.setFont(new java.awt.Font("Bahnschrift", 1, 18)); // NOI18N
+        txtSLDaBan.setForeground(new java.awt.Color(255, 255, 255));
+        txtSLDaBan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtSLDaBan.setText("0");
 
         javax.swing.GroupLayout kGradientPanel4Layout = new javax.swing.GroupLayout(kGradientPanel4);
         kGradientPanel4.setLayout(kGradientPanel4Layout);
@@ -208,12 +313,12 @@ public class QLThongKePanel extends javax.swing.JPanel {
             .addGroup(kGradientPanel4Layout.createSequentialGroup()
                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtLoinhuan, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE))
+                .addComponent(txtSLDaBan, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE))
         );
         kGradientPanel4Layout.setVerticalGroup(
             kGradientPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-            .addComponent(txtLoinhuan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(txtSLDaBan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jLabel1.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
@@ -226,7 +331,7 @@ public class QLThongKePanel extends javax.swing.JPanel {
         jLabel3.setText("Tổng doanh thu");
 
         jLabel4.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
-        jLabel4.setText("Lợi nhuận");
+        jLabel4.setText("Tổng số lượng đã bán");
 
         tbSanPham.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -276,17 +381,155 @@ public class QLThongKePanel extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(tbKhachHang);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Theo ngày", "Theo tháng", "Theo năm" }));
+        cbbThongKe.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Theo ngày", "Theo tháng", "Theo năm" }));
+        cbbThongKe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbThongKeActionPerformed(evt);
+            }
+        });
 
+        txtThongKe.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtThongKe.setText("jLabel10");
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel4.setLayout(new java.awt.BorderLayout());
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 28, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("Doanh Thu", jPanel2);
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel1.setLayout(new java.awt.BorderLayout());
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 942, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 930, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 340, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(74, Short.MAX_VALUE)))
+        );
+
+        jTabbedPane2.addTab("Số lượng đã bán", jPanel3);
+
+        txtDate.setDateFormatString("dd/MM/yyyy");
+
+        btnTheoNgay.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnTheoNgay.setForeground(new java.awt.Color(255, 255, 255));
+        btnTheoNgay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnTheoNgay.setText("Thống Kê");
+        btnTheoNgay.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnTheoNgayMousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout kGradientPanel5Layout = new javax.swing.GroupLayout(kGradientPanel5);
+        kGradientPanel5.setLayout(kGradientPanel5Layout);
+        kGradientPanel5Layout.setHorizontalGroup(
+            kGradientPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnTheoNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        kGradientPanel5Layout.setVerticalGroup(
+            kGradientPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnTheoNgay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        cbbThang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cbbNam.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        btnThongKeThang.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnThongKeThang.setForeground(new java.awt.Color(255, 255, 255));
+        btnThongKeThang.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnThongKeThang.setText("Thống kê");
+        btnThongKeThang.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnThongKeThangMousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout kGradientPanel6Layout = new javax.swing.GroupLayout(kGradientPanel6);
+        kGradientPanel6.setLayout(kGradientPanel6Layout);
+        kGradientPanel6Layout.setHorizontalGroup(
+            kGradientPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnThongKeThang, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+        );
+        kGradientPanel6Layout.setVerticalGroup(
+            kGradientPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnThongKeThang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        btnThongKeNam.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnThongKeNam.setForeground(new java.awt.Color(255, 255, 255));
+        btnThongKeNam.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnThongKeNam.setText("Thống Kê");
+        btnThongKeNam.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnThongKeNamMousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout kGradientPanel7Layout = new javax.swing.GroupLayout(kGradientPanel7);
+        kGradientPanel7.setLayout(kGradientPanel7Layout);
+        kGradientPanel7Layout.setHorizontalGroup(
+            kGradientPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnThongKeNam, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+        );
+        kGradientPanel7Layout.setVerticalGroup(
+            kGradientPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnThongKeNam, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout thongkeLayout = new javax.swing.GroupLayout(thongke);
         thongke.setLayout(thongkeLayout);
         thongkeLayout.setHorizontalGroup(
             thongkeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(thongkeLayout.createSequentialGroup()
-                .addGap(65, 65, 65)
+                .addGap(112, 112, 112)
                 .addGroup(thongkeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(thongkeLayout.createSequentialGroup()
+                        .addComponent(cbbThongKe, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35)
+                        .addComponent(cbbThang, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cbbNam, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(kGradientPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(kGradientPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(kGradientPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtThongKe, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(thongkeLayout.createSequentialGroup()
                         .addGroup(thongkeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(thongkeLayout.createSequentialGroup()
@@ -300,26 +543,33 @@ public class QLThongKePanel extends javax.swing.JPanel {
                             .addComponent(jLabel6)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(46, 46, 46)
-                        .addGroup(thongkeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(thongkeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
-                            .addGroup(thongkeLayout.createSequentialGroup()
-                                .addGroup(thongkeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(kGradientPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(41, 41, 41)
-                                .addGroup(thongkeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(kGradientPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtThongKe, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(94, Short.MAX_VALUE))
+                            .addGroup(thongkeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(thongkeLayout.createSequentialGroup()
+                                    .addGroup(thongkeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(kGradientPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(41, 41, 41)
+                                    .addGroup(thongkeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(kGradientPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 930, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(156, Short.MAX_VALUE))
         );
         thongkeLayout.setVerticalGroup(
             thongkeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(thongkeLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, thongkeLayout.createSequentialGroup()
+                .addContainerGap(40, Short.MAX_VALUE)
+                .addGroup(thongkeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(kGradientPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbbThongKe, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                    .addComponent(txtDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(kGradientPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbbThang)
+                    .addComponent(cbbNam)
+                    .addComponent(kGradientPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtThongKe, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -339,10 +589,12 @@ public class QLThongKePanel extends javax.swing.JPanel {
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(thongkeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(232, Short.MAX_VALUE))
+                .addGroup(thongkeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -353,13 +605,333 @@ public class QLThongKePanel extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(thongke, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(thongke, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnTheoNgayMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTheoNgayMousePressed
+        try {
+            // TODO add your handling code here:
+            DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+            String date = new SimpleDateFormat("MM-dd-yyyy").format(txtDate.getDate());
+            Date date2 = new SimpleDateFormat("MM-dd-yyyy").parse(date);
+            String date1 = new SimpleDateFormat("dd/MM/yyyy").format(date2);
+            txtThongKe.setText("Thống kê ngày " + date1);
+            List<HoaDon> hoaDons = hoaDonServices.countHoaDontheoNgay(2, date2);
+            txtSoLuongDaBan.setText(String.valueOf(hoaDons.size()));
+
+            List<HoaDon> b = hoaDonServices.countHoaDonHuytheoNgay(1, date2);
+            txtHoaDonHuy.setText(String.valueOf(b.size()));
+            List<ThongKeDoanhThu> list = hoaDonChiTietServies.thongKeDoanhThuTheoNgay(date2);
+            String doanhthuString = "";
+            Double doanhThudb = 0.0;
+            String giamGiaString = "";
+            Double giamGiadb = 0.0;
+            Double doanhThudb1 = 0.0;
+
+            for (ThongKeDoanhThu thongKeDoanhThu : list) {
+
+                dataset.setValue(thongKeDoanhThu.getDoanhThu().subtract(thongKeDoanhThu.getGiamGia()), "Price", thongKeDoanhThu.getTenSP());
+                doanhthuString = String.valueOf(thongKeDoanhThu.getDoanhThu());
+                giamGiaString = String.valueOf(thongKeDoanhThu.getGiamGia());
+                doanhThudb += Double.parseDouble(doanhthuString);
+                giamGiadb += Double.parseDouble(giamGiaString);
+//                giamGiaString = String.valueOf(thongKeDoanhThu.getGiamGia());
+//                giamGiadb += Double.parseDouble(giamGiaString);
+            }
+            Long doanhThu = doanhThudb.longValue() - giamGiadb.longValue();
+            txtDoanhThu.setText(String.valueOf(doanhThu));
+
+            JFreeChart chart = ChartFactory.createBarChart("Doanh Thu", "", "Tiền doanh thu", dataset, PlotOrientation.VERTICAL, false, true, false);
+            CategoryPlot categoryPlot = chart.getCategoryPlot();
+            categoryPlot.setBackgroundPaint(Color.WHITE);
+            BarRenderer renderer = (BarRenderer) categoryPlot.getRenderer();
+            Color rColor3 = new Color(204, 0, 51);
+            renderer.setSeriesPaint(0, rColor3);
+            ChartPanel barpChartPanel = new ChartPanel(chart);
+            jPanel4.removeAll();
+            jPanel4.add(barpChartPanel, BorderLayout.CENTER);
+            jPanel4.validate();
+
+            DefaultCategoryDataset dataset1 = new DefaultCategoryDataset();
+            DefaultTableModel model = (DefaultTableModel) tbSanPham.getModel();
+            model.setRowCount(0);
+
+            List<ThongKeSanPham> thongKeSanPhams = hoaDonChiTietServies.thongKeSoLuongDaBanTheoNgay(date2);
+            Integer soLuongDaBan = 0;
+            for (ThongKeSanPham thongKeSanPham : thongKeSanPhams) {
+                soLuongDaBan += thongKeSanPham.getSoLuongBan().intValue();
+            }
+            txtSLDaBan.setText(String.valueOf(soLuongDaBan));
+            List<ThongKeSanPham> sanPhams = hoaDonChiTietServies.thongKeTheoNgay(date2);
+            for (ThongKeSanPham sanPham : sanPhams) {
+                dataset1.setValue(sanPham.getSoLuongBan(), "Quantity", sanPham.getTenSP());
+                Object[] data = new Object[]{
+                    sanPham.getMaSP(),
+                    sanPham.getTenSP(),
+                    sanPham.getSoLuongBan()
+                };
+                model.addRow(data);
+            }
+            JFreeChart chart1 = ChartFactory.createBarChart("Số Lượng Bán ", "", "Số lượng bán", dataset1, PlotOrientation.VERTICAL, false, true, false);
+            CategoryPlot categoryPlot1 = chart1.getCategoryPlot();
+            categoryPlot1.setBackgroundPaint(Color.WHITE);
+            BarRenderer renderer1 = (BarRenderer) categoryPlot1.getRenderer();
+            Color rColor31 = new Color(204, 0, 51);
+            renderer1.setSeriesPaint(0, rColor31);
+            ChartPanel barpChartPanel1 = new ChartPanel(chart1);
+            jPanel1.removeAll();
+            jPanel1.add(barpChartPanel1, BorderLayout.CENTER);
+            jPanel1.validate();
+            DefaultTableModel model1 = (DefaultTableModel) tbKhachHang.getModel();
+            model1.setRowCount(0);
+            List<ThongKeKhachHang> thongKeKhachHangs = khachHangService.thongKeTheoNgay(date2);
+            for (ThongKeKhachHang thongKeKhachHang : thongKeKhachHangs) {
+                Object[] data = new Object[]{
+                    thongKeKhachHang.getMaKH(),
+                    thongKeKhachHang.getTenKH(),
+                    thongKeKhachHang.getSoLanMua()
+                };
+                model1.addRow(data);
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(QLThongKePanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnTheoNgayMousePressed
+
+    private void cbbThongKeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbThongKeActionPerformed
+        // TODO add your handling code here:
+        String cbb = (String) cbbThongKe.getSelectedItem();
+        if (cbb.equalsIgnoreCase("Theo tháng")) {
+            txtDate.setVisible(false);
+            btnTheoNgay.setVisible(false);
+            cbbThang.setVisible(true);
+            cbbNam.setVisible(true);
+            btnThongKeThang.setVisible(true);
+            btnThongKeNam.setVisible(false);
+            cbbThang.removeAllItems();
+            for (int i = 1; i <= 12; i++) {
+                cbbThang.addItem(String.valueOf(i));
+            }
+            cbbNam.removeAllItems();
+            DateTimeFormatter dtf =DateTimeFormatter.ofPattern("yyyy");
+            ZonedDateTime now = ZonedDateTime.now();
+            
+            for (int i = Integer.parseInt(dtf.format(now)); i >= 2000; i--) {
+                cbbNam.addItem(String.valueOf(i));
+            }
+            
+        } else if (cbb.equalsIgnoreCase("Theo năm")) {
+            txtDate.setVisible(false);
+            btnTheoNgay.setVisible(false);
+            cbbThang.setVisible(false);
+            cbbNam.setVisible(true);
+            btnThongKeNam.setVisible(true);
+            btnThongKeThang.setVisible(false);
+            cbbNam.removeAllItems();
+            DateTimeFormatter dtf =DateTimeFormatter.ofPattern("yyyy");
+            ZonedDateTime now = ZonedDateTime.now();
+            
+            for (int i = Integer.parseInt(dtf.format(now)); i >= 2000; i--) {
+                cbbNam.addItem(String.valueOf(i));
+            }
+        }
+            else{
+            txtDate.setVisible(true);
+            btnTheoNgay.setVisible(true);
+            cbbThang.setVisible(false);
+            cbbNam.setVisible(false);
+            btnThongKeThang.setVisible(false);
+            btnThongKeNam.setVisible(false);
+           
+        }
+    }//GEN-LAST:event_cbbThongKeActionPerformed
+
+    private void btnThongKeThangMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThongKeThangMousePressed
+        // TODO add your handling code here:
+        Integer thang = Integer.parseInt((String) cbbThang.getSelectedItem());
+        Integer nam = Integer.parseInt((String) cbbNam.getSelectedItem());
+        
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+ 
+            txtThongKe.setText("Thống kê tháng " + thang +" năm "+nam);
+            List<HoaDon> hoaDons = hoaDonServices.countHoaDontheoThang(2, thang,nam);
+            txtSoLuongDaBan.setText(String.valueOf(hoaDons.size()));
+
+            List<HoaDon> b = hoaDonServices.countHoaDonHuytheoThang(1, thang,nam);
+            txtHoaDonHuy.setText(String.valueOf(b.size()));
+            List<ThongKeDoanhThu> list = hoaDonChiTietServies.thongKeDoanhThuTheoThang(thang,nam);
+            String doanhthuString = "";
+            Double doanhThudb = 0.0;
+            String giamGiaString = "";
+            Double giamGiadb = 0.0;
+            Double doanhThudb1 = 0.0;
+
+            for (ThongKeDoanhThu thongKeDoanhThu : list) {
+
+                dataset.setValue(thongKeDoanhThu.getDoanhThu().subtract(thongKeDoanhThu.getGiamGia()), "Price", thongKeDoanhThu.getTenSP());
+                doanhthuString = String.valueOf(thongKeDoanhThu.getDoanhThu());
+                giamGiaString = String.valueOf(thongKeDoanhThu.getGiamGia());
+                doanhThudb += Double.parseDouble(doanhthuString);
+                giamGiadb += Double.parseDouble(giamGiaString);
+//                giamGiaString = String.valueOf(thongKeDoanhThu.getGiamGia());
+//                giamGiadb += Double.parseDouble(giamGiaString);
+            }
+            Long doanhThu = doanhThudb.longValue() - giamGiadb.longValue();
+            txtDoanhThu.setText(String.valueOf(doanhThu));
+
+            JFreeChart chart = ChartFactory.createBarChart("Doanh Thu", "", "Tiền doanh thu", dataset, PlotOrientation.VERTICAL, false, true, false);
+            CategoryPlot categoryPlot = chart.getCategoryPlot();
+            categoryPlot.setBackgroundPaint(Color.WHITE);
+            BarRenderer renderer = (BarRenderer) categoryPlot.getRenderer();
+            Color rColor3 = new Color(204, 0, 51);
+            renderer.setSeriesPaint(0, rColor3);
+            ChartPanel barpChartPanel = new ChartPanel(chart);
+            jPanel4.removeAll();
+            jPanel4.add(barpChartPanel, BorderLayout.CENTER);
+            jPanel4.validate();
+
+            DefaultCategoryDataset dataset1 = new DefaultCategoryDataset();
+            DefaultTableModel model = (DefaultTableModel) tbSanPham.getModel();
+            model.setRowCount(0);
+
+            List<ThongKeSanPham> thongKeSanPhams = hoaDonChiTietServies.thongKeSoLuongDaBanTheoThang(thang,nam);
+            Integer soLuongDaBan = 0;
+            for (ThongKeSanPham thongKeSanPham : thongKeSanPhams) {
+                soLuongDaBan += thongKeSanPham.getSoLuongBan().intValue();
+            }
+            txtSLDaBan.setText(String.valueOf(soLuongDaBan));
+            List<ThongKeSanPham> sanPhams = hoaDonChiTietServies.thongKeTheoThang(thang,nam);
+            for (ThongKeSanPham sanPham : sanPhams) {
+                dataset1.setValue(sanPham.getSoLuongBan(), "Quantity", sanPham.getTenSP());
+                Object[] data = new Object[]{
+                    sanPham.getMaSP(),
+                    sanPham.getTenSP(),
+                    sanPham.getSoLuongBan()
+                };
+                model.addRow(data);
+            }
+            JFreeChart chart1 = ChartFactory.createBarChart("Số Lượng Bán ", "", "Số lượng bán", dataset1, PlotOrientation.VERTICAL, false, true, false);
+            CategoryPlot categoryPlot1 = chart1.getCategoryPlot();
+            categoryPlot1.setBackgroundPaint(Color.WHITE);
+            BarRenderer renderer1 = (BarRenderer) categoryPlot1.getRenderer();
+            Color rColor31 = new Color(204, 0, 51);
+            renderer1.setSeriesPaint(0, rColor31);
+            ChartPanel barpChartPanel1 = new ChartPanel(chart1);
+            jPanel1.removeAll();
+            jPanel1.add(barpChartPanel1, BorderLayout.CENTER);
+            jPanel1.validate();
+            DefaultTableModel model1 = (DefaultTableModel) tbKhachHang.getModel();
+            model1.setRowCount(0);
+            List<ThongKeKhachHang> thongKeKhachHangs = khachHangService.thongKeTheoThang(thang,nam);
+            for (ThongKeKhachHang thongKeKhachHang : thongKeKhachHangs) {
+                Object[] data = new Object[]{
+                    thongKeKhachHang.getMaKH(),
+                    thongKeKhachHang.getTenKH(),
+                    thongKeKhachHang.getSoLanMua()
+                };
+                model1.addRow(data);
+            }
+       
+    }//GEN-LAST:event_btnThongKeThangMousePressed
+
+    private void btnThongKeNamMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThongKeNamMousePressed
+        // TODO add your handling code here:
+        Integer nam = Integer.parseInt((String) cbbNam.getSelectedItem());
+        
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+ 
+            txtThongKe.setText("Thống kê năm "+nam);
+            List<HoaDon> hoaDons = hoaDonServices.countHoaDontheoNam(2,nam);
+            txtSoLuongDaBan.setText(String.valueOf(hoaDons.size()));
+
+            List<HoaDon> b = hoaDonServices.countHoaDonHuytheoNam(1,nam);
+            txtHoaDonHuy.setText(String.valueOf(b.size()));
+            List<ThongKeDoanhThu> list = hoaDonChiTietServies.thongKeDoanhThuTheoNam(nam);
+            String doanhthuString = "";
+            Double doanhThudb = 0.0;
+            String giamGiaString = "";
+            Double giamGiadb = 0.0;
+            Double doanhThudb1 = 0.0;
+
+            for (ThongKeDoanhThu thongKeDoanhThu : list) {
+
+                dataset.setValue(thongKeDoanhThu.getDoanhThu().subtract(thongKeDoanhThu.getGiamGia()), "Price", thongKeDoanhThu.getTenSP());
+                doanhthuString = String.valueOf(thongKeDoanhThu.getDoanhThu());
+                giamGiaString = String.valueOf(thongKeDoanhThu.getGiamGia());
+                doanhThudb += Double.parseDouble(doanhthuString);
+                giamGiadb += Double.parseDouble(giamGiaString);
+//                giamGiaString = String.valueOf(thongKeDoanhThu.getGiamGia());
+//                giamGiadb += Double.parseDouble(giamGiaString);
+            }
+            Long doanhThu = doanhThudb.longValue() - giamGiadb.longValue();
+            txtDoanhThu.setText(String.valueOf(doanhThu));
+
+            JFreeChart chart = ChartFactory.createBarChart("Doanh Thu", "", "Tiền doanh thu", dataset, PlotOrientation.VERTICAL, false, true, false);
+            CategoryPlot categoryPlot = chart.getCategoryPlot();
+            categoryPlot.setBackgroundPaint(Color.WHITE);
+            BarRenderer renderer = (BarRenderer) categoryPlot.getRenderer();
+            Color rColor3 = new Color(204, 0, 51);
+            renderer.setSeriesPaint(0, rColor3);
+            ChartPanel barpChartPanel = new ChartPanel(chart);
+            jPanel4.removeAll();
+            jPanel4.add(barpChartPanel, BorderLayout.CENTER);
+            jPanel4.validate();
+
+            DefaultCategoryDataset dataset1 = new DefaultCategoryDataset();
+            DefaultTableModel model = (DefaultTableModel) tbSanPham.getModel();
+            model.setRowCount(0);
+
+            List<ThongKeSanPham> thongKeSanPhams = hoaDonChiTietServies.thongKeSoLuongDaBanTheoNam(nam);
+            Integer soLuongDaBan = 0;
+            for (ThongKeSanPham thongKeSanPham : thongKeSanPhams) {
+                soLuongDaBan += thongKeSanPham.getSoLuongBan().intValue();
+            }
+            txtSLDaBan.setText(String.valueOf(soLuongDaBan));
+            List<ThongKeSanPham> sanPhams = hoaDonChiTietServies.thongKeTheoNam(nam);
+            for (ThongKeSanPham sanPham : sanPhams) {
+                dataset1.setValue(sanPham.getSoLuongBan(), "Quantity", sanPham.getTenSP());
+                Object[] data = new Object[]{
+                    sanPham.getMaSP(),
+                    sanPham.getTenSP(),
+                    sanPham.getSoLuongBan()
+                };
+                model.addRow(data);
+            }
+            JFreeChart chart1 = ChartFactory.createBarChart("Số Lượng Bán ", "", "Số lượng bán", dataset1, PlotOrientation.VERTICAL, false, true, false);
+            CategoryPlot categoryPlot1 = chart1.getCategoryPlot();
+            categoryPlot1.setBackgroundPaint(Color.WHITE);
+            BarRenderer renderer1 = (BarRenderer) categoryPlot1.getRenderer();
+            Color rColor31 = new Color(204, 0, 51);
+            renderer1.setSeriesPaint(0, rColor31);
+            ChartPanel barpChartPanel1 = new ChartPanel(chart1);
+            jPanel1.removeAll();
+            jPanel1.add(barpChartPanel1, BorderLayout.CENTER);
+            jPanel1.validate();
+            DefaultTableModel model1 = (DefaultTableModel) tbKhachHang.getModel();
+            model1.setRowCount(0);
+            List<ThongKeKhachHang> thongKeKhachHangs = khachHangService.thongKeTheoNam(nam);
+            for (ThongKeKhachHang thongKeKhachHang : thongKeKhachHangs) {
+                Object[] data = new Object[]{
+                    thongKeKhachHang.getMaKH(),
+                    thongKeKhachHang.getTenKH(),
+                    thongKeKhachHang.getSoLanMua()
+                };
+                model1.addRow(data);
+            }
+    }//GEN-LAST:event_btnThongKeNamMousePressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JLabel btnTheoNgay;
+    private javax.swing.JLabel btnThongKeNam;
+    private javax.swing.JLabel btnThongKeThang;
+    private javax.swing.JComboBox<String> cbbNam;
+    private javax.swing.JComboBox<String> cbbThang;
+    private javax.swing.JComboBox<String> cbbThongKe;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
@@ -370,18 +942,27 @@ public class QLThongKePanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTabbedPane jTabbedPane2;
     private keeptoo.KGradientPanel kGradientPanel1;
     private keeptoo.KGradientPanel kGradientPanel2;
     private keeptoo.KGradientPanel kGradientPanel3;
     private keeptoo.KGradientPanel kGradientPanel4;
+    private keeptoo.KGradientPanel kGradientPanel5;
+    private keeptoo.KGradientPanel kGradientPanel6;
+    private keeptoo.KGradientPanel kGradientPanel7;
     private javax.swing.JTable tbKhachHang;
     private javax.swing.JTable tbSanPham;
     private javax.swing.JPanel thongke;
+    private com.toedter.calendar.JDateChooser txtDate;
     private javax.swing.JLabel txtDoanhThu;
     private javax.swing.JLabel txtHoaDonHuy;
-    private javax.swing.JLabel txtLoinhuan;
+    private javax.swing.JLabel txtSLDaBan;
     private javax.swing.JLabel txtSoLuongDaBan;
     private javax.swing.JLabel txtThongKe;
     // End of variables declaration//GEN-END:variables

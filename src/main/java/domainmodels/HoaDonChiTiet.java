@@ -6,6 +6,7 @@ package domainmodels;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -27,11 +28,25 @@ public class HoaDonChiTiet implements Serializable{
     @ManyToOne
     @JoinColumn(name = "MaImei", nullable = false)
     private ChiTietSP maImei ;
-    @JoinColumn(name = "SoLuong")
+    @Column(name = "SoLuong")
     private Integer soLuong ;
-    @JoinColumn (name = "DonGia")
+    @Column (name = "DonGia")
     private BigDecimal donGia ;
+     @Column(name = "GiamGia")
+    private BigDecimal giamGia ;
 
+    public HoaDonChiTiet() {
+    }
+
+    public HoaDonChiTiet(HoaDon maHD, ChiTietSP maImei, Integer soLuong, BigDecimal donGia, BigDecimal giamGia) {
+        this.maHD = maHD;
+        this.maImei = maImei;
+        this.soLuong = soLuong;
+        this.donGia = donGia;
+        this.giamGia = giamGia;
+    }
+
+     
     public HoaDon getMaHD() {
         return maHD;
     }
@@ -63,6 +78,15 @@ public class HoaDonChiTiet implements Serializable{
     public void setDonGia(BigDecimal donGia) {
         this.donGia = donGia;
     }
+
+    public BigDecimal getGiamGia() {
+        return giamGia;
+    }
+
+    public void setGiamGia(BigDecimal giamGia) {
+        this.giamGia = giamGia;
+    }
+    
     
     
     
