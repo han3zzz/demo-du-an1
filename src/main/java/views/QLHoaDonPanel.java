@@ -45,9 +45,10 @@ public class QLHoaDonPanel extends javax.swing.JPanel {
     private INhanVienServices nhanVienServices;
     private IKhachHangService khachHangService;
     private IQLSanPhamServices sanPhamServices;
+
     public QLHoaDonPanel() {
         initComponents();
-        
+
         hoaDonServices = new HoaDonServices();
         hoaDonChiTietServies = new HoaDonChiTietServices();
         chiTietSPServices = new ChiTietSPServices();
@@ -57,7 +58,8 @@ public class QLHoaDonPanel extends javax.swing.JPanel {
 
         loadHoaDonChiTiet();
     }
-        public void loadHoaDonChiTiet() {
+
+    public void loadHoaDonChiTiet() {
         tbHoaDonChiTiet.getColumn("Ảnh").setCellRenderer(new myTableCellRender());
         DefaultTableModel model = (DefaultTableModel) tbHoaDon.getModel();
         model.setRowCount(0);
@@ -66,7 +68,13 @@ public class QLHoaDonPanel extends javax.swing.JPanel {
         List<KhachHang> khachHangs = khachHangService.getALL();
         String tenNhanVien = "";
         String tenKH = "";
+        String trangThai = "";
         for (HoaDon hoaDon : hoaDons) {
+            if (hoaDon.getTrangThai() == 1) {
+                trangThai = "Đã Hủy";
+            } else {
+                trangThai = "Đã thanh toán";
+            }
             for (KhachHang khachHang : khachHangs) {
                 if (hoaDon.getKhachHang().getMaKH().equals(khachHang.getMaKH())) {
                     tenKH = khachHang.getTenKH();
@@ -87,7 +95,7 @@ public class QLHoaDonPanel extends javax.swing.JPanel {
                 tenNhanVien,
                 hoaDon.getGiamGia(),
                 hoaDon.getTongTien(),
-                hoaDon.getTrangThai()
+                trangThai
 
             };
             model.addRow(data);
@@ -163,7 +171,7 @@ public class QLHoaDonPanel extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(tbHoaDonChiTiet);
 
-        lbHoaDonChiTiet.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbHoaDonChiTiet.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         lbHoaDonChiTiet.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbHoaDonChiTiet.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 0, 0)));
 
@@ -176,10 +184,10 @@ public class QLHoaDonPanel extends javax.swing.JPanel {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 955, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(hoadonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(hoadonLayout.createSequentialGroup()
-                            .addGap(24, 24, 24)
+                            .addGap(59, 59, 59)
                             .addGroup(hoadonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel24)
+                                .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(lbHoaDonChiTiet, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(hoadonLayout.createSequentialGroup()
                             .addGap(79, 79, 79)
@@ -189,7 +197,7 @@ public class QLHoaDonPanel extends javax.swing.JPanel {
         hoadonLayout.setVerticalGroup(
             hoadonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, hoadonLayout.createSequentialGroup()
-                .addGap(0, 88, Short.MAX_VALUE)
+                .addContainerGap(74, Short.MAX_VALUE)
                 .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -198,7 +206,8 @@ public class QLHoaDonPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbHoaDonChiTiet, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -211,7 +220,7 @@ public class QLHoaDonPanel extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 701, Short.MAX_VALUE)
+            .addGap(0, 707, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(hoadon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -259,31 +268,31 @@ public class QLHoaDonPanel extends javax.swing.JPanel {
         //        String tenKhachHang = "";
         //        String tenNV = "";
         //        for (HoaDon hoaDon : hoaDons) {
-            //            for (KhachHang khachHang : khachHangs) {
-                //                if (hoaDon.getKhachHang().getMaKH().equals(khachHang.getMaKH())) {
-                    //                    tenKhachHang = khachHang.getTenKH();
-                    //                }
-                //            }
-            //            for (NhanVien nhanVien : nhanViens) {
-                //                if (hoaDon.getNhanVien().getMaNV().equals(nhanVien.getMaNV())) {
-                    //                    tenNV = nhanVien.getTenNV();
-                    //                }
-                //            }
-            //            Object[] data = new Object[]{
-                //                hoaDon.getMaHD(),
-                //                hoaDon.getTenNguoiNhan(),
-                //                hoaDon.getNgayMua(),
-                //                hoaDon.getGhiChu(),
-                //                hoaDon.getDiaChiNhanHang(),
-                //                tenKhachHang,
-                //                tenNV,
-                //                hoaDon.getGiamGia(),
-                //                hoaDon.getTongTien(),
-                //                hoaDon.getTrangThai()
-                //
-                //            };
-            //            model.addRow(data);
-            //        }
+        //            for (KhachHang khachHang : khachHangs) {
+        //                if (hoaDon.getKhachHang().getMaKH().equals(khachHang.getMaKH())) {
+        //                    tenKhachHang = khachHang.getTenKH();
+        //                }
+        //            }
+        //            for (NhanVien nhanVien : nhanViens) {
+        //                if (hoaDon.getNhanVien().getMaNV().equals(nhanVien.getMaNV())) {
+        //                    tenNV = nhanVien.getTenNV();
+        //                }
+        //            }
+        //            Object[] data = new Object[]{
+        //                hoaDon.getMaHD(),
+        //                hoaDon.getTenNguoiNhan(),
+        //                hoaDon.getNgayMua(),
+        //                hoaDon.getGhiChu(),
+        //                hoaDon.getDiaChiNhanHang(),
+        //                tenKhachHang,
+        //                tenNV,
+        //                hoaDon.getGiamGia(),
+        //                hoaDon.getTongTien(),
+        //                hoaDon.getTrangThai()
+        //
+        //            };
+        //            model.addRow(data);
+        //        }
         //             DefaultTableModel model = (DefaultTableModel) tbHoaDon.getModel();
         //            model.setRowCount(0);
         //            List<HoaDon> hoaDons = hoaDonService.layAllHoaDon();
@@ -292,16 +301,16 @@ public class QLHoaDonPanel extends javax.swing.JPanel {
         //            String tenKhachHang = "";
         //            String tenNhanVien = "";
         //            for (HoaDon hoaDon : hoaDons) {
-            //                for (KhachHang khachHang : khachHangs) {
-                //                    if (hoaDon.getMaKhachHang().equals(khachHang.getMaKhachHang())) {
-                    //                        tenKhachHang = khachHang.getTenKhachHang();
-                    //                    }
-                //                }
-            //                for (NhanVien nhanVien : nhanViens) {
-                //                    if (hoaDon.getMaNhanVien().equals(nhanVien.getMaNhanVien())) {
-                    //                        tenNhanVien = nhanVien.getTenNhanVien();
-                    //                    }
-                //                }
+        //                for (KhachHang khachHang : khachHangs) {
+        //                    if (hoaDon.getMaKhachHang().equals(khachHang.getMaKhachHang())) {
+        //                        tenKhachHang = khachHang.getTenKhachHang();
+        //                    }
+        //                }
+        //                for (NhanVien nhanVien : nhanViens) {
+        //                    if (hoaDon.getMaNhanVien().equals(nhanVien.getMaNhanVien())) {
+        //                        tenNhanVien = nhanVien.getTenNhanVien();
+        //                    }
+        //                }
     }//GEN-LAST:event_tbHoaDonChiTietMouseClicked
 
 
