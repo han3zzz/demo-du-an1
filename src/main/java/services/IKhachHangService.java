@@ -14,15 +14,15 @@ import viewmodels.ThongKeKhachHang;
  * @author Tungt
  */
 public interface IKhachHangService {
-     public List<KhachHang> getALL();
+    public List<KhachHang> getALL();
     public boolean add(KhachHang khachHang);
     public boolean update(KhachHang khachHang);
     public boolean delete(String ma);
     public KhachHang seachbyMa(String ma);
     public KhachHang fill(String maKH);
     public KhachHang layMa();
-    public List<KhachHang> phanTrang(Integer limitPage ,Integer posion);
     public List<ThongKeKhachHang> thongKeTheoNgay(Date date);
     public List<ThongKeKhachHang> thongKeTheoThang(Integer thang , Integer nam);
     public List<ThongKeKhachHang> thongKeTheoNam(Integer nam);
+    public List<KhachHang> phanTrang(Integer limitPage ,Integer page);
 }

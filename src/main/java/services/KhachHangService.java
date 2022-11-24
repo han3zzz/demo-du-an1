@@ -56,10 +56,6 @@ public class KhachHangService implements IKhachHangService{
         return khr.layMa();
     }
 
-    @Override
-    public List<KhachHang> phanTrang(Integer limitPage, Integer posion) {
-        return khr.phanTrang(limitPage, posion);
-    }
 
     @Override
     public List<ThongKeKhachHang> thongKeTheoNgay(Date date) {
@@ -74,6 +70,11 @@ public class KhachHangService implements IKhachHangService{
     @Override
     public List<ThongKeKhachHang> thongKeTheoNam(Integer nam) {
         return khr.thongKeTheoNam(nam);
+    }
+
+    @Override
+    public List<KhachHang> phanTrang(Integer limitPage, Integer page) {
+        return khr.phanTrang(limitPage, page);
     }
     
      

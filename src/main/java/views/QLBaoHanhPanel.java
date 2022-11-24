@@ -388,14 +388,15 @@ public class QLBaoHanhPanel extends javax.swing.JPanel implements Runnable, Thre
                 return;
             }
 
-            ChiTietSP chiTietSP1 = chiTietSPServices.seachbyMa(txtImei.getText());
-            if (chiTietSP1.getTrangThai() == 3) {
-                JOptionPane.showMessageDialog(this, "Sản phẩm này đã được bảo hành !");
-                return;
-            }
+           
             BaoHanhChiTiet bhct = baoHanhChiTietServices.seachbyMa(txtImei.getText());
             if (bhct == null) {
                 JOptionPane.showMessageDialog(this, "Sản phẩm này không được bảo hành !");
+                return;
+            }
+             ChiTietSP chiTietSP1 = chiTietSPServices.seachbyMa(txtImei.getText());
+            if (chiTietSP1.getTrangThai() == 3) {
+                JOptionPane.showMessageDialog(this, "Sản phẩm này đã được bảo hành !");
                 return;
             }
             ChiTietSP c = chiTietSPServices.seachbyMa(txtImei.getText());

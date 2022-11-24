@@ -18,52 +18,57 @@ import viewmodels.ThongKeKhachHang;
  * @author Tungt
  */
 public class KhachHangRepositores {
-    public List<KhachHang> getALL(){
+
+    public List<KhachHang> getALL() {
         Session session = HibernateConfig.getFACTORY().openSession();
         Query q = session.createQuery("From KhachHang");
         List<KhachHang> list = q.getResultList();
         return list;
     }
-    public boolean add(KhachHang khachHang){
+
+    public boolean add(KhachHang khachHang) {
         Transaction transaction = null;
-        try(Session s = HibernateConfig.getFACTORY().openSession()){
-            transaction= s.beginTransaction();
+        try ( Session s = HibernateConfig.getFACTORY().openSession()) {
+            transaction = s.beginTransaction();
             s.save(khachHang);
             transaction.commit();
             return true;
-        }catch(Exception e){
+        } catch (Exception e) {
             transaction.rollback();
             return false;
         }
     }
-    public boolean update(KhachHang khachHang){
+
+    public boolean update(KhachHang khachHang) {
         Transaction transaction = null;
-        try(Session s = HibernateConfig.getFACTORY().openSession()){
-            transaction= s.beginTransaction();
+        try ( Session s = HibernateConfig.getFACTORY().openSession()) {
+            transaction = s.beginTransaction();
             s.update(khachHang);
             transaction.commit();
             return true;
-        }catch(Exception e){
+        } catch (Exception e) {
             transaction.rollback();
             return false;
         }
     }
-    public boolean delete(String ma){
+
+    public boolean delete(String ma) {
         Transaction transaction = null;
-        try(Session s = HibernateConfig.getFACTORY().openSession()){
-           KhachHang kh = s.get(KhachHang.class, ma);
+        try ( Session s = HibernateConfig.getFACTORY().openSession()) {
+            KhachHang kh = s.get(KhachHang.class, ma);
             kh.setTrangThai(1);
-            transaction= s.beginTransaction();
+            transaction = s.beginTransaction();
             s.update(kh);
             transaction.commit();
             return true;
-        }catch(Exception e){
+        } catch (Exception e) {
             transaction.rollback();
             return false;
         }
-        
+
     }
-    public KhachHang seachbyMa(String ma){
+
+    public KhachHang seachbyMa(String ma) {
         Session session = HibernateConfig.getFACTORY().openSession();
         Query q = session.createQuery("From KhachHang where MaKH = :ma");
         q.setParameter("ma", ma);
@@ -73,31 +78,40 @@ public class KhachHangRepositores {
         }
         return list.get(0);
     }
-    public KhachHang fill(String maKH){
+
+    public KhachHang fill(String maKH) {
         Session session = HibernateConfig.getFACTORY().openSession();
         Query q = session.createQuery("From KhachHang where MaKH = :masp");
         q.setParameter("masp", maKH);
         List<KhachHang> list = q.getResultList();
         return list.get(0);
     }
+
     public KhachHang layMa() {
         Session session = HibernateConfig.getFACTORY().openSession();
         Query q = session.createQuery("From KhachHang where MaKH in (Select 'KH'+ Cast(Max(Cast(SUBSTRING(MaKH,3,Len(MaKH) - 2) as int)) as string) from KhachHang)");
         List<KhachHang> list = q.getResultList();
         return list.get(0);
     }
-    public List<KhachHang> phanTrang(Integer limitPage ,Integer posion){
+
+    public List<KhachHang> phanTrang(Integer limitPage, Integer page) {
         Session s = HibernateConfig.getFACTORY().openSession();
-        Query query = s.createQuery("From KhachHang").setFirstResult(posion).setMaxResults(limitPage);
+        Transaction transaction = s.beginTransaction();
+        Query query = s.createQuery("From KhachHang");
+        query.setFirstResult(page);
+        query.setMaxResults(limitPage);
+        transaction.commit();
         List<KhachHang> list = query.getResultList();
+        s.close();
         return list;
-        
+
     }
-    public List<ThongKeKhachHang> thongKeTheoNgay(Date date){
+
+    public List<ThongKeKhachHang> thongKeTheoNgay(Date date) {
         Session s = HibernateConfig.getFACTORY().openSession();
-       
+
         Query query = s.createQuery("Select new viewmodels.ThongKeKhachHang(e.khachHang.maKH , e.khachHang.tenKH , COUNT(e.maHD)) FROM HoaDon e "
-                + "Where e.maHD.trangThai = 2 and ngayMua = :ngay "    
+                + "Where e.maHD.trangThai = 2 and ngayMua = :ngay "
                 + "Group by e.khachHang.maKH , e.khachHang.tenKH "
                 + "Order by COUNT(e.maHD) DESC");
         query.setParameter("ngay", date);
@@ -107,11 +121,12 @@ public class KhachHangRepositores {
         List<ThongKeKhachHang> list = query.getResultList();
         return list;
     }
-    public List<ThongKeKhachHang> thongKeTheoThang(Integer thang , Integer nam){
+
+    public List<ThongKeKhachHang> thongKeTheoThang(Integer thang, Integer nam) {
         Session s = HibernateConfig.getFACTORY().openSession();
-       
+
         Query query = s.createQuery("Select new viewmodels.ThongKeKhachHang(e.khachHang.maKH , e.khachHang.tenKH , COUNT(e.maHD)) FROM HoaDon e "
-                + "Where e.maHD.trangThai = 2 and MONTH(ngayMua) = :ngay and YEAR(ngayMua) = :nam "    
+                + "Where e.maHD.trangThai = 2 and MONTH(ngayMua) = :ngay and YEAR(ngayMua) = :nam "
                 + "Group by e.khachHang.maKH , e.khachHang.tenKH "
                 + "Order by COUNT(e.maHD) DESC");
         query.setParameter("ngay", thang);
@@ -122,11 +137,12 @@ public class KhachHangRepositores {
         List<ThongKeKhachHang> list = query.getResultList();
         return list;
     }
-    public List<ThongKeKhachHang> thongKeTheoNam( Integer nam){
+
+    public List<ThongKeKhachHang> thongKeTheoNam(Integer nam) {
         Session s = HibernateConfig.getFACTORY().openSession();
-       
+
         Query query = s.createQuery("Select new viewmodels.ThongKeKhachHang(e.khachHang.maKH , e.khachHang.tenKH , COUNT(e.maHD)) FROM HoaDon e "
-                + "Where e.maHD.trangThai = 2 and YEAR(ngayMua) = :nam "    
+                + "Where e.maHD.trangThai = 2 and YEAR(ngayMua) = :nam "
                 + "Group by e.khachHang.maKH , e.khachHang.tenKH "
                 + "Order by COUNT(e.maHD) DESC");
         query.setParameter("nam", nam);
@@ -136,4 +152,5 @@ public class KhachHangRepositores {
         List<ThongKeKhachHang> list = query.getResultList();
         return list;
     }
+
 }
