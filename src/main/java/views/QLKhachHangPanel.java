@@ -42,7 +42,7 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
                 loadData(page);
             }
         });
-//loadData(2);
+        //loadData(2);
 
     }
 
@@ -64,10 +64,12 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
         Integer toltalPage = soLamTron;
         List<KhachHang> kh = service.phanTrang(limit, page);
         for (KhachHang khachHang : kh) {
+            Date date = khachHang.getNgaySinh();
+            String sdf = new SimpleDateFormat("dd/MM/yyyy").format(date);
             Object[] row = new Object[]{
                 khachHang.getMaKH(),
                 khachHang.getTenKH(),
-                khachHang.getNgaySinh(),
+                sdf,
                 khachHang.getSdt(),
                 khachHang.getDiaChi()
             };
@@ -114,6 +116,7 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
                     khachHang.getDiaChi()
                 };
                 model.addRow(row);
+
             }
         }
 
@@ -160,7 +163,8 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
     }
 
     public void clear() {
-        hienThi();
+        loadData(1);
+        loadMaKH();
         txtTen.setText("");
         txtNgaySinh.setDate(null);
         txtsdt.setText("");
@@ -172,7 +176,7 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
         String ma = tbbBang.getValueAt(index, 0).toString();
         String ten = tbbBang.getValueAt(index, 1).toString();
         String ngaySinh = tbbBang.getValueAt(index, 2).toString();
-        Date date = new SimpleDateFormat("MM-dd-yyyy").parse(ngaySinh);
+        Date date = new SimpleDateFormat("dd/MM/yyyy").parse(ngaySinh);
         String sdt = tbbBang.getValueAt(index, 3).toString();
         String diaChi = tbbBang.getValueAt(index, 4).toString();
 
@@ -215,6 +219,9 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
         txtNgaySinh = new com.toedter.calendar.JDateChooser();
         txtMa = new javax.swing.JLabel();
         phantrang = new pagination.Pagination();
+        txtTim = new javax.swing.JTextField();
+        kGradientPanel1 = new keeptoo.KGradientPanel();
+        btnTimTheoMa = new javax.swing.JLabel();
 
         nhanvien.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -354,10 +361,30 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
         txtQueQuan.setRows(5);
         jScrollPane2.setViewportView(txtQueQuan);
 
+        txtNgaySinh.setDateFormatString("dd/MM/yyyy");
+
         txtMa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtMa.setText("jLabel1");
 
         phantrang.setOpaque(false);
+
+        btnTimTheoMa.setText("Tìm theo mã");
+        btnTimTheoMa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnTimTheoMaMousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout kGradientPanel1Layout = new javax.swing.GroupLayout(kGradientPanel1);
+        kGradientPanel1.setLayout(kGradientPanel1Layout);
+        kGradientPanel1Layout.setHorizontalGroup(
+            kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnTimTheoMa, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
+        );
+        kGradientPanel1Layout.setVerticalGroup(
+            kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnTimTheoMa, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout nhanvienLayout = new javax.swing.GroupLayout(nhanvien);
         nhanvien.setLayout(nhanvienLayout);
@@ -398,13 +425,22 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
                                 .addComponent(kGradientPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(nhanvienLayout.createSequentialGroup()
                         .addGap(343, 343, 343)
-                        .addComponent(phantrang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(phantrang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(nhanvienLayout.createSequentialGroup()
+                        .addGap(157, 157, 157)
+                        .addComponent(txtTim, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(kGradientPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
         nhanvienLayout.setVerticalGroup(
             nhanvienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nhanvienLayout.createSequentialGroup()
-                .addContainerGap(165, Short.MAX_VALUE)
+                .addContainerGap(101, Short.MAX_VALUE)
+                .addGroup(nhanvienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtTim, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(kGradientPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(31, 31, 31)
                 .addGroup(nhanvienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(nhanvienLayout.createSequentialGroup()
                         .addGap(68, 68, 68)
@@ -549,22 +585,57 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
             // TODO add your handling code here:
             KhachHang kh = layTTSua();
             if (service.update(kh) == true) {
-                JOptionPane.showMessageDialog(this, "Sua thành công !");
+                JOptionPane.showMessageDialog(this, "Sửa thành công !");
 //                hienThi();
                 loadData(1);
             } else {
-                JOptionPane.showMessageDialog(this, "Sua thất bại !");
+                JOptionPane.showMessageDialog(this, "Sửa thất bại !");
             }
         } catch (ParseException ex) {
             Logger.getLogger(QLNhanVienPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnUpdateMousePressed
 
+    private void btnTimTheoMaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTimTheoMaMousePressed
+        // TODO add your handling code here:
+        if (txtTim.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Bạn cần điền mã để tìm");
+            return;
+        }
+        if (txtTim.getText().length() > 10) {
+            JOptionPane.showMessageDialog(this, "Mã điền phải nhỏ hơn 10");
+            return;
+        }
+        DefaultTableModel model = (DefaultTableModel) tbbBang.getModel();
+        model.setRowCount(0);
+        KhachHang khachHang = service.seachbyMa(txtTim.getText());
+        if(khachHang== null){
+            JOptionPane.showMessageDialog(this, "Không có dữ liệu");
+            return;
+        }
+        if (khachHang.getTrangThai() == 0) {
+            Date date = khachHang.getNgaySinh();
+            String sdf = new SimpleDateFormat("dd/MM/yyyy").format(date);
+            Object[] row = new Object[]{
+                khachHang.getMaKH(),
+                khachHang.getTenKH(),
+                sdf,
+                khachHang.getSdt(),
+                khachHang.getDiaChi()
+            };
+            model.addRow(row);
+        }
+        JOptionPane.showMessageDialog(this, "Tìm thành công");
+
+
+    }//GEN-LAST:event_btnTimTheoMaMousePressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnAdd;
     private javax.swing.JLabel btnDelete;
     private javax.swing.JLabel btnReset;
+    private javax.swing.JLabel btnTimTheoMa;
     private javax.swing.JLabel btnUpdate;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -573,6 +644,7 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel28;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private keeptoo.KGradientPanel kGradientPanel1;
     private keeptoo.KGradientPanel kGradientPanel2;
     private keeptoo.KGradientPanel kGradientPanel5;
     private keeptoo.KGradientPanel kGradientPanel6;
@@ -584,6 +656,7 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
     private com.toedter.calendar.JDateChooser txtNgaySinh;
     private javax.swing.JTextArea txtQueQuan;
     private javax.swing.JTextField txtTen;
+    private javax.swing.JTextField txtTim;
     private javax.swing.JTextField txtsdt;
     // End of variables declaration//GEN-END:variables
 }
