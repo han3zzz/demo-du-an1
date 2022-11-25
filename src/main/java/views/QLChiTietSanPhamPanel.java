@@ -138,14 +138,14 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
         List<SanPham> sps = sanPhamServices.getAllbyTrangThai(0);
         Integer count = sps.size();
         Integer soDu = count % limit;
-        Integer soLamTron = 0;
-        if (soDu == 0) {
-            soLamTron = count / limit;
-        }
-        if (soDu != 0) {
-            soLamTron = ((count - soDu) / limit) + 1;
-        }
-        Integer toltalPage = soLamTron;
+//        Integer soLamTron = 0;
+//        if (soDu == 0) {
+//            soLamTron = count / limit;
+//        }
+//        if (soDu != 0) {
+//            soLamTron = ((count - soDu) / limit) + 1;
+//        }
+        Integer toltalPage =(int) Math.ceil(count/ (float) limit);
         String maSP = "";
         Integer tonKho = 0;
         List<SanPham> sanPhams = sanPhamServices.phanTrang(limit, page);

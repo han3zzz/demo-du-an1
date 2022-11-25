@@ -23,5 +23,7 @@ public interface INhanVienServices {
     public NhanVien seachbyMa(String ma);
     public NhanVien fill(String maNV);
     public List<NhanVien> getALLbyVaiTro(Integer vaiTro);
+    public List<NhanVien> phanTrang(Integer limitPage, Integer page);
+    public List<NhanVien> getALLbyTrangThai(Integer trangThai);
     
 }

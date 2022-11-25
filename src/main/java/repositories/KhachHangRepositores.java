@@ -97,7 +97,7 @@ public class KhachHangRepositores {
     public List<KhachHang> phanTrang(Integer limitPage, Integer page) {
         Session s = HibernateConfig.getFACTORY().openSession();
         Transaction transaction = s.beginTransaction();
-        Query query = s.createQuery("From KhachHang");
+        Query query = s.createQuery("From KhachHang where TrangThai = 0");
         query.setFirstResult((limitPage * page) - limitPage);
         query.setMaxResults(limitPage);
         transaction.commit();

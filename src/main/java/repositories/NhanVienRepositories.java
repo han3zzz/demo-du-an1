@@ -97,4 +97,23 @@ public class NhanVienRepositories {
         List<NhanVien> list = q.getResultList();
         return list;
     }
+    public List<NhanVien> phanTrang(Integer limitPage, Integer page) {
+        Session s = HibernateConfig.getFACTORY().openSession();
+        Transaction transaction = s.beginTransaction();
+        Query query = s.createQuery("From NhanVien where TrangThai = 0");
+        query.setFirstResult((limitPage * page) - limitPage);
+        query.setMaxResults(limitPage);
+        transaction.commit();
+        List<NhanVien> list = query.getResultList();
+        s.close();
+        return list;
+
+    }
+    public List<NhanVien> getALLbyTrangThai(Integer trangThai){
+        Session session = HibernateConfig.getFACTORY().openSession();
+        Query q = session.createQuery("From NhanVien where TrangThai = :trangthai");
+        q.setParameter("trangthai", trangThai);
+        List<NhanVien> list = q.getResultList();
+        return list;
+    }
 }

@@ -57,5 +57,15 @@ public class NhanVienServices implements INhanVienServices{
     public List<NhanVien> getALLbyVaiTro(Integer vaiTro) {
         return nvr.getALLbyVaiTro(vaiTro);
     }
+
+    @Override
+    public List<NhanVien> phanTrang(Integer limitPage, Integer page) {
+       return nvr.phanTrang(limitPage, page);
+    }
+
+    @Override
+    public List<NhanVien> getALLbyTrangThai(Integer trangThai) {
+        return nvr.getALLbyTrangThai(trangThai);
+    }
     
 }

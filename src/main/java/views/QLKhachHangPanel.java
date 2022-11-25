@@ -52,16 +52,17 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
         Integer limit = 10;
         List<KhachHang> khachHangs = service.getALL();
         Integer count = khachHangs.size();
-        Integer soDu = count % 10;
-        Integer soLamTron = 0;
-        if (soDu == 0) {
-            soLamTron = count / 10;
-        }
-        if (soDu != 0) {
-            soLamTron = ((count - soDu) / 10) + 1;
-        }
+//        Integer soDu = count % 10;
+//        Integer soLamTron = 0;
+//        if (soDu == 0) {
+//            soLamTron = count / 10;
+//        }
+//        if (soDu != 0) {
+//            soLamTron = ((count - soDu) / 10) + 1;
+//        }
+Integer toltalPage =(int) Math.ceil(count/ (float) limit);
 
-        Integer toltalPage = soLamTron;
+       
         List<KhachHang> kh = service.phanTrang(limit, page);
         for (KhachHang khachHang : kh) {
             if (khachHang.getTrangThai() == 0) {
