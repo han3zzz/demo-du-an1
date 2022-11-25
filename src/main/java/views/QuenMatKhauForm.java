@@ -147,12 +147,28 @@ public class QuenMatKhauForm extends javax.swing.JFrame {
 
     private void btnQuenMatKhauMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQuenMatKhauMousePressed
         // TODO add your handling code here:
-        
         String ma = txtMa.getText();
         String email = txtEmail.getText();
+        String checkMail = "^([a-zA-Z0-9]+\\.)*[a-zA-Z0-9]+@([a-z]+\\.)+[a-z]{2,4}$";
+        if(ma.trim().isEmpty() || email.trim().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Không được bỏ trống ");
+            return;
+        }
+        if(ma.length() >10){
+            JOptionPane.showMessageDialog(this, "Mã không được vượt quá 10 kí tự");
+            return;
+        }
+        if(email.length() >30){
+            JOptionPane.showMessageDialog(this, "email nhỏ hơn 30 kí tự");
+            return;
+        }
+        if(!email.matches(checkMail)){
+            JOptionPane.showMessageDialog(this, "Email Không dùng định dạng Example@gmail.com");
+            return;
+        }
+        
         if (services.checkTonTai(email, ma) == false) {
             JOptionPane.showMessageDialog(this, "Tài khoản hoặc email không đúng");
-            
         }
         else{
             services.capNhatPass(ma);
