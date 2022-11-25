@@ -22,5 +22,6 @@ public interface INhanVienServices {
     public boolean delete(String ma);
     public NhanVien seachbyMa(String ma);
     public NhanVien fill(String maNV);
+    public List<NhanVien> getALLbyVaiTro(Integer vaiTro);
     
 }

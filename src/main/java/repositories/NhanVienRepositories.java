@@ -90,4 +90,11 @@ public class NhanVienRepositories {
         transaction.commit();
         session.close();
     }
+    public List<NhanVien> getALLbyVaiTro(Integer vaiTro){
+        Session session = HibernateConfig.getFACTORY().openSession();
+        Query q = session.createQuery("From NhanVien where VaiTro = :vaiTro");
+        q.setParameter("vaiTro", vaiTro);
+        List<NhanVien> list = q.getResultList();
+        return list;
+    }
 }

@@ -52,5 +52,10 @@ public class NhanVienServices implements INhanVienServices{
     public NhanVien fill(String maNV) {
         return nvr.fill(maNV);
     }
+
+    @Override
+    public List<NhanVien> getALLbyVaiTro(Integer vaiTro) {
+        return nvr.getALLbyVaiTro(vaiTro);
+    }
     
 }
