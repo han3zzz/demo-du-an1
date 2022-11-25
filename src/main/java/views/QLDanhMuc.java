@@ -410,11 +410,15 @@ public class QLDanhMuc extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Bạn chỉ được chọn 1 bản ghi !");
                 return;
             }
-            DanhMuc n = layTTSua();
-            if (n.getMaDanhMuc().trim().isEmpty() || n.getTenDanhMuc().trim().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Không được để trống !");
+            if (txtTen.getText().length() >= 30) {
+                JOptionPane.showMessageDialog(this, "Độ dài tên vượt quá độ dài cho phép!", "Thông báo", JOptionPane.ERROR_MESSAGE);
                 return;
             }
+            DanhMuc n = layTTSua();
+//            if (n.getMaDanhMuc().trim().isEmpty() || n.getTenDanhMuc().trim().isEmpty()) {
+//                JOptionPane.showMessageDialog(this, "Không được để trống !");
+//                return;
+//            }
             int check = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn sửa ?");
             if (check != JOptionPane.YES_OPTION) {
                 return;
@@ -464,7 +468,6 @@ public class QLDanhMuc extends javax.swing.JFrame {
 //                return;
 //            }
             DanhMuc n = layTT();
-
             if (services.seachbyMa(n.getMaDanhMuc()) != null) {
                 JOptionPane.showMessageDialog(this, "Mã đã tồn tại !");
                 return;
@@ -499,10 +502,10 @@ public class QLDanhMuc extends javax.swing.JFrame {
             if (check != JOptionPane.YES_OPTION) {
                 return;
             }
-            if (txtTen.getText().length() >= 30) {
-                JOptionPane.showMessageDialog(this, "Độ dài tên vượt quá độ dài cho phép!", "Thông báo", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
+//            if (txtTen.getText().length() >= 30) {
+//                JOptionPane.showMessageDialog(this, "Độ dài tên vượt quá độ dài cho phép!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+//                return;
+//            }
             DanhMuc n = layTT();
             if (services.delete(n) == true) {
                 JOptionPane.showMessageDialog(this, "Xóa thành công !");
