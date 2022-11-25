@@ -10,9 +10,15 @@ import domainmodels.KhachHang;
 import domainmodels.NhanVien;
 import java.awt.Component;
 import java.awt.Image;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -28,6 +34,7 @@ import services.IQLSanPhamServices;
 import services.KhachHangService;
 import services.NhanVienServices;
 import services.QLSanPhamServices;
+import services.TaoHoaDonServices;
 import viewmodels.ChiTietSPViewModels;
 
 /**
@@ -89,10 +96,18 @@ public class QLHoaDonPanel extends javax.swing.JPanel {
                     tenNhanVien = nhanVien.getTenNV();
                 }
             }
+            String sdf = "";
+            Date date = hoaDon.getNgayMua();
+            if (date == null) {
+                sdf = "";
+               
+            }else{
+                sdf = new SimpleDateFormat("dd/MM/yyyy").format(date);
+            }
             Object[] data = new Object[]{
                 hoaDon.getMaHD(),
                 hoaDon.getTenNguoiNhan(),
-                hoaDon.getNgayMua(),
+                sdf,
                 hoaDon.getGhiChu(),
                 hoaDon.getDiaChiNhanHang(),
                 tenKH,
@@ -139,6 +154,8 @@ public class QLHoaDonPanel extends javax.swing.JPanel {
         rbDaHuy = new javax.swing.JRadioButton();
         rbDaThanhToan = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
+        kGradientPanel1 = new keeptoo.KGradientPanel();
+        btnIn = new javax.swing.JLabel();
 
         hoadon.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -219,6 +236,28 @@ public class QLHoaDonPanel extends javax.swing.JPanel {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_conversion_25px_1.png"))); // NOI18N
         jLabel1.setText("Lọc");
 
+        btnIn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnIn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_print_30px.png"))); // NOI18N
+        btnIn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnInMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnInMousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout kGradientPanel1Layout = new javax.swing.GroupLayout(kGradientPanel1);
+        kGradientPanel1.setLayout(kGradientPanel1Layout);
+        kGradientPanel1Layout.setHorizontalGroup(
+            kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnIn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
+        );
+        kGradientPanel1Layout.setVerticalGroup(
+            kGradientPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnIn, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout hoadonLayout = new javax.swing.GroupLayout(hoadon);
         hoadon.setLayout(hoadonLayout);
         hoadonLayout.setHorizontalGroup(
@@ -229,11 +268,14 @@ public class QLHoaDonPanel extends javax.swing.JPanel {
                     .addGroup(hoadonLayout.createSequentialGroup()
                         .addGroup(hoadonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 955, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 959, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(hoadonLayout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 959, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(kGradientPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(hoadonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(lbHoaDonChiTiet, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel24, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(0, 110, Short.MAX_VALUE))
+                        .addGap(0, 43, Short.MAX_VALUE))
                     .addGroup(hoadonLayout.createSequentialGroup()
                         .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -244,21 +286,23 @@ public class QLHoaDonPanel extends javax.swing.JPanel {
                         .addComponent(rbDaHuy)
                         .addGap(18, 18, 18)
                         .addComponent(rbDaThanhToan)
-                        .addGap(294, 294, 294))))
+                        .addGap(261, 261, 261))))
         );
         hoadonLayout.setVerticalGroup(
             hoadonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, hoadonLayout.createSequentialGroup()
-                .addContainerGap(111, Short.MAX_VALUE)
-                .addGroup(hoadonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(100, 100, 100)
+                .addGroup(hoadonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(hoadonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(rbTatCa)
                         .addComponent(rbDaHuy)
                         .addComponent(rbDaThanhToan)
-                        .addComponent(jLabel1)))
+                        .addComponent(jLabel1))
+                    .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(hoadonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(kGradientPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel24)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -436,10 +480,18 @@ public class QLHoaDonPanel extends javax.swing.JPanel {
                     tenNhanVien = nhanVien.getTenNV();
                 }
             }
+           String sdf = "";
+            Date date = hoaDon.getNgayMua();
+            if (date == null) {
+                sdf = "";
+               
+            }else{
+                sdf = new SimpleDateFormat("dd/MM/yyyy").format(date);
+            }
             Object[] data = new Object[]{
                 hoaDon.getMaHD(),
                 hoaDon.getTenNguoiNhan(),
-                hoaDon.getNgayMua(),
+                sdf,
                 hoaDon.getGhiChu(),
                 hoaDon.getDiaChiNhanHang(),
                 tenKH,
@@ -481,10 +533,19 @@ public class QLHoaDonPanel extends javax.swing.JPanel {
                     tenNhanVien = nhanVien.getTenNV();
                 }
             }
+            String sdf = "";
+            Date date = hoaDon.getNgayMua();
+            if (date == null) {
+                sdf = "";
+               
+            }else{
+                sdf = new SimpleDateFormat("dd/MM/yyyy").format(date);
+            }
+             
             Object[] data = new Object[]{
                 hoaDon.getMaHD(),
                 hoaDon.getTenNguoiNhan(),
-                hoaDon.getNgayMua(),
+                sdf,
                 hoaDon.getGhiChu(),
                 hoaDon.getDiaChiNhanHang(),
                 tenKH,
@@ -499,19 +560,47 @@ public class QLHoaDonPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_rbDaThanhToanMousePressed
 
+    private void btnInMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnInMouseExited
+
+    private void btnInMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInMousePressed
+        try {
+ 
+            // TODO add your handling code here:
+            int index = tbHoaDon.getSelectedRow();
+            if (index == -1) {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn hóa đơn cần in !");
+                return;
+            }
+            if (tbHoaDon.getValueAt(index, 9).toString().equals("Đã Hủy")) {
+                JOptionPane.showMessageDialog(this, "Hóa đơn này đã hủy nên không thể in !");
+                return;
+            }
+            TaoHoaDonServices taoHoaDonServices = new TaoHoaDonServices();
+            String maHd = tbHoaDon.getValueAt(index, 0).toString();
+            int check = JOptionPane.showConfirmDialog(this, "Bạn có chắc in hóa đơn " + maHd + " !");
+            if (check != JOptionPane.YES_OPTION) {
+                return;
+            }
+            taoHoaDonServices.taoHoaDon(maHd);
+            JOptionPane.showMessageDialog(this, "In thành công !");
+        } catch (IOException ex) {
+            Logger.getLogger(QLHoaDonPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnInMousePressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel btnIn;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JPanel hoadon;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private keeptoo.KGradientPanel kGradientPanel1;
-    private keeptoo.KGradientPanel kGradientPanel2;
     private javax.swing.JLabel lbHoaDonChiTiet;
     private javax.swing.JRadioButton rbDaHuy;
     private javax.swing.JRadioButton rbDaThanhToan;
