@@ -64,16 +64,18 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
         Integer toltalPage = soLamTron;
         List<KhachHang> kh = service.phanTrang(limit, page);
         for (KhachHang khachHang : kh) {
-            Date date = khachHang.getNgaySinh();
-            String sdf = new SimpleDateFormat("dd/MM/yyyy").format(date);
-            Object[] row = new Object[]{
-                khachHang.getMaKH(),
-                khachHang.getTenKH(),
-                sdf,
-                khachHang.getSdt(),
-                khachHang.getDiaChi()
-            };
-            model.addRow(row);
+            if (khachHang.getTrangThai() == 0) {
+                Date date = khachHang.getNgaySinh();
+                String sdf = new SimpleDateFormat("dd/MM/yyyy").format(date);
+                Object[] row = new Object[]{
+                    khachHang.getMaKH(),
+                    khachHang.getTenKH(),
+                    sdf,
+                    khachHang.getSdt(),
+                    khachHang.getDiaChi()
+                };
+                model.addRow(row);
+            }
         }
         phantrang.setPagegination(page, toltalPage);
     }
@@ -617,7 +619,7 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) tbbBang.getModel();
         model.setRowCount(0);
         KhachHang khachHang = service.seachbyMa(txtTim.getText());
-        if(khachHang== null){
+        if (khachHang == null) {
             JOptionPane.showMessageDialog(this, "Không có dữ liệu");
             return;
         }

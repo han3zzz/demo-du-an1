@@ -146,6 +146,13 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
         loadCbbLocDanhMuc();
         loadCbbLocMauSac();
         loadCbbLocBoNho();
+        rbTaiCuaHang.setSelected(true);
+        txtDiaChiNhanHang.setText("Tại cửa hàng");
+        txtDiaChiNhanHang.setEditable(false);
+        txtDiaChiNhanHang.setEnabled(false);
+        txtPhiship.setText("0");
+        txtPhiship.setEditable(false);
+        txtPhiship.setEnabled(false);
     }
 
     private void loadCbbLocDanhMuc() {
@@ -1258,11 +1265,15 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
                                         .addComponent(cbbGiamGia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                 .addGroup(banhangLayout.createSequentialGroup()
                                     .addGroup(banhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel15)
-                                        .addComponent(jLabel16)
-                                        .addComponent(jLabel17)
-                                        .addComponent(jLabel18))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(banhangLayout.createSequentialGroup()
+                                            .addGroup(banhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel16)
+                                                .addComponent(jLabel17)
+                                                .addComponent(jLabel18))
+                                            .addGap(47, 47, 47))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, banhangLayout.createSequentialGroup()
+                                            .addComponent(jLabel15)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                                     .addGroup(banhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(txtPhiShip, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(txtGiamGia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1386,9 +1397,9 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
                                             .addComponent(jLabel14)
                                             .addComponent(cbbGiamGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(banhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel15)
-                                            .addComponent(txtTienKhachDua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(banhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(txtTienKhachDua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(banhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel16)

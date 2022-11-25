@@ -54,6 +54,11 @@ public class QLKhuyenMaiServices implements IQLKhuyenMaiServices{
     public List<KhuyenMai> getAllByMa(String ma) {
         return repo.getAllByMa(ma);
     }
+
+    @Override
+    public void updatebyTrangThai(String maString, Integer trangThai) {
+        repo.updatebyTrangThai(maString, trangThai);
+    }
     
     
 }

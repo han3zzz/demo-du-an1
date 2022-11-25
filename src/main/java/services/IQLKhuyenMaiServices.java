@@ -19,5 +19,6 @@ public interface IQLKhuyenMaiServices {
     public KhuyenMai seachbyMa(String ma);
     public KhuyenMai layMa();
     public  List<KhuyenMai> getAllByMa(String ma);
+    public void updatebyTrangThai(String maString, Integer trangThai);
     
 }

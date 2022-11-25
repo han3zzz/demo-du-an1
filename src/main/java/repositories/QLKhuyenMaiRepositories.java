@@ -88,5 +88,17 @@ public class QLKhuyenMaiRepositories {
         return list;
         
     }
+    public void updatebyTrangThai(String maString, Integer trangThai){
+        Session session = HibernateConfig.getFACTORY().openSession();
+        Transaction transaction = session.beginTransaction();
+        Query q = session.createQuery("Update KhuyenMai set TrangThai = :trangthai where MaKM = :makm");
+        q.setParameter("trangthai", trangThai);
+        q.setParameter("makm", maString);
+        int check = q.executeUpdate();
+        transaction.commit();
+        
+        session.close();
+        
+    }
     
 }
