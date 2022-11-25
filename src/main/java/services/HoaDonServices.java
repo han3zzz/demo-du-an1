@@ -114,6 +114,11 @@ public class HoaDonServices implements IHoaDonServices{
         return hdr.countHoaDonHuytheoNam(trangThai, nam);
     }
 
+    @Override
+    public List<HoaDon> locTheoTrangThai(Integer trangThai) {
+        return hdr.locTheoTrangThai(trangThai);
+    }
+
    
 
     

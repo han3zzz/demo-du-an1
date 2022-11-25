@@ -34,4 +34,5 @@ public interface IHoaDonServices {
     public List<HoaDon> countHoaDonHuytheoThang(Integer trangThai, Integer thang , Integer nam);
     public List<HoaDon> countHoaDontheoNam(Integer trangThai,  Integer nam);
     public List<HoaDon> countHoaDonHuytheoNam(Integer trangThai, Integer nam);
+    public List<HoaDon> locTheoTrangThai(Integer trangThai);
 }

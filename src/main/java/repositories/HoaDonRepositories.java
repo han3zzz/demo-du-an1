@@ -13,7 +13,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import utilities.HibernateConfig;
 
-
 /**
  *
  * @author HANGOCHAN
@@ -159,6 +158,7 @@ public class HoaDonRepositories {
         List<HoaDon> list = q.getResultList();
         return list;
     }
+
     public List<HoaDon> countHoaDonHuytheoNgay(Integer trangThai, Date ngay) {
         Session session = HibernateConfig.getFACTORY().openSession();
         Query q = session.createQuery("From HoaDon where TrangThai = :trangthai and NgaySua = :ngaymua");
@@ -167,6 +167,7 @@ public class HoaDonRepositories {
         List<HoaDon> list = q.getResultList();
         return list;
     }
+
     public List<HoaDon> countHoaDon(Integer trangThai) {
         Session session = HibernateConfig.getFACTORY().openSession();
         Query q = session.createQuery("From HoaDon where TrangThai = :trangthai");
@@ -174,8 +175,8 @@ public class HoaDonRepositories {
         List<HoaDon> list = q.getResultList();
         return list;
     }
-    
-    public List<HoaDon> countHoaDontheoThang(Integer trangThai, Integer thang , Integer nam) {
+
+    public List<HoaDon> countHoaDontheoThang(Integer trangThai, Integer thang, Integer nam) {
         Session session = HibernateConfig.getFACTORY().openSession();
         Query q = session.createQuery("From HoaDon where TrangThai = :trangthai and MONTH(NgayMua) = :ngaymua and YEAR(NgayMua) = :nam");
         q.setParameter("trangthai", trangThai);
@@ -184,35 +185,42 @@ public class HoaDonRepositories {
         List<HoaDon> list = q.getResultList();
         return list;
     }
-    public List<HoaDon> countHoaDonHuytheoThang(Integer trangThai, Integer thang , Integer nam) {
+
+    public List<HoaDon> countHoaDonHuytheoThang(Integer trangThai, Integer thang, Integer nam) {
         Session session = HibernateConfig.getFACTORY().openSession();
         Query q = session.createQuery("From HoaDon where TrangThai = :trangthai and MONTH(NgaySua) = :ngaymua and YEAR(NgaySua) = :nam");
-       q.setParameter("trangthai", trangThai);
+        q.setParameter("trangthai", trangThai);
         q.setParameter("ngaymua", thang);
         q.setParameter("nam", nam);
         List<HoaDon> list = q.getResultList();
         return list;
     }
+
     public List<HoaDon> countHoaDontheoNam(Integer trangThai, Integer nam) {
         Session session = HibernateConfig.getFACTORY().openSession();
         Query q = session.createQuery("From HoaDon where TrangThai = :trangthai and YEAR(NgayMua) = :nam");
         q.setParameter("trangthai", trangThai);
-  
+
         q.setParameter("nam", nam);
         List<HoaDon> list = q.getResultList();
         return list;
     }
-    public List<HoaDon> countHoaDonHuytheoNam(Integer trangThai,Integer nam) {
+
+    public List<HoaDon> countHoaDonHuytheoNam(Integer trangThai, Integer nam) {
         Session session = HibernateConfig.getFACTORY().openSession();
         Query q = session.createQuery("From HoaDon where TrangThai = :trangthai and YEAR(NgaySua) = :nam");
-       q.setParameter("trangthai", trangThai);
+        q.setParameter("trangthai", trangThai);
         q.setParameter("nam", nam);
         List<HoaDon> list = q.getResultList();
         return list;
     }
-    
-    
 
-  
+    public List<HoaDon> locTheoTrangThai(Integer trangThai) {
+        Session session = HibernateConfig.getFACTORY().openSession();
+        Query q = session.createQuery("From HoaDon where TrangThai = :trangthai");
+        q.setParameter("trangthai", trangThai);
+        List<HoaDon> list = q.getResultList();
+        return list;
+    }
 
 }
