@@ -284,6 +284,7 @@ public class QLBoNhoTrong extends javax.swing.JFrame {
             .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
         );
 
+        txtMa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtMa.setText("jLabel4");
 
         btnSearch1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
