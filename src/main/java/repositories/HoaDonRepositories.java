@@ -57,16 +57,17 @@ public class HoaDonRepositories {
 //        
 //    }
 
-    public void suaHD(String maHD, String ghiChu, BigDecimal tongTien, BigDecimal giamGia, Integer trangThai, String maKM) {
+    public void suaHD(String maHD, String ghiChu, BigDecimal tongTien, BigDecimal giamGia, Integer trangThai, String maKM, String diachi) {
         Session session = HibernateConfig.getFACTORY().openSession();
         Transaction transaction = session.beginTransaction();
-        Query q = session.createQuery("UPDATE HoaDon SET GhiChu = :ghichu , TongTien = :tongtien , GiamGia = :giamgia , TrangThai = :trangThai , MaKM = :makm where MaHD = :mahd");
+        Query q = session.createQuery("UPDATE HoaDon SET DiaChiNhanHang = :diachi , GhiChu = :ghichu , TongTien = :tongtien , GiamGia = :giamgia , TrangThai = :trangThai , MaKM = :makm where MaHD = :mahd");
         q.setParameter("mahd", maHD);
         q.setParameter("ghichu", ghiChu);
         q.setParameter("tongtien", tongTien);
         q.setParameter("giamgia", giamGia);
         q.setParameter("trangThai", trangThai);
         q.setParameter("makm", maKM);
+        q.setParameter("diachi", diachi);
         int index = q.executeUpdate();
         transaction.commit();
         session.close();

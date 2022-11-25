@@ -74,7 +74,9 @@ public class MainForm extends javax.swing.JFrame {
         initComponents();
 
         setTitle("Hệ Thống Bán Điện Thoại");
-
+//        ImageIcon icon = new ImageIcon("/image/icons8_add_30px_6.png");
+//        Image image = icon.getImage();
+//        setIconImage(image);
         pqs = new PhanQuyenServices();
         cardLayout = (CardLayout) giaodien.getLayout();
 

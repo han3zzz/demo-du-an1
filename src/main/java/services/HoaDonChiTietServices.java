@@ -10,7 +10,9 @@ import java.util.Date;
 import java.util.List;
 import repositories.HoaDonChiTietRepositories;
 import viewmodels.ThongKeDoanhThu;
+import viewmodels.ThongKeDoanhThuTheoDanhMuc;
 import viewmodels.ThongKeSanPham;
+import viewmodels.ThongKeSoLuongTheoDanhMuc;
 
 /**
  *
@@ -101,6 +103,36 @@ public class HoaDonChiTietServices implements IHoaDonChiTietServies{
     @Override
     public List<ThongKeDoanhThu> thongKeDoanhThuTheoNam(Integer nam) {
         return hdctr.thongKeDoanhThuTheoNam(nam);
+    }
+
+    @Override
+    public List<ThongKeDoanhThuTheoDanhMuc> thongKeDoanhThuDanhMucTheoNgay(Date date) {
+        return hdctr.thongKeDoanhThuDanhMucTheoNgay(date);
+    }
+
+    @Override
+    public List<ThongKeDoanhThuTheoDanhMuc> thongKeDoanhThuDanhMucTheoThang(Integer thang, Integer nam) {
+        return hdctr.thongKeDoanhThuDanhMucTheoThang(thang, nam);
+    }
+
+    @Override
+    public List<ThongKeDoanhThuTheoDanhMuc> thongKeDoanhThuDanhMucTheoNam(Integer nam) {
+        return hdctr.thongKeDoanhThuDanhMucTheoNam(nam);
+    }
+
+    @Override
+    public List<ThongKeSoLuongTheoDanhMuc> thongKeSoLuongDanhMucTheoNgay(Date date) {
+        return hdctr.thongKeSoLuongDanhMucTheoNgay(date);
+    }
+
+    @Override
+    public List<ThongKeSoLuongTheoDanhMuc> thongKeSoLuongDanhMucTheoThang(Integer thang, Integer nam) {
+        return hdctr.thongKeSoLuongDanhMucTheoThang(thang,nam);
+    }
+
+    @Override
+    public List<ThongKeSoLuongTheoDanhMuc> thongKeSoLuongDanhMucTheoNam(Integer nam) {
+        return hdctr.thongKeSoLuongDanhMucTheoNam(nam);
     }
 
    

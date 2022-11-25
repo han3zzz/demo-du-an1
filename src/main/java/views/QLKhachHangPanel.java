@@ -29,41 +29,53 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
      * Creates new form QLKhachHangPanel
      */
     private IKhachHangService service;
+
     public QLKhachHangPanel() {
         initComponents();
         service = new KhachHangService();
-        hienThi();
-    loadMaKH();
-//    pagination1.addEventPagination(new EventPagination() {
-//            @Override
-//            public void pageChanged(int page) {
-//                loadData(page);
-//            }
-//    });
+//        hienThi();
+        loadMaKH();
+        loadData(1);
+        phantrang.addEventPagination(new EventPagination() {
+            @Override
+            public void pageChanged(int page) {
+                loadData(page);
+            }
+        });
 //loadData(2);
 
     }
-    public void loadData(Integer page){
+
+    public void loadData(Integer page) {
         DefaultTableModel model = (DefaultTableModel) tbbBang.getModel();
         model.setRowCount(0);
-        Integer limit = 10 ;
+        Integer limit = 10;
         List<KhachHang> khachHangs = service.getALL();
         Integer count = khachHangs.size();
-        
-        Integer toltalPage = (int) Math.ceil(count/limit);
+        Integer soDu = count % 10;
+        Integer soLamTron = 0;
+        if (soDu == 0) {
+            soLamTron = count / 10;
+        }
+        if (soDu != 0) {
+            soLamTron = ((count - soDu) / 10) + 1;
+        }
+
+        Integer toltalPage = soLamTron;
         List<KhachHang> kh = service.phanTrang(limit, page);
         for (KhachHang khachHang : kh) {
             Object[] row = new Object[]{
-                    khachHang.getMaKH(),
-                    khachHang.getTenKH(),
-                    khachHang.getNgaySinh(),
-                    khachHang.getSdt(),
-                    khachHang.getDiaChi()
-                };
-                model.addRow(row);
+                khachHang.getMaKH(),
+                khachHang.getTenKH(),
+                khachHang.getNgaySinh(),
+                khachHang.getSdt(),
+                khachHang.getDiaChi()
+            };
+            model.addRow(row);
         }
-        pagination1.setPagegination(page, toltalPage);
+        phantrang.setPagegination(page, toltalPage);
     }
+
     public void loadMaKH() {
 
         String ma = "";
@@ -86,6 +98,7 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
         String maMoi = "KH" + sofinal;
         txtMa.setText(maMoi);
     }
+
     public void hienThi() {
         loadMaKH();
         DefaultTableModel model = (DefaultTableModel) tbbBang.getModel();
@@ -201,7 +214,7 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
         txtQueQuan = new javax.swing.JTextArea();
         txtNgaySinh = new com.toedter.calendar.JDateChooser();
         txtMa = new javax.swing.JLabel();
-        pagination1 = new pagination.Pagination();
+        phantrang = new pagination.Pagination();
 
         nhanvien.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -224,6 +237,7 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tbbBang.setRowHeight(40);
         tbbBang.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 tbbBangMousePressed(evt);
@@ -343,7 +357,7 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
         txtMa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtMa.setText("jLabel1");
 
-        pagination1.setOpaque(false);
+        phantrang.setOpaque(false);
 
         javax.swing.GroupLayout nhanvienLayout = new javax.swing.GroupLayout(nhanvien);
         nhanvien.setLayout(nhanvienLayout);
@@ -383,21 +397,17 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
                                 .addGap(18, 18, 18)
                                 .addComponent(kGradientPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(nhanvienLayout.createSequentialGroup()
-                        .addGap(374, 374, 374)
-                        .addComponent(pagination1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(343, 343, 343)
+                        .addComponent(phantrang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
         nhanvienLayout.setVerticalGroup(
             nhanvienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(nhanvienLayout.createSequentialGroup()
-                .addContainerGap(295, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nhanvienLayout.createSequentialGroup()
+                .addContainerGap(165, Short.MAX_VALUE)
                 .addGroup(nhanvienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nhanvienLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(pagination1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(43, 43, 43))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nhanvienLayout.createSequentialGroup()
+                    .addGroup(nhanvienLayout.createSequentialGroup()
+                        .addGap(68, 68, 68)
                         .addGroup(nhanvienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(nhanvienLayout.createSequentialGroup()
                                 .addGap(4, 4, 4)
@@ -426,8 +436,15 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
                                 .addComponent(kGradientPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(kGradientPanel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(kGradientPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(128, 128, 128))))
+                        .addGap(86, 86, 86))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nhanvienLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(phantrang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(27, 27, 27))
         );
+
+        phantrang.getAccessibleContext().setAccessibleParent(phantrang);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -437,9 +454,7 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(nhanvien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(nhanvien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -461,17 +476,18 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
             KhachHang kh = layTTKH();
             if (service.add(kh) == true) {
                 JOptionPane.showMessageDialog(this, "Thêm thành công !");
-                hienThi();
+//                hienThi();
+                loadData(1);
             } else {
                 JOptionPane.showMessageDialog(this, "Thêm thất bại !");
             }
 
             //            if (chiTietSPServices.add(c) == true) {
-                //                JOptionPane.showMessageDialog(this, "Thêm thành công !");
-                //                hienThiSanPham();
-                //            } else {
-                //                JOptionPane.showMessageDialog(this, "Thêm thất bại !");
-                //            }
+            //                JOptionPane.showMessageDialog(this, "Thêm thành công !");
+            //                hienThiSanPham();
+            //            } else {
+            //                JOptionPane.showMessageDialog(this, "Thêm thất bại !");
+            //            }
         } catch (ParseException ex) {
             Logger.getLogger(QLNhanVienPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -501,7 +517,8 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
         String ma = tbbBang.getValueAt(index, 0).toString();
         if (service.delete(ma) == true) {
             JOptionPane.showMessageDialog(this, "Xóa thành công !");
-            hienThi();
+//            hienThi();
+            loadData(1);
         } else {
             JOptionPane.showMessageDialog(this, "Xóa thất bại !");
         }
@@ -533,7 +550,8 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
             KhachHang kh = layTTSua();
             if (service.update(kh) == true) {
                 JOptionPane.showMessageDialog(this, "Sua thành công !");
-                hienThi();
+//                hienThi();
+                loadData(1);
             } else {
                 JOptionPane.showMessageDialog(this, "Sua thất bại !");
             }
@@ -560,7 +578,7 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
     private keeptoo.KGradientPanel kGradientPanel6;
     private keeptoo.KGradientPanel kGradientPanel7;
     private javax.swing.JPanel nhanvien;
-    private pagination.Pagination pagination1;
+    private pagination.Pagination phantrang;
     private javax.swing.JTable tbbBang;
     private javax.swing.JLabel txtMa;
     private com.toedter.calendar.JDateChooser txtNgaySinh;

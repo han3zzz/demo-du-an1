@@ -98,7 +98,7 @@ public class KhachHangRepositores {
         Session s = HibernateConfig.getFACTORY().openSession();
         Transaction transaction = s.beginTransaction();
         Query query = s.createQuery("From KhachHang");
-        query.setFirstResult(page);
+        query.setFirstResult((limitPage * page) - limitPage);
         query.setMaxResults(limitPage);
         transaction.commit();
         List<KhachHang> list = query.getResultList();

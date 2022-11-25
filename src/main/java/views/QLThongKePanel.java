@@ -24,9 +24,11 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PiePlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DefaultPieDataset;
 import services.HoaDonChiTietServices;
 import services.HoaDonServices;
 import services.IHoaDonChiTietServies;
@@ -38,8 +40,10 @@ import services.KhachHangService;
 import services.QLKhuyenMaiServices;
 import services.QLSanPhamServices;
 import viewmodels.ThongKeDoanhThu;
+import viewmodels.ThongKeDoanhThuTheoDanhMuc;
 import viewmodels.ThongKeKhachHang;
 import viewmodels.ThongKeSanPham;
+import viewmodels.ThongKeSoLuongTheoDanhMuc;
 
 /**
  *
@@ -172,6 +176,34 @@ public class QLThongKePanel extends javax.swing.JPanel {
             jPanel4.removeAll();
             jPanel4.add(barpChartPanel, BorderLayout.CENTER);
             jPanel4.validate();
+            
+            
+            DefaultPieDataset pieDataset = new DefaultPieDataset();
+            List<ThongKeDoanhThuTheoDanhMuc> thongKeDoanhThuTheoDanhMucs = hoaDonChiTietServies.thongKeDoanhThuDanhMucTheoNgay(date);
+            for (ThongKeDoanhThuTheoDanhMuc thongKeDoanhThuTheoDanhMuc : thongKeDoanhThuTheoDanhMucs) {
+                pieDataset.setValue(thongKeDoanhThuTheoDanhMuc.getTenDM(),thongKeDoanhThuTheoDanhMuc.getTongTien().subtract(thongKeDoanhThuTheoDanhMuc.getGiamGia()));
+            }
+            JFreeChart chart1 = ChartFactory.createPieChart("Doanh thu theo danh muc", pieDataset, false, true, false);
+            PiePlot piePlot = (PiePlot) chart1.getPlot();
+            piePlot.setBackgroundPaint(Color.white);
+            ChartPanel pieChartPanel = new ChartPanel(chart1);
+            jPanel6.removeAll();
+            jPanel6.add(pieChartPanel,BorderLayout.CENTER);
+            jPanel6.validate();
+            
+            
+            DefaultPieDataset pieDataset1 = new DefaultPieDataset();
+            List<ThongKeSoLuongTheoDanhMuc> thongKeSoLuongTheoDanhMucs = hoaDonChiTietServies.thongKeSoLuongDanhMucTheoNgay(date);
+            for (ThongKeSoLuongTheoDanhMuc thongKeSoLuongTheoDanhMuc : thongKeSoLuongTheoDanhMucs) {
+                pieDataset1.setValue(thongKeSoLuongTheoDanhMuc.getTenDM(),thongKeSoLuongTheoDanhMuc.getSoLuong().intValue());
+            }
+            JFreeChart chart2 = ChartFactory.createPieChart("Số lượng đã bán theo danh mục", pieDataset1, false, true, false);
+            PiePlot piePlot2 = (PiePlot) chart2.getPlot();
+            piePlot2.setBackgroundPaint(Color.white);
+            ChartPanel pieChartPanel2 = new ChartPanel(chart2);
+            jPanel8.removeAll();
+            jPanel8.add(pieChartPanel2,BorderLayout.CENTER);
+            jPanel8.validate();
 
         } catch (ParseException ex) {
             Logger.getLogger(QLThongKePanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -217,6 +249,10 @@ public class QLThongKePanel extends javax.swing.JPanel {
         jPanel4 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
+        jPanel7 = new javax.swing.JPanel();
+        jPanel8 = new javax.swing.JPanel();
         txtDate = new com.toedter.calendar.JDateChooser();
         kGradientPanel5 = new keeptoo.KGradientPanel();
         btnTheoNgay = new javax.swing.JLabel();
@@ -411,7 +447,7 @@ public class QLThongKePanel extends javax.swing.JPanel {
                 .addGap(0, 28, Short.MAX_VALUE))
         );
 
-        jTabbedPane2.addTab("Doanh Thu", jPanel2);
+        jTabbedPane2.addTab("Doanh thu từng sản phẩm", jPanel2);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -438,7 +474,54 @@ public class QLThongKePanel extends javax.swing.JPanel {
                     .addContainerGap(74, Short.MAX_VALUE)))
         );
 
-        jTabbedPane2.addTab("Số lượng đã bán", jPanel3);
+        jTabbedPane2.addTab("Số lượng đã bán từng sản phẩm", jPanel3);
+
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel6.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel6.setLayout(new java.awt.BorderLayout());
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 893, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(65, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("Doanh thu theo danh mục", jPanel5);
+
+        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel8.setLayout(new java.awt.BorderLayout());
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 903, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(71, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("Số lượng đã bán theo danh mục", jPanel7);
 
         txtDate.setDateFormatString("dd/MM/yyyy");
 
@@ -701,6 +784,31 @@ public class QLThongKePanel extends javax.swing.JPanel {
                 };
                 model1.addRow(data);
             }
+            DefaultPieDataset pieDataset = new DefaultPieDataset();
+            List<ThongKeDoanhThuTheoDanhMuc> thongKeDoanhThuTheoDanhMucs = hoaDonChiTietServies.thongKeDoanhThuDanhMucTheoNgay(date2);
+            for (ThongKeDoanhThuTheoDanhMuc thongKeDoanhThuTheoDanhMuc : thongKeDoanhThuTheoDanhMucs) {
+                pieDataset.setValue(thongKeDoanhThuTheoDanhMuc.getTenDM(),thongKeDoanhThuTheoDanhMuc.getTongTien().subtract(thongKeDoanhThuTheoDanhMuc.getGiamGia()));
+            }
+            JFreeChart chart2 = ChartFactory.createPieChart("Doanh thu theo danh muc", pieDataset, false, true, false);
+            PiePlot piePlot = (PiePlot) chart2.getPlot();
+            piePlot.setBackgroundPaint(Color.white);
+            ChartPanel pieChartPanel = new ChartPanel(chart2);
+            jPanel6.removeAll();
+            jPanel6.add(pieChartPanel,BorderLayout.CENTER);
+            jPanel6.validate();
+            
+            DefaultPieDataset pieDataset1 = new DefaultPieDataset();
+            List<ThongKeSoLuongTheoDanhMuc> thongKeSoLuongTheoDanhMucs = hoaDonChiTietServies.thongKeSoLuongDanhMucTheoNgay(date2);
+            for (ThongKeSoLuongTheoDanhMuc thongKeSoLuongTheoDanhMuc : thongKeSoLuongTheoDanhMucs) {
+                pieDataset1.setValue(thongKeSoLuongTheoDanhMuc.getTenDM(),thongKeSoLuongTheoDanhMuc.getSoLuong().intValue());
+            }
+            JFreeChart chart3 = ChartFactory.createPieChart("Số lượng đã bán theo danh mục", pieDataset1, false, true, false);
+            PiePlot piePlot2 = (PiePlot) chart3.getPlot();
+            piePlot2.setBackgroundPaint(Color.white);
+            ChartPanel pieChartPanel2 = new ChartPanel(chart3);
+            jPanel8.removeAll();
+            jPanel8.add(pieChartPanel2,BorderLayout.CENTER);
+            jPanel8.validate();
         } catch (ParseException ex) {
             Logger.getLogger(QLThongKePanel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -840,6 +948,31 @@ public class QLThongKePanel extends javax.swing.JPanel {
                 };
                 model1.addRow(data);
             }
+            DefaultPieDataset pieDataset = new DefaultPieDataset();
+            List<ThongKeDoanhThuTheoDanhMuc> thongKeDoanhThuTheoDanhMucs = hoaDonChiTietServies.thongKeDoanhThuDanhMucTheoThang(thang,nam);
+            for (ThongKeDoanhThuTheoDanhMuc thongKeDoanhThuTheoDanhMuc : thongKeDoanhThuTheoDanhMucs) {
+                pieDataset.setValue(thongKeDoanhThuTheoDanhMuc.getTenDM(),thongKeDoanhThuTheoDanhMuc.getTongTien().subtract(thongKeDoanhThuTheoDanhMuc.getGiamGia()));
+            }
+            JFreeChart chart2 = ChartFactory.createPieChart("Doanh thu theo danh muc", pieDataset, false, true, false);
+            PiePlot piePlot = (PiePlot) chart2.getPlot();
+            piePlot.setBackgroundPaint(Color.white);
+            ChartPanel pieChartPanel = new ChartPanel(chart2);
+            jPanel6.removeAll();
+            jPanel6.add(pieChartPanel,BorderLayout.CENTER);
+            jPanel6.validate();
+            
+            DefaultPieDataset pieDataset1 = new DefaultPieDataset();
+            List<ThongKeSoLuongTheoDanhMuc> thongKeSoLuongTheoDanhMucs = hoaDonChiTietServies.thongKeSoLuongDanhMucTheoThang(thang,nam);
+            for (ThongKeSoLuongTheoDanhMuc thongKeSoLuongTheoDanhMuc : thongKeSoLuongTheoDanhMucs) {
+                pieDataset1.setValue(thongKeSoLuongTheoDanhMuc.getTenDM(),thongKeSoLuongTheoDanhMuc.getSoLuong().intValue());
+            }
+            JFreeChart chart3 = ChartFactory.createPieChart("Số lượng đã bán theo danh mục", pieDataset1, false, true, false);
+            PiePlot piePlot2 = (PiePlot) chart3.getPlot();
+            piePlot2.setBackgroundPaint(Color.white);
+            ChartPanel pieChartPanel2 = new ChartPanel(chart3);
+            jPanel8.removeAll();
+            jPanel8.add(pieChartPanel2,BorderLayout.CENTER);
+            jPanel8.validate();
        
     }//GEN-LAST:event_btnThongKeThangMousePressed
 
@@ -928,6 +1061,31 @@ public class QLThongKePanel extends javax.swing.JPanel {
                 };
                 model1.addRow(data);
             }
+            DefaultPieDataset pieDataset = new DefaultPieDataset();
+            List<ThongKeDoanhThuTheoDanhMuc> thongKeDoanhThuTheoDanhMucs = hoaDonChiTietServies.thongKeDoanhThuDanhMucTheoNam(nam);
+            for (ThongKeDoanhThuTheoDanhMuc thongKeDoanhThuTheoDanhMuc : thongKeDoanhThuTheoDanhMucs) {
+                pieDataset.setValue(thongKeDoanhThuTheoDanhMuc.getTenDM(),thongKeDoanhThuTheoDanhMuc.getTongTien().subtract(thongKeDoanhThuTheoDanhMuc.getGiamGia()));
+            }
+            JFreeChart chart2 = ChartFactory.createPieChart("Doanh thu theo danh muc", pieDataset, false, true, false);
+            PiePlot piePlot = (PiePlot) chart2.getPlot();
+            piePlot.setBackgroundPaint(Color.white);
+            ChartPanel pieChartPanel = new ChartPanel(chart2);
+            jPanel6.removeAll();
+            jPanel6.add(pieChartPanel,BorderLayout.CENTER);
+            jPanel6.validate();
+            
+            DefaultPieDataset pieDataset1 = new DefaultPieDataset();
+            List<ThongKeSoLuongTheoDanhMuc> thongKeSoLuongTheoDanhMucs = hoaDonChiTietServies.thongKeSoLuongDanhMucTheoNam(nam);
+            for (ThongKeSoLuongTheoDanhMuc thongKeSoLuongTheoDanhMuc : thongKeSoLuongTheoDanhMucs) {
+                pieDataset1.setValue(thongKeSoLuongTheoDanhMuc.getTenDM(),thongKeSoLuongTheoDanhMuc.getSoLuong().intValue());
+            }
+            JFreeChart chart3 = ChartFactory.createPieChart("Số lượng đã bán theo danh mục", pieDataset1, false, true, false);
+            PiePlot piePlot2 = (PiePlot) chart3.getPlot();
+            piePlot2.setBackgroundPaint(Color.white);
+            ChartPanel pieChartPanel2 = new ChartPanel(chart3);
+            jPanel8.removeAll();
+            jPanel8.add(pieChartPanel2,BorderLayout.CENTER);
+            jPanel8.validate();
     }//GEN-LAST:event_btnThongKeNamMousePressed
 
 
@@ -952,6 +1110,10 @@ public class QLThongKePanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane2;

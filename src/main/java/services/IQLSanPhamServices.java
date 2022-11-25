@@ -19,6 +19,10 @@ public interface IQLSanPhamServices {
     public boolean delete(SanPham sanPham);
     public SanPham seachbyMa(String ma);
     public SanPham layMa();
+    public List<SanPham> getAllbyTrangThai(Integer trangThai);
+    public List<SanPham> phanTrang(Integer limitPage, Integer page);
+    public List<SanPham> loc(String danhMuc , String mauSac , Integer boNho,Integer litmitNumber , Integer number);
+    public List<SanPham> locSanPham(String danhMuc , String mauSac , Integer boNho);
     
     
 }

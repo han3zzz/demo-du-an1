@@ -60,8 +60,8 @@ public class HoaDonServices implements IHoaDonServices{
 //    }
 
     @Override
-    public void suaHD(String maHD, String ghiChu, BigDecimal tongTien, BigDecimal giamGia, Integer trangThai ,String makm) {
-        hdr.suaHD(maHD, ghiChu, tongTien, giamGia, trangThai , makm);
+    public void suaHD(String maHD, String ghiChu, BigDecimal tongTien, BigDecimal giamGia, Integer trangThai ,String makm,String diachi) {
+        hdr.suaHD(maHD, ghiChu, tongTien, giamGia, trangThai , makm,diachi);
     }
 
     @Override

@@ -105,6 +105,7 @@ public class Imei extends javax.swing.JFrame {
             .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
         );
 
+        jLabel2.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
         jLabel2.setText("Imei");
 
         cbbImei.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -115,6 +116,7 @@ public class Imei extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
         jLabel1.setText("Search");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

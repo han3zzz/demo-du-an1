@@ -13,7 +13,9 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import utilities.HibernateConfig;
 import viewmodels.ThongKeDoanhThu;
+import viewmodels.ThongKeDoanhThuTheoDanhMuc;
 import viewmodels.ThongKeSanPham;
+import viewmodels.ThongKeSoLuongTheoDanhMuc;
 
 /**
  *
@@ -231,6 +233,86 @@ public class HoaDonChiTietRepositories {
 //        query.setFirstResult(0);
 //        query.setMaxResults(10);
         List<ThongKeDoanhThu> list = query.getResultList();
+        return list;
+    }
+    public List<ThongKeDoanhThuTheoDanhMuc> thongKeDoanhThuDanhMucTheoNgay(Date date){
+        Session s = HibernateConfig.getFACTORY().openSession();
+       
+        Query query = s.createQuery("Select new viewmodels.ThongKeDoanhThuTheoDanhMuc(e.maImei.sanPham.danhmuc.maDanhMuc,e.maImei.sanPham.danhmuc.tenDanhMuc,SUM(e.donGia),SUM(e.giamGia)) FROM HoaDonChiTiet e "
+                + "Where e.maHD.trangThai = 2 and ngayMua = :ngay "    
+                + "Group by e.maImei.sanPham.danhmuc.maDanhMuc , e.maImei.sanPham.danhmuc.tenDanhMuc");
+        query.setParameter("ngay", date);
+       
+//        query.setFirstResult(0);
+//        query.setMaxResults(10);
+        List<ThongKeDoanhThuTheoDanhMuc> list = query.getResultList();
+        return list;
+    }
+    public List<ThongKeDoanhThuTheoDanhMuc> thongKeDoanhThuDanhMucTheoThang(Integer thang , Integer nam){
+        Session s = HibernateConfig.getFACTORY().openSession();
+       
+        Query query = s.createQuery("Select new viewmodels.ThongKeDoanhThuTheoDanhMuc(e.maImei.sanPham.danhmuc.maDanhMuc,e.maImei.sanPham.danhmuc.tenDanhMuc,SUM(e.donGia),SUM(e.giamGia)) FROM HoaDonChiTiet e "
+                + "Where e.maHD.trangThai = 2 and MONTH(ngayMua) = :ngay and YEAR(ngayMua) = :nam "    
+                + "Group by e.maImei.sanPham.danhmuc.maDanhMuc , e.maImei.sanPham.danhmuc.tenDanhMuc");
+         query.setParameter("ngay", thang);
+        query.setParameter("nam", nam);
+       
+//        query.setFirstResult(0);
+//        query.setMaxResults(10);
+        List<ThongKeDoanhThuTheoDanhMuc> list = query.getResultList();
+        return list;
+    }
+    public List<ThongKeDoanhThuTheoDanhMuc> thongKeDoanhThuDanhMucTheoNam(Integer nam){
+        Session s = HibernateConfig.getFACTORY().openSession();
+       
+        Query query = s.createQuery("Select new viewmodels.ThongKeDoanhThuTheoDanhMuc(e.maImei.sanPham.danhmuc.maDanhMuc,e.maImei.sanPham.danhmuc.tenDanhMuc,SUM(e.donGia),SUM(e.giamGia)) FROM HoaDonChiTiet e "
+                + "Where e.maHD.trangThai = 2 and YEAR(ngayMua) = :nam "    
+                + "Group by e.maImei.sanPham.danhmuc.maDanhMuc , e.maImei.sanPham.danhmuc.tenDanhMuc");
+        query.setParameter("nam", nam);
+       
+//        query.setFirstResult(0);
+//        query.setMaxResults(10);
+        List<ThongKeDoanhThuTheoDanhMuc> list = query.getResultList();
+        return list;
+    }
+    public List<ThongKeSoLuongTheoDanhMuc> thongKeSoLuongDanhMucTheoNgay(Date date){
+        Session s = HibernateConfig.getFACTORY().openSession();
+       
+        Query query = s.createQuery("Select new viewmodels.ThongKeSoLuongTheoDanhMuc(e.maImei.sanPham.danhmuc.maDanhMuc,e.maImei.sanPham.danhmuc.tenDanhMuc,COUNT(e.maImei)) FROM HoaDonChiTiet e "
+                + "Where e.maHD.trangThai = 2 and ngayMua = :ngay "    
+                + "Group by e.maImei.sanPham.danhmuc.maDanhMuc , e.maImei.sanPham.danhmuc.tenDanhMuc");
+        query.setParameter("ngay", date);
+       
+//        query.setFirstResult(0);
+//        query.setMaxResults(10);
+        List<ThongKeSoLuongTheoDanhMuc> list = query.getResultList();
+        return list;
+    }
+    public List<ThongKeSoLuongTheoDanhMuc> thongKeSoLuongDanhMucTheoThang(Integer thang , Integer nam){
+        Session s = HibernateConfig.getFACTORY().openSession();
+       
+        Query query = s.createQuery("Select new viewmodels.ThongKeSoLuongTheoDanhMuc(e.maImei.sanPham.danhmuc.maDanhMuc,e.maImei.sanPham.danhmuc.tenDanhMuc,COUNT(e.maImei)) FROM HoaDonChiTiet e "
+                + "Where e.maHD.trangThai = 2 and MONTH(ngayMua) = :ngay and YEAR(ngayMua) = :nam "    
+                + "Group by e.maImei.sanPham.danhmuc.maDanhMuc , e.maImei.sanPham.danhmuc.tenDanhMuc");
+        query.setParameter("ngay", thang);
+        query.setParameter("nam", nam);
+       
+//        query.setFirstResult(0);
+//        query.setMaxResults(10);
+        List<ThongKeSoLuongTheoDanhMuc> list = query.getResultList();
+        return list;
+    }
+    public List<ThongKeSoLuongTheoDanhMuc> thongKeSoLuongDanhMucTheoNam(Integer nam){
+        Session s = HibernateConfig.getFACTORY().openSession();
+       
+        Query query = s.createQuery("Select new viewmodels.ThongKeSoLuongTheoDanhMuc(e.maImei.sanPham.danhmuc.maDanhMuc,e.maImei.sanPham.danhmuc.tenDanhMuc,COUNT(e.maImei)) FROM HoaDonChiTiet e "
+                + "Where e.maHD.trangThai = 2 and YEAR(ngayMua) = :nam "    
+                + "Group by e.maImei.sanPham.danhmuc.maDanhMuc , e.maImei.sanPham.danhmuc.tenDanhMuc");
+        query.setParameter("nam", nam);
+       
+//        query.setFirstResult(0);
+//        query.setMaxResults(10);
+        List<ThongKeSoLuongTheoDanhMuc> list = query.getResultList();
         return list;
     }
     

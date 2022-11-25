@@ -29,7 +29,7 @@ public class ChiTietSPServices implements IChiTietSPServices{
         for (ChiTietSP ctsp : list) {
             List<ChiTietSP> count = ctspr.count(ctsp.getSanPham().getMaSP());
             String tenSP = ctsp.getSanPham().getTenSP();
-            String nsx = ctsp.getSanPham().getNsx().getTenNSX();
+            String nsx = ctsp.getSanPham().getDanhmuc().getTenDanhMuc();
             String mauSac = ctsp.getSanPham().getMausac().getTenMauSac();
             Integer boNho = ctsp.getSanPham().getBonhotrong().getDungLuong();
             Integer tonKho = count.size();
@@ -83,7 +83,7 @@ public class ChiTietSPServices implements IChiTietSPServices{
         List<ChiTietSP> count = ctspr.count(ctsp.getSanPham().getMaSP());
         
         String tenSP = ctsp.getSanPham().getTenSP();
-            String nsx = ctsp.getSanPham().getNsx().getTenNSX();
+            String nsx = ctsp.getSanPham().getDanhmuc().getTenDanhMuc();
             String mauSac = ctsp.getSanPham().getMausac().getTenMauSac();
             Integer boNho = ctsp.getSanPham().getBonhotrong().getDungLuong();
             Integer tonKho = count.size();

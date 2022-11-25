@@ -100,5 +100,48 @@ public class QLSanPhamRepositories {
 //        List<ThongKeTheoNgay> list = q.getResultList();
 //        return list;
 //    }
+    
+    public List<SanPham> getAllbyTrangThai(Integer trangThai) {
+        Session session = HibernateConfig.getFACTORY().openSession();
+        Query q = session.createQuery("From SanPham where TrangThai = :trangthai");
+        q.setParameter("trangthai", trangThai);
+        List<SanPham> list = q.getResultList();
+        return list;
+    }
+    public List<SanPham> phanTrang(Integer limitPage, Integer page) {
+        Session s = HibernateConfig.getFACTORY().openSession();
+        Transaction transaction = s.beginTransaction();
+        Query query = s.createQuery("From SanPham e order by e.ngayTao desc");
+        query.setFirstResult((limitPage * page) - limitPage);
+        query.setMaxResults(limitPage);
+        transaction.commit();
+        List<SanPham> list = query.getResultList();
+        s.close();
+        return list;
+
+    }
+    public List<SanPham> loc(String danhMuc , String mauSac , Integer boNho,Integer litmitNumber , Integer number) {
+        Session session = HibernateConfig.getFACTORY().openSession();
+        Query q = session.createQuery("From SanPham e where e.danhmuc.tenDanhMuc like :danhmuc and e.mausac.tenMauSac like :mausac and e.bonhotrong.dungLuong = :dungluong"
+                + " and e.trangThai = 0");
+        q.setParameter("danhmuc", danhMuc);
+        q.setParameter("mausac", mauSac);
+        q.setParameter("dungluong", boNho);
+        q.setFirstResult((litmitNumber * number) - litmitNumber);
+        q.setMaxResults(number);
+        List<SanPham> list = q.getResultList();
+        return list;
+    }
+    public List<SanPham> locSanPham(String danhMuc , String mauSac , Integer boNho) {
+        Session session = HibernateConfig.getFACTORY().openSession();
+        Query q = session.createQuery("From SanPham e where e.danhmuc.tenDanhMuc like :danhmuc and e.mausac.tenMauSac like :mausac and e.bonhotrong.dungLuong = :dungluong"
+                + " and e.trangThai = 0");
+        q.setParameter("danhmuc", danhMuc);
+        q.setParameter("mausac", mauSac);
+        q.setParameter("dungluong", boNho);
+        List<SanPham> list = q.getResultList();
+        return list;
+    }
+    
 
 }

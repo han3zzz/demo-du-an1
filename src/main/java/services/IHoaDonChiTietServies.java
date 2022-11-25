@@ -9,7 +9,9 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import viewmodels.ThongKeDoanhThu;
+import viewmodels.ThongKeDoanhThuTheoDanhMuc;
 import viewmodels.ThongKeSanPham;
+import viewmodels.ThongKeSoLuongTheoDanhMuc;
 
 /**
  *
@@ -32,4 +34,10 @@ public interface IHoaDonChiTietServies {
     public List<ThongKeSanPham> thongKeTheoNam(Integer nam);
     public List<ThongKeSanPham> thongKeSoLuongDaBanTheoNam(Integer nam);
     public List<ThongKeDoanhThu> thongKeDoanhThuTheoNam(Integer nam);
+    public List<ThongKeDoanhThuTheoDanhMuc> thongKeDoanhThuDanhMucTheoNgay(Date date);
+    public List<ThongKeDoanhThuTheoDanhMuc> thongKeDoanhThuDanhMucTheoThang(Integer thang , Integer nam);
+    public List<ThongKeDoanhThuTheoDanhMuc> thongKeDoanhThuDanhMucTheoNam(Integer nam);
+    public List<ThongKeSoLuongTheoDanhMuc> thongKeSoLuongDanhMucTheoNgay(Date date);
+    public List<ThongKeSoLuongTheoDanhMuc> thongKeSoLuongDanhMucTheoThang(Integer thang , Integer nam);
+    public List<ThongKeSoLuongTheoDanhMuc> thongKeSoLuongDanhMucTheoNam(Integer nam);
 }

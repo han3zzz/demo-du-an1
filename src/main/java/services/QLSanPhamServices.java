@@ -51,5 +51,27 @@ public class QLSanPhamServices implements IQLSanPhamServices{
         return spr.layMa();
     }
 
+    @Override
+    public List<SanPham> getAllbyTrangThai(Integer trangThai) {
+        return spr.getAllbyTrangThai(trangThai);
+    }
+
+    @Override
+    public List<SanPham> phanTrang(Integer limitPage, Integer page) {
+        return spr.phanTrang(limitPage, page);
+    }
+
+    @Override
+    public List<SanPham> loc(String danhMuc, String mauSac, Integer boNho,Integer litmitNumber , Integer number) {
+        return spr.loc(danhMuc, mauSac, boNho, litmitNumber ,  number);
+    }
+
+    @Override
+    public List<SanPham> locSanPham(String danhMuc, String mauSac, Integer boNho) {
+        return spr.locSanPham(danhMuc, mauSac, boNho);
+    }
+
+
+
    
 }
