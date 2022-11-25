@@ -140,6 +140,8 @@ public class QLMauSac extends javax.swing.JFrame {
         btnUpdate = new javax.swing.JLabel();
         txtTen = new javax.swing.JTextField();
         txtMa = new javax.swing.JLabel();
+        kGradientPanel5 = new keeptoo.KGradientPanel();
+        btnSearch1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -270,6 +272,25 @@ public class QLMauSac extends javax.swing.JFrame {
         txtMa.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtMa.setText("jLabel4");
 
+        btnSearch1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnSearch1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_available_updates_30px.png"))); // NOI18N
+        btnSearch1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnSearch1MousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout kGradientPanel5Layout = new javax.swing.GroupLayout(kGradientPanel5);
+        kGradientPanel5.setLayout(kGradientPanel5Layout);
+        kGradientPanel5Layout.setHorizontalGroup(
+            kGradientPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnSearch1, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+        );
+        kGradientPanel5Layout.setVerticalGroup(
+            kGradientPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btnSearch1, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -278,6 +299,10 @@ public class QLMauSac extends javax.swing.JFrame {
                 .addGap(145, 145, 145)
                 .addComponent(txtMa, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(134, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(kGradientPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(41, 41, 41)
@@ -309,7 +334,9 @@ public class QLMauSac extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(94, 94, 94)
                 .addComponent(txtMa, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(302, Short.MAX_VALUE))
+                .addGap(57, 57, 57)
+                .addComponent(kGradientPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(234, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(20, 20, 20)
@@ -326,9 +353,9 @@ public class QLMauSac extends javax.swing.JFrame {
                         .addComponent(kGradientPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(kGradientPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(kGradientPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(18, 18, 18)
+                    .addGap(59, 59, 59)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(21, Short.MAX_VALUE)))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -505,6 +532,12 @@ public class QLMauSac extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnUpdateMousePressed
 
+    private void btnSearch1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSearch1MousePressed
+        // TODO add your handling code here:
+        load();
+        txtTen.setText("");
+    }//GEN-LAST:event_btnSearch1MousePressed
+
     /**
      * @param args the command line arguments
      */
@@ -544,6 +577,7 @@ public class QLMauSac extends javax.swing.JFrame {
     private javax.swing.JLabel btnAdd;
     private javax.swing.JLabel btnDelete;
     private javax.swing.JLabel btnSearch;
+    private javax.swing.JLabel btnSearch1;
     private javax.swing.JLabel btnUpdate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -554,6 +588,7 @@ public class QLMauSac extends javax.swing.JFrame {
     private keeptoo.KGradientPanel kGradientPanel2;
     private keeptoo.KGradientPanel kGradientPanel3;
     private keeptoo.KGradientPanel kGradientPanel4;
+    private keeptoo.KGradientPanel kGradientPanel5;
     private javax.swing.JTable tbMauSac;
     private javax.swing.JLabel txtMa;
     private javax.swing.JTextField txtTen;

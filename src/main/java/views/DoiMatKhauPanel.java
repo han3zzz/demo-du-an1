@@ -158,13 +158,22 @@ public class DoiMatKhauPanel extends javax.swing.JPanel {
         String MkCu = txtMkCu.getText();
         String MkMoi = txtMkMoi.getText();
         String NhapLai = txtNhapLai.getText();
-
+        if(MkCu.trim().isEmpty() || MkMoi.trim().isEmpty() || NhapLai.trim().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Bạn không được bỏ trống ");
+            return;
+        }
+        
         if(DoiMkSv.CheckTonTai(MkCu, ma) == false){
             JOptionPane.showMessageDialog(this, "Mật khẩu cũ chưa chính xác !");
             return;
         }
+        
         if(!MkMoi.equals(NhapLai)){
             JOptionPane.showMessageDialog(this, "Mật khẩu mới và Nhập lại mật khẩu mới chưa giống nhau !");
+            return;
+        }
+        if(MkMoi.length() < 8 || MkMoi.length() > 16){
+            JOptionPane.showMessageDialog(this, "Mật khẩu mới phải từ 8 đến 16 kí tự");
             return;
         }
         DoiMkSv.DoiMk(ma, MkMoi);
