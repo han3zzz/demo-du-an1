@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -611,6 +612,11 @@ public class QLThongKePanel extends javax.swing.JPanel {
 
     private void btnTheoNgayMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTheoNgayMousePressed
         try {
+            if (txtDate.getDate() == null) {
+                JOptionPane.showMessageDialog(this, "Vui lòng chọn ngày trước khi thống kê !");
+                return;
+            }
+           
             // TODO add your handling code here:
             DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 

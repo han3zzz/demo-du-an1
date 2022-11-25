@@ -53,14 +53,14 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
     private IQLSanPhamServices sanPhamServices;
     private IChiTietSPServices chiTietSPServices;
     private BarCodeServices barCodeServices;
-    
+
     public QLChiTietSanPhamPanel() {
         initComponents();
-        
+
         sanPhamServices = new QLSanPhamServices();
         barCodeServices = new BarCodeServices();
         chiTietSPServices = new ChiTietSPServices();
-        
+
         cbbImei.removeAllItems();
         cbbSanPhamm.removeAllItems();
         List<SanPham> sanPhams = sanPhamServices.getALL();
@@ -71,7 +71,7 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
         }
         hienThiSanPham();
     }
-    
+
     public void hienThiSanPham() {
         tbSanPham.getColumn("Ảnh").setCellRenderer(new myTableCellRender());
         DefaultTableModel model = (DefaultTableModel) tbSanPham.getModel();
@@ -101,15 +101,15 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
                 };
                 model.addRow(data);
             }
-            
+
         }
         if (cbbSanPhamm.getItemCount() == 0) {
-            
+
         } else {
             cbbSanPhamm.setSelectedIndex(0);
         }
     }
-    
+
     public void loadHienThiSanPham(List<SanPham> list, ChiTietSPViewModels c) {
         tbSanPham.getColumn("Ảnh").setCellRenderer(new myTableCellRender());
         DefaultTableModel model = (DefaultTableModel) tbSanPham.getModel();
@@ -139,43 +139,43 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
                 };
                 model.addRow(data);
             }
-            
+
         }
         if (cbbSanPhamm.getItemCount() == 0) {
-            
+
         } else {
             cbbSanPhamm.setSelectedIndex(0);
         }
     }
-    
+
     class myTableCellRender implements TableCellRenderer {
-        
+
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             tbSanPham.setRowHeight(70);
-            
+
             return (Component) value;
         }
     }
-    
+
     public static void cbbSanPham(List<SanPham> items) {
         cbbSanPhamm.removeAllItems();
-        
+
         for (SanPham sanPham : items) {
             if (sanPham.getTrangThai() == 0) {
                 cbbSanPhamm.addItem(sanPham.getTenSP());
             }
         }
-        
+
     }
-    
+
     public static void loadHienThiSanPham(Object[] data) {
-        
+
         DefaultTableModel model = (DefaultTableModel) tbSanPham.getModel();
         model.setRowCount(0);
         model.addRow(data);
     }
-    
+
     public static void cbbImei(List<String> items) {
         cbbImei.removeAllItems();
         for (String item : items) {
@@ -197,7 +197,7 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
     public static void txtSoLuong(String sl) {
         txtSoLuongTon.setText(sl);
     }
-    
+
     public void fillSanPham() {
         AnhService anhService = new AnhService();
         anhService.setAnh(null);
@@ -228,7 +228,7 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
             lbAnh.setIcon(m);
         }
         anhService.setAnh(c.getAnh());
-        
+
         cbbSanPhamm.setSelectedItem(tenSP);
         txtGiaNhap.setText(String.valueOf(c.getGiaNhap()));
         txtGiaBan.setText(String.valueOf(c.getGiaBan()));
@@ -253,7 +253,7 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
         }
         cbbTGBH.setSelectedItem(ngayBh);
     }
-    
+
     public ChiTietSP layTTSanPham() throws ParseException {
         String Imei = "";
         for (int i = 0; i < cbbImei.getItemCount(); i++) {
@@ -280,7 +280,7 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
         }
         AnhService anhService = new AnhService();
         String anh = anhService.getAnh();
-        
+
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy");
         ZonedDateTime now = ZonedDateTime.now();
         String ngayTao = dtf.format(now);
@@ -293,7 +293,7 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
                 sp = sanPham;
             }
         }
-        
+
         ChiTietSP c = new ChiTietSP();
         c.setMaImei(Imei);
         c.setGiaNhap(giaNhap);
@@ -305,9 +305,9 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
         c.setTrangThai(0);
         c.setSanPham(sp);
         return c;
-        
+
     }
-    
+
     public ChiTietSP layTTSuaSanPham() throws ParseException {
         String Imei = "";
         for (int i = 0; i < cbbImei.getItemCount(); i++) {
@@ -359,14 +359,14 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
         } else {
             c.setAnh(spp.getAnh());
         }
-        
+
         c.setNgaySua(date);
         c.setTrangThai(0);
         c.setSanPham(sp);
         return c;
-        
+
     }
-    
+
     public ChiTietSP layTTSuaChiTietSanPham() throws ParseException {
         String Imei = "";
         for (int i = 0; i < cbbImei.getItemCount(); i++) {
@@ -406,7 +406,7 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
                 masp = sanPham.getMaSP();
             }
         }
-        
+
         ChiTietSP c = new ChiTietSP();
         c.setMaImei(Imei);
         c.setGiaNhap(giaNhap);
@@ -419,14 +419,14 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
         } else {
             c.setAnh(spp.getAnh());
         }
-        
+
         c.setNgaySua(date);
         c.setTrangThai(1);
         c.setSanPham(sp);
         return c;
-        
+
     }
-    
+
     public void clear() {
         lbAnh.setIcon(null);
         cbbSanPhamm.setSelectedIndex(0);
@@ -435,7 +435,8 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
         cbbImei.removeAllItems();
         txtSoLuongTon.setText("0");
         txtGhiChu.setText("");
-        
+        ImeiServices imeiServices = new ImeiServices();
+        imeiServices.setList(null);
         cbbTGBH.setSelectedIndex(0);
         hienThiSanPham();
     }
@@ -853,7 +854,7 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
             btnAdd.setEnabled(true);
             ImeiServices imeiServices = new ImeiServices();
             imeiServices.setList(null);
-            
+
         }
 
     }//GEN-LAST:event_cbbSanPhammActionPerformed
@@ -893,7 +894,7 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập giá nhập hoặc giá bán nhỏ hơn 9999999999 !");
                 return;
             }
-            
+
             Double giaNhap = Double.parseDouble(txtGiaNhap.getText());
             Double giaBan = Double.parseDouble(txtGiaBan.getText());
             if (giaNhap > giaBan) {
@@ -908,7 +909,7 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập ghi chú nhỏ hơn 255 kí tự !");
                 return;
             }
-            
+
             if (cbbImei.getItemCount() == 0) {
                 JOptionPane.showMessageDialog(this, "Imei rỗng !");
                 return;
@@ -928,7 +929,7 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
                     }
                 }
             }
-            
+
             String Imei = "";
             for (int i = 0; i < cbbImei.getItemCount(); i++) {
                 Imei = cbbImei.getItemAt(i);
@@ -936,11 +937,11 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
                 c.setMaImei(Imei);
                 chiTietSPServices.add(c);
             }
-            
+
             JOptionPane.showMessageDialog(this, "Thêm thành công !");
             hienThiSanPham();
             clear();
-            
+
         } catch (ParseException ex) {
             Logger.getLogger(QLChiTietSanPhamPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -968,7 +969,7 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
         }
         for (int i = 0; i < cbbImei.getItemCount(); i++) {
             try {
-                
+
                 Imei = cbbImei.getItemAt(i);
                 ChiTietSP c = layTTSanPham();
                 c.setMaImei(Imei);
@@ -1007,7 +1008,7 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
             String giaNhapString = txtGiaNhap.getText().trim();
             String giaBanString = txtGiaBan.getText().trim();
             String ghiChu = txtGhiChu.getText().trim();
-            
+
             if (!giaBanString.matches(checkSo) || !giaNhapString.matches(checkSo)) {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập giá nhập hoặc giá bán là số !");
                 return;
@@ -1016,7 +1017,7 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập giá nhập hoặc giá bán nhỏ hơn 9999999999 !");
                 return;
             }
-            
+
             Double giaNhap = Double.parseDouble(txtGiaNhap.getText());
             Double giaBan = Double.parseDouble(txtGiaBan.getText());
             if (giaNhap > giaBan) {
@@ -1031,7 +1032,7 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Vui lòng nhập ghi chú nhỏ hơn 255 kí tự !");
                 return;
             }
-            
+
             if (cbbImei.getItemCount() == 0) {
                 JOptionPane.showMessageDialog(this, "Imei rỗng !");
                 return;
@@ -1040,7 +1041,7 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Không có sản phẩm nào !");
                 return;
             }
-            
+
             int check = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn sửa ?");
             if (check != JOptionPane.YES_OPTION) {
                 return;
@@ -1054,7 +1055,7 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
             List<ChiTietSP> list = chiTietSPServices.getImeibyMaSP(c.getSanPham().getMaSP());
             for (int i = 0; i < row; i++) {
                 Imei = cbbImei.getItemAt(i);
-                
+
                 ChiTietSP c1 = layTTSanPham();
                 //                c1.setAnh(c.getAnh());
                 c1.setMaImei(Imei);
@@ -1072,13 +1073,13 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
                     }
                 }
                 barCodeServices.taoBarCode(Imei);
-                
+
             }
-            
+
             JOptionPane.showMessageDialog(this, "Sửa thành công !");
             hienThiSanPham();
             clear();
-            
+
         } catch (ParseException ex) {
             Logger.getLogger(QLChiTietSanPhamPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
