@@ -30,9 +30,26 @@ public class QLKhuyenMaiPanel extends javax.swing.JPanel {
     private IQLKhuyenMaiServices khuyenMaiServices;
 
     public QLKhuyenMaiPanel() {
-        initComponents();
-        khuyenMaiServices = new QLKhuyenMaiServices();
-        load();
+        try {
+            initComponents();
+            khuyenMaiServices = new QLKhuyenMaiServices();
+            load();
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            ZonedDateTime now = ZonedDateTime.now();
+            String ngay = dtf.format(now);
+            Date date = new SimpleDateFormat("dd/MM/yyyy").parse(ngay);
+            List<KhuyenMai> khuyenMais = khuyenMaiServices.getAll();
+            if (khuyenMais.size() == 0) {
+                return;
+            }
+            for (KhuyenMai khuyenMai : khuyenMais) {
+                if (khuyenMai.getNgayKetThuc().after(date)) {
+                    khuyenMaiServices.updatebyTrangThai(khuyenMai.getMaKM(), 1);
+                }
+            }
+        } catch (ParseException ex) {
+            Logger.getLogger(QLKhuyenMaiPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void loadMaKM() {
