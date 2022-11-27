@@ -78,6 +78,9 @@ public class NhanVienRepositories {
         Query q = session.createQuery("From NhanVien where MaNV = :masp");
         q.setParameter("masp", maNV);
         List<NhanVien> list = q.getResultList();
+        if (list.size() == 0) {
+            return null;
+        }
         return list.get(0);
     }
     public void doiMatKhau(String maNV , String matKhau){
