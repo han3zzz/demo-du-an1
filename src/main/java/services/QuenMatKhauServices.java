@@ -91,7 +91,7 @@ public class QuenMatKhauServices {
              String time = dtf.format(now);
              
              NhanVien nv = nvr.fill(Username);
-             String title = "Cập nhật mật khẩu lúc " +time;
+             String title = "Change Password Successfully at " +time;
              String content = "Xin chào "+nv.getTenNV()+" ! . <br>"
                      + "Bạn vừa yêu cầu cập nhật lại mật khẩu cho tài khoản "+Username+". <br>"
                      + "Mật khẩu mới của bạn là:  " +getMakhaumoi() ;

@@ -30,11 +30,12 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
      * Creates new form QLKhachHangPanel
      */
     private IKhachHangService service;
-
+    
     public QLKhachHangPanel() {
         initComponents();
         service = new KhachHangService();
 //        hienThi();
+        txtNgaySinh.setMaxSelectableDate(new Date());
         loadMaKH();
         loadData(1);
         phantrang.addEventPagination(new EventPagination() {
@@ -46,7 +47,7 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
         //loadData(2);
 
     }
-
+    
     public void loadData(Integer page) {
         DefaultTableModel model = (DefaultTableModel) tbbBang.getModel();
         model.setRowCount(0);
@@ -61,9 +62,8 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
 //        if (soDu != 0) {
 //            soLamTron = ((count - soDu) / 10) + 1;
 //        }
-Integer toltalPage =(int) Math.ceil(count/ (float) limit);
-
-       
+        Integer toltalPage = (int) Math.ceil(count / (float) limit);
+        
         List<KhachHang> kh = service.phanTrang(limit, page);
         for (KhachHang khachHang : kh) {
             if (khachHang.getTrangThai() == 0) {
@@ -81,9 +81,9 @@ Integer toltalPage =(int) Math.ceil(count/ (float) limit);
         }
         phantrang.setPagegination(page, toltalPage);
     }
-
+    
     public void loadMaKH() {
-
+        
         String ma = "";
         List<KhachHang> khachHangs = service.getALL();
         if (khachHangs.size() == 0) {
@@ -93,18 +93,18 @@ Integer toltalPage =(int) Math.ceil(count/ (float) limit);
 //          
             ma = sp.getMaKH();
         }
-
+        
         String mangString[] = ma.split("");
         String so = "";
         for (int i = 2; i < mangString.length; i++) {
             so += mangString[i];
         }
-
+        
         Integer sofinal = Integer.parseInt(so) + 1;
         String maMoi = "KH" + sofinal;
         txtMa.setText(maMoi);
     }
-
+    
     public void hienThi() {
         loadMaKH();
         DefaultTableModel model = (DefaultTableModel) tbbBang.getModel();
@@ -120,12 +120,12 @@ Integer toltalPage =(int) Math.ceil(count/ (float) limit);
                     khachHang.getDiaChi()
                 };
                 model.addRow(row);
-
+                
             }
         }
-
+        
     }
-
+    
     public KhachHang layTTKH() throws ParseException {
         String ma = txtMa.getText();
         String ten = txtTen.getText();
@@ -149,7 +149,7 @@ Integer toltalPage =(int) Math.ceil(count/ (float) limit);
         kh.setNgayTao(date1);
         return kh;
     }
-
+    
     public KhachHang layTTSua() throws ParseException {
         String ma = txtMa.getText();
         String ten = txtTen.getText();
@@ -173,7 +173,7 @@ Integer toltalPage =(int) Math.ceil(count/ (float) limit);
         kh.setNgaySua(date);
         return kh;
     }
-
+    
     public void clear() {
         loadData(1);
         loadMaKH();
@@ -182,7 +182,7 @@ Integer toltalPage =(int) Math.ceil(count/ (float) limit);
         txtsdt.setText("");
         txtQueQuan.setText("");
     }
-
+    
     public void fill() throws ParseException {
         int index = tbbBang.getSelectedRow();
         String ma = tbbBang.getValueAt(index, 0).toString();
@@ -191,7 +191,7 @@ Integer toltalPage =(int) Math.ceil(count/ (float) limit);
         Date date = new SimpleDateFormat("dd/MM/yyyy").parse(ngaySinh);
         String sdt = tbbBang.getValueAt(index, 3).toString();
         String diaChi = tbbBang.getValueAt(index, 4).toString();
-
+        
         txtMa.setText(ma);
         txtTen.setText(ten);
         txtNgaySinh.setDate(date);
@@ -554,7 +554,7 @@ Integer toltalPage =(int) Math.ceil(count/ (float) limit);
     }//GEN-LAST:event_btnResetMousePressed
 
     private void btnDeleteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMousePressed
-
+        
         int index = tbbBang.getSelectedRow();
         if (index == -1) {
             JOptionPane.showMessageDialog(this, "Bạn chưa chọn bản ghi nào !");
@@ -569,7 +569,7 @@ Integer toltalPage =(int) Math.ceil(count/ (float) limit);
         if (check != JOptionPane.YES_OPTION) {
             return;
         }
-
+        
         String ma = tbbBang.getValueAt(index, 0).toString();
         if (service.delete(ma) == true) {
             JOptionPane.showMessageDialog(this, "Xóa thành công !");
@@ -646,7 +646,7 @@ Integer toltalPage =(int) Math.ceil(count/ (float) limit);
             model.addRow(row);
         }
         JOptionPane.showMessageDialog(this, "Tìm thành công");
-
+        
 
     }//GEN-LAST:event_btnTimTheoMaMousePressed
 
