@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -129,12 +130,16 @@ Integer toltalPage =(int) Math.ceil(count/ (float) limit);
         String ma = txtMa.getText();
         String ten = txtTen.getText();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy");
-        ZonedDateTime now = ZonedDateTime.now();
-        String ngaySinh = dtf.format(now);
+//        ZonedDateTime now = ZonedDateTime.now();
+
+        String ngaySinh = new SimpleDateFormat("MM-dd-yyyy").format(txtNgaySinh.getDate());
         Date date = new SimpleDateFormat("MM-dd-yyyy").parse(ngaySinh);
         String sdt = txtsdt.getText();
         String diaChi = txtQueQuan.getText();
-
+        DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+        ZonedDateTime now1 = ZonedDateTime.now();
+        String ngayTao = dtf1.format(now1);
+        Date date1 = new SimpleDateFormat("MM-dd-yyyy").parse(ngayTao);
         KhachHang kh = new KhachHang();
         kh.setMaKH(ma);
         kh.setTenKH(ten);
@@ -142,6 +147,7 @@ Integer toltalPage =(int) Math.ceil(count/ (float) limit);
         kh.setSdt(sdt);
         kh.setDiaChi(diaChi);
         kh.setTrangThai(0);
+        kh.setNgayTao(date1);
         return kh;
     }
 

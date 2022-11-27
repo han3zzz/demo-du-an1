@@ -128,7 +128,7 @@ public class QLSanPhamRepositories {
         q.setParameter("mausac", mauSac);
         q.setParameter("dungluong", boNho);
         q.setFirstResult((litmitNumber * number) - litmitNumber);
-        q.setMaxResults(number);
+        q.setMaxResults(litmitNumber);
         List<SanPham> list = q.getResultList();
         return list;
     }
