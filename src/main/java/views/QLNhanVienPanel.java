@@ -853,10 +853,6 @@ Integer toltalPage =(int) Math.ceil(count/ (float) limit);
         model.setRowCount(0);
         String vaiTro1 = "";
         NhanVien nhanVien = services.seachbyMa(txtTimKiem.getText());
-        if (nhanVien == null) {
-            JOptionPane.showMessageDialog(this, "Không có dữ liệu !");
-            return;
-        }
         if (nhanVien.getTrangThai() == 0) {
             if (nhanVien.getVaiTro() == 0) {
                 vaiTro1 = "Quản Lý";
