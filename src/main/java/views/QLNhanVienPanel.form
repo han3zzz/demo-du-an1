@@ -49,8 +49,10 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jScrollPane1" min="-2" pref="860" max="-2" attributes="0"/>
                               <Group type="102" attributes="0">
-                                  <EmptySpace min="284" pref="284" max="-2" attributes="0"/>
-                                  <Component id="pagination1" min="-2" pref="205" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="272" max="-2" attributes="0"/>
+                                  <Component id="pagination2" min="-2" pref="169" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="pagination1" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -187,7 +189,10 @@
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="pagination1" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="pagination2" min="-2" max="-2" attributes="0"/>
+                              <Component id="pagination1" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
                   <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
@@ -598,7 +603,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/image/icons8_search_25px_1.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="T&#xec;m v&#x1edb;i m&#xe3;"/>
+                <Property name="text" type="java.lang.String" value="T&#xec;m v&#x1edb;i t&#xea;n"/>
               </Properties>
               <Events>
                 <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnTimKiemMousePressed"/>
@@ -609,6 +614,11 @@
         <Component class="javax.swing.JTextField" name="txtTimKiem">
         </Component>
         <Component class="pagination.Pagination" name="pagination1">
+          <Properties>
+            <Property name="opaque" type="boolean" value="false"/>
+          </Properties>
+        </Component>
+        <Component class="pagination.Pagination" name="pagination2">
           <Properties>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>

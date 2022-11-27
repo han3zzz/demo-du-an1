@@ -67,5 +67,15 @@ public class NhanVienServices implements INhanVienServices{
     public List<NhanVien> getALLbyTrangThai(Integer trangThai) {
         return nvr.getALLbyTrangThai(trangThai);
     }
+
+    @Override
+    public List<NhanVien> timKiembyTrangThai(String ten) {
+        return nvr.timKiembyTrangThai(ten);
+    }
+
+    @Override
+    public List<NhanVien> timKiemPhanTrang(String ten, Integer limitPage, Integer page) {
+        return nvr.timKiemPhanTrang(ten, limitPage, page);
+    }
     
 }

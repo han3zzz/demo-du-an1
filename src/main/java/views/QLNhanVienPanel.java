@@ -44,11 +44,18 @@ public class QLNhanVienPanel extends javax.swing.JPanel {
         cbbVaiTro.addItem("Quản Lý");
         cbbVaiTro.addItem("Nhân Viên");
 //        hienThi();
+        pagination2.setVisible(false);
         loadData(1);
-         pagination1.addEventPagination(new EventPagination() {
+        pagination1.addEventPagination(new EventPagination() {
             @Override
             public void pageChanged(int page) {
-                loadData(page);
+                if (pagination1.isVisible() == true) {
+                    loadData(page);
+                }
+                else{
+                    timKiem(page);
+                }
+                
             }
         });
         cbbLoc.removeAllItems();
@@ -56,6 +63,7 @@ public class QLNhanVienPanel extends javax.swing.JPanel {
         cbbLoc.addItem("Nhân Viên");
 
     }
+
     public void loadData(Integer page) {
         DefaultTableModel model = (DefaultTableModel) tbNhanVien.getModel();
         model.setRowCount(0);
@@ -70,14 +78,13 @@ public class QLNhanVienPanel extends javax.swing.JPanel {
 //        if (soDu != 0) {
 //            soLamTron = ((count - soDu) / 10) + 1;
 //        }
-Integer toltalPage =(int) Math.ceil(count/ (float) limit);
+        Integer toltalPage = (int) Math.ceil(count / (float) limit);
 
-       
         List<NhanVien> kh = services.phanTrang(limit, page);
         String vaiTro = "";
         for (NhanVien nhanVien : kh) {
             if (nhanVien.getTrangThai() == 0) {
-               
+
                 if (nhanVien.getVaiTro() == 0) {
                     vaiTro = "Quản Lý";
                 } else {
@@ -240,6 +247,8 @@ Integer toltalPage =(int) Math.ceil(count/ (float) limit);
         cbbVaiTro.setSelectedIndex(0);
         hienThi();
         lbAnh.setIcon(null);
+        pagination2.setVisible(false);
+        pagination1.setVisible(true);
     }
 
     /**
@@ -286,6 +295,7 @@ Integer toltalPage =(int) Math.ceil(count/ (float) limit);
         btnTimKiem = new javax.swing.JLabel();
         txtTimKiem = new javax.swing.JTextField();
         pagination1 = new pagination.Pagination();
+        pagination2 = new pagination.Pagination();
 
         nhanvien.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -483,7 +493,7 @@ Integer toltalPage =(int) Math.ceil(count/ (float) limit);
         btnTimKiem.setForeground(new java.awt.Color(255, 255, 255));
         btnTimKiem.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_search_25px_1.png"))); // NOI18N
-        btnTimKiem.setText("Tìm với mã");
+        btnTimKiem.setText("Tìm với tên");
         btnTimKiem.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnTimKiemMousePressed(evt);
@@ -503,6 +513,8 @@ Integer toltalPage =(int) Math.ceil(count/ (float) limit);
 
         pagination1.setOpaque(false);
 
+        pagination2.setOpaque(false);
+
         javax.swing.GroupLayout nhanvienLayout = new javax.swing.GroupLayout(nhanvien);
         nhanvien.setLayout(nhanvienLayout);
         nhanvienLayout.setHorizontalGroup(
@@ -514,8 +526,10 @@ Integer toltalPage =(int) Math.ceil(count/ (float) limit);
                         .addGroup(nhanvienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(nhanvienLayout.createSequentialGroup()
-                                .addGap(284, 284, 284)
-                                .addComponent(pagination1, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(272, 272, 272)
+                                .addComponent(pagination2, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(pagination1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(nhanvienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(nhanvienLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -621,7 +635,9 @@ Integer toltalPage =(int) Math.ceil(count/ (float) limit);
                             .addComponent(kGradientPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(nhanvienLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pagination1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(nhanvienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(pagination2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(pagination1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(19, 19, 19))
         );
 
@@ -834,7 +850,7 @@ Integer toltalPage =(int) Math.ceil(count/ (float) limit);
                     vaiTro1,};
                 model.addRow(data);
             }
-            
+
         }
         JOptionPane.showMessageDialog(this, "Lọc thành công !");
     }//GEN-LAST:event_btnLocMousePressed
@@ -845,34 +861,80 @@ Integer toltalPage =(int) Math.ceil(count/ (float) limit);
             JOptionPane.showMessageDialog(this, "Vui lòng không được để trống !");
             return;
         }
-        if (txtTimKiem.getText().length() > 10) {
-            JOptionPane.showMessageDialog(this, "Mã nhỏ hơn hoặc bằng 10 kí tự !");
+        if (txtTimKiem.getText().length() > 30) {
+            JOptionPane.showMessageDialog(this, "Tên nhỏ hơn hoặc bằng 30 kí tự !");
             return;
         }
-        DefaultTableModel model = (DefaultTableModel) tbNhanVien.getModel();
-        model.setRowCount(0);
-        String vaiTro1 = "";
-        NhanVien nhanVien = services.seachbyMa(txtTimKiem.getText());
-        if (nhanVien.getTrangThai() == 0) {
-            if (nhanVien.getVaiTro() == 0) {
-                vaiTro1 = "Quản Lý";
-            } else {
-                vaiTro1 = "Nhân Viên";
-            }
-            Object[] data = new Object[]{
-                nhanVien.getMaNV(),
-                nhanVien.getTenNV(),
-                nhanVien.getSdt(),
-                nhanVien.getEmail(),
-                nhanVien.getQueQuan(),
-                nhanVien.getMatKhau(),
-                vaiTro1,};
-            model.addRow(data);
+        List<NhanVien> nhanViens = services.timKiembyTrangThai(txtTimKiem.getText());
+        if (nhanViens.size() == 0) {
+            JOptionPane.showMessageDialog(this, "Không có dữ liệu !");
+            return;
         }
+        pagination1.setVisible(false);
+        timKiem(1);
+//        DefaultTableModel model = (DefaultTableModel) tbNhanVien.getModel();
+//        model.setRowCount(0);
+//        String vaiTro1 = "";
+//        NhanVien nhanVien = services.seachbyMa(txtTimKiem.getText());
+//        if (nhanVien.getTrangThai() == 0) {
+//            if (nhanVien.getVaiTro() == 0) {
+//                vaiTro1 = "Quản Lý";
+//            } else {
+//                vaiTro1 = "Nhân Viên";
+//            }
+//            Object[] data = new Object[]{
+//                nhanVien.getMaNV(),
+//                nhanVien.getTenNV(),
+//                nhanVien.getSdt(),
+//                nhanVien.getEmail(),
+//                nhanVien.getQueQuan(),
+//                nhanVien.getMatKhau(),
+//                vaiTro1,};
+//            model.addRow(data);
+//        }
         JOptionPane.showMessageDialog(this, "Tìm thành công !");
 
     }//GEN-LAST:event_btnTimKiemMousePressed
+    public void timKiem(Integer page) {
+        pagination2.setVisible(true);
+        DefaultTableModel model = (DefaultTableModel) tbNhanVien.getModel();
+        model.setRowCount(0);
+        Integer limit = 10;
+        List<NhanVien> nhanViens = services.timKiembyTrangThai(txtTimKiem.getText());
+        Integer count = nhanViens.size();
+//        Integer soDu = count % 10;
+//        Integer soLamTron = 0;
+//        if (soDu == 0) {
+//            soLamTron = count / 10;
+//        }
+//        if (soDu != 0) {
+//            soLamTron = ((count - soDu) / 10) + 1;
+//        }
+        Integer toltalPage = (int) Math.ceil(count / (float) limit);
 
+        List<NhanVien> kh = services.timKiemPhanTrang(txtTimKiem.getText(), limit, page);
+        String vaiTro = "";
+        for (NhanVien nhanVien : kh) {
+            if (nhanVien.getTrangThai() == 0) {
+
+                if (nhanVien.getVaiTro() == 0) {
+                    vaiTro = "Quản Lý";
+                } else {
+                    vaiTro = "Nhân Viên";
+                }
+                Object[] data = new Object[]{
+                    nhanVien.getMaNV(),
+                    nhanVien.getTenNV(),
+                    nhanVien.getSdt(),
+                    nhanVien.getEmail(),
+                    nhanVien.getQueQuan(),
+                    nhanVien.getMatKhau(),
+                    vaiTro,};
+                model.addRow(data);
+            }
+        }
+        pagination2.setPagegination(page, toltalPage);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnAdd;
@@ -902,6 +964,7 @@ Integer toltalPage =(int) Math.ceil(count/ (float) limit);
     private javax.swing.JLabel lbAnh;
     private javax.swing.JPanel nhanvien;
     private pagination.Pagination pagination1;
+    private pagination.Pagination pagination2;
     private javax.swing.JTable tbNhanVien;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtMa;

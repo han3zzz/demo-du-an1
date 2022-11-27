@@ -119,4 +119,24 @@ public class NhanVienRepositories {
         List<NhanVien> list = q.getResultList();
         return list;
     }
+    public List<NhanVien> timKiembyTrangThai(String ten){
+        Session session = HibernateConfig.getFACTORY().openSession();
+        Query q = session.createQuery("From NhanVien where TenNV like :ten and TrangThai = 0");
+        q.setParameter("ten", "%"+ten+"%");
+        List<NhanVien> list = q.getResultList();
+        return list;
+    }
+    public List<NhanVien> timKiemPhanTrang(String ten , Integer limitPage, Integer page) {
+        Session s = HibernateConfig.getFACTORY().openSession();
+        Transaction transaction = s.beginTransaction();
+        Query query = s.createQuery("From NhanVien where TenNV like :ten and TrangThai = 0");
+        query.setFirstResult((limitPage * page) - limitPage);
+        query.setMaxResults(limitPage);
+        query.setParameter("ten", "%"+ten+"%");
+        transaction.commit();
+        List<NhanVien> list = query.getResultList();
+        s.close();
+        return list;
+
+    }
 }
