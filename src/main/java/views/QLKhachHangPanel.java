@@ -129,7 +129,6 @@ Integer toltalPage =(int) Math.ceil(count/ (float) limit);
     public KhachHang layTTKH() throws ParseException {
         String ma = txtMa.getText();
         String ten = txtTen.getText();
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy");
 //        ZonedDateTime now = ZonedDateTime.now();
 
         String ngaySinh = new SimpleDateFormat("MM-dd-yyyy").format(txtNgaySinh.getDate());
@@ -156,18 +155,22 @@ Integer toltalPage =(int) Math.ceil(count/ (float) limit);
         String ten = txtTen.getText();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy");
         ZonedDateTime now = ZonedDateTime.now();
-        String ngaySinh = dtf.format(now);
-        Date date = new SimpleDateFormat("MM-dd-yyyy").parse(ngaySinh);
+        String ngaySua = dtf.format(now);
+        Date date = new SimpleDateFormat("MM-dd-yyyy").parse(ngaySua);
+        String ngaySinh = new SimpleDateFormat("MM-dd-yyyy").format(txtNgaySinh.getDate());
+        Date date1 = new SimpleDateFormat("MM-dd-yyyy").parse(ngaySinh);
         String sdt = txtsdt.getText();
         String diaChi = txtQueQuan.getText();
-
+        KhachHang khachHang = service.seachbyMa(ma);
         KhachHang kh = new KhachHang();
         kh.setMaKH(ma);
         kh.setTenKH(ten);
-        kh.setNgaySinh(date);
+        kh.setNgaySinh(date1);
         kh.setSdt(sdt);
         kh.setDiaChi(diaChi);
         kh.setTrangThai(0);
+        kh.setNgayTao(khachHang.getNgayTao());
+        kh.setNgaySua(date);
         return kh;
     }
 
