@@ -91,11 +91,10 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
         pagination1.addEventPagination(new EventPagination() {
             @Override
             public void pageChanged(int page) {
-               
+
                 if (pagination1.isVisible() == true) {
-                     hienThiSanPham(page);
-                }
-                else{
+                    hienThiSanPham(page);
+                } else {
                     LocSanPham(page);
                 }
             }
@@ -150,13 +149,15 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
 //        if (soDu != 0) {
 //            soLamTron = ((count - soDu) / limit) + 1;
 //        }
-        Integer toltalPage =(int) Math.ceil(count/ (float) limit);
+        Integer toltalPage = (int) Math.ceil(count / (float) limit);
         String maSP = "";
         Integer tonKho = 0;
         List<SanPham> sanPhams = sanPhamServices.phanTrang(limit, page);
+
         for (SanPham sanPham : sanPhams) {
             maSP = sanPham.getMaSP();
             ChiTietSPViewModels c = chiTietSPServices.load(maSP);
+
             if (c == null) {
                 continue;
             }
@@ -180,6 +181,7 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
                     label
                 };
                 model.addRow(data);
+
             }
 
         }
@@ -818,8 +820,8 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
         sanphamLayout.setHorizontalGroup(
             sanphamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(sanphamLayout.createSequentialGroup()
-                .addContainerGap(16, Short.MAX_VALUE)
-                .addGroup(sanphamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addContainerGap(8, Short.MAX_VALUE)
+                .addGroup(sanphamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(sanphamLayout.createSequentialGroup()
                         .addGroup(sanphamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -831,10 +833,11 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(sanphamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbbLocBoNho, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(32, 32, 32)
+                            .addComponent(cbbLocBoNho, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(kGradientPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(23, 23, 23)
                 .addGroup(sanphamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(sanphamLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -885,7 +888,7 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
                                             .addComponent(jLabel18)
                                             .addGap(27, 27, 27)
                                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(0, 32, Short.MAX_VALUE)))
+                                .addGap(0, 23, Short.MAX_VALUE)))
                         .addGap(25, 25, 25))
                     .addGroup(sanphamLayout.createSequentialGroup()
                         .addGap(41, 41, 41)
@@ -896,7 +899,7 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
                         .addComponent(kGradientPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(kGradientPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(27, Short.MAX_VALUE))))
             .addGroup(sanphamLayout.createSequentialGroup()
                 .addGap(306, 306, 306)
                 .addComponent(pagination2, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -908,22 +911,23 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
             sanphamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(sanphamLayout.createSequentialGroup()
                 .addGap(57, 57, 57)
-                .addGroup(sanphamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(sanphamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(sanphamLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbbLocDanhMuc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(sanphamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(sanphamLayout.createSequentialGroup()
-                            .addGroup(sanphamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel4))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(sanphamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(cbbLocMauSac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(cbbLocBoNho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(8, 8, 8))
-                        .addComponent(kGradientPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(sanphamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(sanphamLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cbbLocDanhMuc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(sanphamLayout.createSequentialGroup()
+                                .addGroup(sanphamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(sanphamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(cbbLocMauSac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cbbLocBoNho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(8, 8, 8))
+                    .addComponent(kGradientPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(36, 36, 36)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 591, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1429,9 +1433,9 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
 //            cbbSanPhamm.setSelectedIndex(0);
 //        }
 
-        
+
     }//GEN-LAST:event_jLabel5MousePressed
-    private void LocSanPham(Integer page){
+        private void LocSanPham(Integer page) {
         String danhMuc = (String) cbbLocDanhMuc.getSelectedItem();
         String mauSac = (String) cbbLocMauSac.getSelectedItem();
         Integer boNho = Integer.parseInt((String) cbbLocBoNho.getSelectedItem());
@@ -1439,7 +1443,7 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
         DefaultTableModel model = (DefaultTableModel) tbSanPham.getModel();
         model.setRowCount(0);
         Integer limit = 8;
-        List<SanPham> sps = sanPhamServices.locSanPham(danhMuc,mauSac,boNho);
+        List<SanPham> sps = sanPhamServices.locSanPham(danhMuc, mauSac, boNho);
         Integer count = sps.size();
         if (count == 0) {
             JOptionPane.showMessageDialog(this, "Không có dữ liệu !");
@@ -1453,10 +1457,10 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
 //        if (soDu != 0) {
 //            soLamTron = ((count - soDu) / limit) + 1;
 //        }
-        Integer toltalPage =(int) Math.ceil(count/ (float) limit);
+        Integer toltalPage = (int) Math.ceil(count / (float) limit);
         String maSP = "";
         Integer tonKho = 0;
-        List<SanPham> sanPhams = sanPhamServices.loc(danhMuc,mauSac,boNho,limit, page);
+        List<SanPham> sanPhams = sanPhamServices.loc(danhMuc, mauSac, boNho, limit, page);
         for (SanPham sanPham : sanPhams) {
             maSP = sanPham.getMaSP();
             ChiTietSPViewModels c = chiTietSPServices.load(maSP);

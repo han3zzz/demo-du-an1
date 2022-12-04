@@ -19,7 +19,7 @@ import utilities.HibernateConfig;
 public class QLKhuyenMaiRepositories {
     public  List<KhuyenMai> getAll(){
         Session session = HibernateConfig.getFACTORY().openSession();
-        Query q = session.createQuery("From KhuyenMai");
+        Query q = session.createQuery("From KhuyenMai e where e.trangThai = 0 or e.trangThai = 1 Order by e.ngayTao desc");
         List<KhuyenMai> list = q.getResultList();
         return list;
         

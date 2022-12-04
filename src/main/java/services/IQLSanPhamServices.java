@@ -23,6 +23,9 @@ public interface IQLSanPhamServices {
     public List<SanPham> phanTrang(Integer limitPage, Integer page);
     public List<SanPham> loc(String danhMuc , String mauSac , Integer boNho,Integer litmitNumber , Integer number);
     public List<SanPham> locSanPham(String danhMuc , String mauSac , Integer boNho);
+    public List<SanPham> timKiembyTrangThai(String ten);
+    public List<SanPham> timKiemPhanTrang(String ten , Integer limitPage, Integer page);
+    
     
     
 }

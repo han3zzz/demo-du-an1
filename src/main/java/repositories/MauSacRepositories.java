@@ -18,7 +18,7 @@ import utilities.HibernateConfig;
 public class MauSacRepositories {
     public List<MauSac> getAll(){
         Session session = HibernateConfig.getFACTORY().openSession();
-        Query q = session.createQuery("From MauSac");
+        Query q = session.createQuery("From MauSac e where e.trangThai = 0 Order by e.ngayTao desc");
         List<MauSac> list = q.getResultList();
         return list;
     }

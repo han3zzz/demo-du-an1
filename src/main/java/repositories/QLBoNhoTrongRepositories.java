@@ -18,7 +18,7 @@ import utilities.HibernateConfig;
 public class QLBoNhoTrongRepositories {
     public List<BoNhoTrong> getAll(){
         Session session = HibernateConfig.getFACTORY().openSession();
-        Query q = session.createQuery("From BoNhoTrong");
+        Query q = session.createQuery("From BoNhoTrong e where e.trangThai = 0 Order by e.ngayTao desc");
         List<BoNhoTrong> list = q.getResultList();
         return list;
     }

@@ -19,7 +19,7 @@ public class DanhMucRepositories {
 
     public List<DanhMuc> getAll() {
         Session session = HibernateConfig.getFACTORY().openSession();
-        Query q = session.createQuery("From DanhMuc");
+        Query q = session.createQuery("From DanhMuc e where e.trangThai = 0 Order by e.ngayTao desc");
         List<DanhMuc> list = q.getResultList();
         return list;
     }

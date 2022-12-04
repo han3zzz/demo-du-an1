@@ -27,7 +27,8 @@ public class ChiTietSPServices implements IChiTietSPServices{
         List<ChiTietSP> list = ctspr.getAll();
         List<ChiTietSPViewModels> ctspvms = new ArrayList();
         for (ChiTietSP ctsp : list) {
-            List<ChiTietSP> count = ctspr.count(ctsp.getSanPham().getMaSP());
+            if (ctsp != null) {
+                List<ChiTietSP> count = ctspr.count(ctsp.getSanPham().getMaSP());
             String tenSP = ctsp.getSanPham().getTenSP();
             String nsx = ctsp.getSanPham().getDanhmuc().getTenDanhMuc();
             String mauSac = ctsp.getSanPham().getMausac().getTenMauSac();
@@ -39,6 +40,7 @@ public class ChiTietSPServices implements IChiTietSPServices{
             Integer trangThai = ctsp.getTrangThai();
             ChiTietSPViewModels ctspvm = new ChiTietSPViewModels(tenSP, nsx, mauSac, boNho, tonKho,giaNhap, giaBan,anh,trangThai);
             ctspvms.add(ctspvm);
+            }
         }
         
         return ctspvms;
@@ -80,7 +82,7 @@ public class ChiTietSPServices implements IChiTietSPServices{
         if (ctsp == null) {
             return null;
         }
-        List<ChiTietSP> count = ctspr.count(ctsp.getSanPham().getMaSP());
+         List<ChiTietSP> count = ctspr.count(ctsp.getSanPham().getMaSP());
         
         String tenSP = ctsp.getSanPham().getTenSP();
             String nsx = ctsp.getSanPham().getDanhmuc().getTenDanhMuc();

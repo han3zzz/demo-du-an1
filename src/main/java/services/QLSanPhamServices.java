@@ -71,6 +71,16 @@ public class QLSanPhamServices implements IQLSanPhamServices{
         return spr.locSanPham(danhMuc, mauSac, boNho);
     }
 
+    @Override
+    public List<SanPham> timKiembyTrangThai(String ten) {
+        return spr.timKiembyTrangThai(ten);
+    }
+
+    @Override
+    public List<SanPham> timKiemPhanTrang(String ten, Integer limitPage, Integer page) {
+        return spr.timKiemPhanTrang(ten, limitPage, page);
+    }
+
 
 
    

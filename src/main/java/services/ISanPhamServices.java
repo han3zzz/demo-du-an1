@@ -17,4 +17,5 @@ public interface ISanPhamServices {
     public boolean update(SanPham sanPham);
     public boolean delete(SanPham sanPham);
     public SanPham seachbyMa(String ma);
+    
 }

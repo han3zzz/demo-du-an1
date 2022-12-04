@@ -465,7 +465,7 @@ public class QLBaoHanhPanel extends javax.swing.JPanel implements Runnable, Thre
         chiTietSPServices.updateImeiTrangThai(ImeiMoi, 2);
         chiTietSPServices.updateImeiTrangThai(txtMaImei.getText(), 3);
         baoHanhChiTietServices.xoaBaoHanh(txtMaImei.getText());
-        JOptionPane.showMessageDialog(this, "Bao hanh thanh cong !");
+        JOptionPane.showMessageDialog(this, "Bảo hành thành công !");
         clear();
     }//GEN-LAST:event_jLabel12MousePressed
 

@@ -43,7 +43,7 @@ public class QLKhuyenMaiPanel extends javax.swing.JPanel {
                 return;
             }
             for (KhuyenMai khuyenMai : khuyenMais) {
-                if (khuyenMai.getNgayKetThuc().after(date)) {
+                if (khuyenMai.getNgayKetThuc().after(date) == false) {
                     khuyenMaiServices.updatebyTrangThai(khuyenMai.getMaKM(), 1);
                 }
             }

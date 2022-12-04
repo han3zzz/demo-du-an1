@@ -21,7 +21,7 @@ public class QLSanPhamRepositories {
 
     public List<SanPham> getAll() {
         Session session = HibernateConfig.getFACTORY().openSession();
-        Query q = session.createQuery("From SanPham");
+        Query q = session.createQuery("From SanPham e order by e.ngayTao desc");
         List<SanPham> list = q.getResultList();
         return list;
     }
@@ -111,7 +111,7 @@ public class QLSanPhamRepositories {
     public List<SanPham> phanTrang(Integer limitPage, Integer page) {
         Session s = HibernateConfig.getFACTORY().openSession();
         Transaction transaction = s.beginTransaction();
-        Query query = s.createQuery("From SanPham e order by e.ngayTao desc");
+        Query query = s.createQuery("From SanPham e where e.trangThai = 0 order by e.ngayTao desc");
         query.setFirstResult((limitPage * page) - limitPage);
         query.setMaxResults(limitPage);
         transaction.commit();
@@ -141,6 +141,26 @@ public class QLSanPhamRepositories {
         q.setParameter("dungluong", boNho);
         List<SanPham> list = q.getResultList();
         return list;
+    }
+    public List<SanPham> timKiembyTrangThai(String ten){
+        Session session = HibernateConfig.getFACTORY().openSession();
+        Query q = session.createQuery("From SanPham where TenSP like :ten and TrangThai = 0");
+        q.setParameter("ten", "%"+ten+"%");
+        List<SanPham> list = q.getResultList();
+        return list;
+    }
+    public List<SanPham> timKiemPhanTrang(String ten , Integer limitPage, Integer page) {
+        Session s = HibernateConfig.getFACTORY().openSession();
+        Transaction transaction = s.beginTransaction();
+        Query query = s.createQuery("From SanPham where TenSP like :ten and TrangThai = 0");
+        query.setFirstResult((limitPage * page) - limitPage);
+        query.setMaxResults(limitPage);
+        query.setParameter("ten", "%"+ten+"%");
+        transaction.commit();
+        List<SanPham> list = query.getResultList();
+        s.close();
+        return list;
+
     }
     
 

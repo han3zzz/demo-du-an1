@@ -76,6 +76,21 @@ public class KhachHangService implements IKhachHangService{
     public List<KhachHang> phanTrang(Integer limitPage, Integer page) {
         return khr.phanTrang(limitPage, page);
     }
+
+    @Override
+    public List<KhachHang> getALLbyTrangThai(Integer trangThai) {
+        return khr.getALLbyTrangThai(trangThai);
+    }
+
+    @Override
+    public List<KhachHang> timKiembyTrangThai(String ten) {
+        return khr.timKiembyTrangThai(ten);
+    }
+
+    @Override
+    public List<KhachHang> timKiemPhanTrang(String ten, Integer limitPage, Integer page) {
+        return khr.timKiemPhanTrang(ten, limitPage, page);
+    }
     
      
 

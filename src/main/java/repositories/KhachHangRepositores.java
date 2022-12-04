@@ -21,7 +21,7 @@ public class KhachHangRepositores {
 
     public List<KhachHang> getALL() {
         Session session = HibernateConfig.getFACTORY().openSession();
-        Query q = session.createQuery("From KhachHang");
+        Query q = session.createQuery("From KhachHang e where e.trangThai = 0 Order by e.ngayTao desc");
         List<KhachHang> list = q.getResultList();
         return list;
     }
@@ -151,6 +151,34 @@ public class KhachHangRepositores {
 //        query.setMaxResults(10);
         List<ThongKeKhachHang> list = query.getResultList();
         return list;
+    }
+    
+    public List<KhachHang> getALLbyTrangThai(Integer trangThai){
+        Session session = HibernateConfig.getFACTORY().openSession();
+        Query q = session.createQuery("From KhachHang e where e.trangThai = :trangthai Order by e.ngayTao desc");
+        q.setParameter("trangthai", trangThai);
+        List<KhachHang> list = q.getResultList();
+        return list;
+    }
+    public List<KhachHang> timKiembyTrangThai(String ten){
+        Session session = HibernateConfig.getFACTORY().openSession();
+        Query q = session.createQuery("From KhachHang where TenKH like :ten and TrangThai = 0");
+        q.setParameter("ten", "%"+ten+"%");
+        List<KhachHang> list = q.getResultList();
+        return list;
+    }
+    public List<KhachHang> timKiemPhanTrang(String ten , Integer limitPage, Integer page) {
+        Session s = HibernateConfig.getFACTORY().openSession();
+        Transaction transaction = s.beginTransaction();
+        Query query = s.createQuery("From KhachHang where TenKH like :ten and TrangThai = 0");
+        query.setFirstResult((limitPage * page) - limitPage);
+        query.setMaxResults(limitPage);
+        query.setParameter("ten", "%"+ten+"%");
+        transaction.commit();
+        List<KhachHang> list = query.getResultList();
+        s.close();
+        return list;
+
     }
 
 }

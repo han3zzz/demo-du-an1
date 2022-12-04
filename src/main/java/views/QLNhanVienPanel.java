@@ -341,10 +341,10 @@ public class QLNhanVienPanel extends javax.swing.JPanel {
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel14.setText("SDT");
 
-        jLabel25.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel25.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
         jLabel25.setText("Quê Quán");
 
-        jLabel26.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel26.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
         jLabel26.setText("Mật Khẩu");
 
         jLabel28.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -460,7 +460,7 @@ public class QLNhanVienPanel extends javax.swing.JPanel {
         txtQueQuan.setRows(5);
         jScrollPane2.setViewportView(txtQueQuan);
 
-        jLabel27.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel27.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
         jLabel27.setText("Vai Trò");
 
         cbbVaiTro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -532,31 +532,45 @@ public class QLNhanVienPanel extends javax.swing.JPanel {
                                 .addComponent(pagination1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(nhanvienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(nhanvienLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(nhanvienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel14)
-                                    .addComponent(jLabel13)
-                                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(nhanvienLayout.createSequentialGroup()
                                         .addGroup(nhanvienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel28)
-                                            .addComponent(jLabel25)
-                                            .addComponent(jLabel26)
-                                            .addComponent(jLabel27))
-                                        .addGap(15, 15, 15)
-                                        .addGroup(nhanvienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(nhanvienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(nhanvienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGroup(nhanvienLayout.createSequentialGroup()
+                                                        .addGap(18, 18, 18)
+                                                        .addGroup(nhanvienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nhanvienLayout.createSequentialGroup()
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(jLabel25)))
+                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nhanvienLayout.createSequentialGroup()
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(jLabel26)))
                                             .addGroup(nhanvienLayout.createSequentialGroup()
-                                                .addComponent(lbAnh, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(btnUpload, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE))
-                                            .addGroup(nhanvienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(txtMatKhau)
-                                                .addComponent(txtMa)
-                                                .addComponent(txtTen)
-                                                .addComponent(txtSDT)
-                                                .addComponent(jScrollPane2)
-                                                .addComponent(txtEmail)
-                                                .addComponent(cbbVaiTro, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jLabel27)))
+                                        .addGap(8, 8, 8))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, nhanvienLayout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(nhanvienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                                .addGroup(nhanvienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(nhanvienLayout.createSequentialGroup()
+                                        .addComponent(lbAnh, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnUpload, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE))
+                                    .addGroup(nhanvienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txtMatKhau)
+                                        .addComponent(txtMa)
+                                        .addComponent(txtTen)
+                                        .addComponent(txtSDT)
+                                        .addComponent(jScrollPane2)
+                                        .addComponent(txtEmail)
+                                        .addComponent(cbbVaiTro, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                 .addGap(29, 29, 29))
                             .addGroup(nhanvienLayout.createSequentialGroup()
                                 .addGap(36, 36, 36)
@@ -704,6 +718,11 @@ public class QLNhanVienPanel extends javax.swing.JPanel {
             }
             if (txtQueQuan.getText().length() > 50) {
                 JOptionPane.showMessageDialog(this, "Quê quán nhỏ hơn hoặc bằng 50 kí tự ");
+                return;
+            }
+            NhanVien nv1 = services.seachbyMa(txtMa.getText());
+            if (nv1 != null) {
+                JOptionPane.showMessageDialog(this, "Mã nhân viên đã tồn tại !");
                 return;
             }
             if (txtMatKhau.getText().length() < 8 || txtMatKhau.getText().length() > 16) {

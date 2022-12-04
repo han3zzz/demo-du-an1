@@ -18,7 +18,7 @@ import utilities.HibernateConfig;
 public class NSXRepositories {
     public List<NSX> getAll(){
         Session session = HibernateConfig.getFACTORY().openSession();
-        Query q = session.createQuery("From NSX");
+        Query q = session.createQuery("From NSX e where e.trangThai = 0 Order by e.ngayTao desc");
         List<NSX> list = q.getResultList();
         return list;
     }

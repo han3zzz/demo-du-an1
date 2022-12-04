@@ -25,4 +25,7 @@ public interface IKhachHangService {
     public List<ThongKeKhachHang> thongKeTheoThang(Integer thang , Integer nam);
     public List<ThongKeKhachHang> thongKeTheoNam(Integer nam);
     public List<KhachHang> phanTrang(Integer limitPage ,Integer page);
+    public List<KhachHang> getALLbyTrangThai(Integer trangThai);
+    public List<KhachHang> timKiembyTrangThai(String ten);
+    public List<KhachHang> timKiemPhanTrang(String ten , Integer limitPage, Integer page);
 }
