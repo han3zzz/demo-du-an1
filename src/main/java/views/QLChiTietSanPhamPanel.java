@@ -64,6 +64,7 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
     private IQLNSXServices qLNSXServices;
     private IQLMauSacServices qLMauSacServices;
     private IQLBoNhoTrongServices boNhoTrongServices;
+    private Integer check = 0;
 
     public QLChiTietSanPhamPanel() {
         initComponents();
@@ -87,12 +88,12 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
         loadCbbLocMauSac();
         loadCbbLocBoNho();
         hienThiSanPham(1);
-        pagination2.setVisible(false);
+
         pagination1.addEventPagination(new EventPagination() {
             @Override
             public void pageChanged(int page) {
 
-                if (pagination1.isVisible() == true) {
+                if (check == 0) {
                     hienThiSanPham(page);
                 } else {
                     LocSanPham(page);
@@ -138,7 +139,7 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
         tbSanPham.getColumn("Ảnh").setCellRenderer(new myTableCellRender());
         DefaultTableModel model = (DefaultTableModel) tbSanPham.getModel();
         model.setRowCount(0);
-        Integer limit = 8;
+        Integer limit = 5;
         List<SanPham> sps = sanPhamServices.getAllbyTrangThai(0);
         Integer count = sps.size();
         Integer soDu = count % limit;
@@ -153,7 +154,7 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
         String maSP = "";
         Integer tonKho = 0;
         List<SanPham> sanPhams = sanPhamServices.phanTrang(limit, page);
-
+  
         for (SanPham sanPham : sanPhams) {
             maSP = sanPham.getMaSP();
             ChiTietSPViewModels c = chiTietSPServices.load(maSP);
@@ -191,6 +192,7 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
         } else {
             cbbSanPhamm.setSelectedIndex(0);
         }
+        check = 0;
     }
 
     public void loadHienThiSanPham(List<SanPham> list, ChiTietSPViewModels c) {
@@ -235,7 +237,7 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
 
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            tbSanPham.setRowHeight(70);
+            tbSanPham.setRowHeight(110);
 
             return (Component) value;
         }
@@ -522,8 +524,9 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
         imeiServices.setList(null);
         cbbTGBH.setSelectedIndex(0);
         hienThiSanPham(1);
-        pagination1.setVisible(true);
-        pagination2.setVisible(false);
+//        pagination1.setVisible(true);
+//        pagination2.setVisible(false);
+        check = 0;
     }
 
     /**
@@ -574,7 +577,6 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         kGradientPanel1 = new keeptoo.KGradientPanel();
         jLabel5 = new javax.swing.JLabel();
-        pagination2 = new pagination.Pagination();
 
         sanpham.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -594,6 +596,7 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tbSanPham.setRowHeight(40);
         tbSanPham.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 tbSanPhamMousePressed(evt);
@@ -813,8 +816,6 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
         );
 
-        pagination2.setOpaque(false);
-
         javax.swing.GroupLayout sanphamLayout = new javax.swing.GroupLayout(sanpham);
         sanpham.setLayout(sanphamLayout);
         sanphamLayout.setHorizontalGroup(
@@ -840,7 +841,6 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
                 .addGap(23, 23, 23)
                 .addGroup(sanphamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(sanphamLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(sanphamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(sanphamLayout.createSequentialGroup()
                                 .addGroup(sanphamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -901,10 +901,8 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
                         .addComponent(kGradientPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(27, Short.MAX_VALUE))))
             .addGroup(sanphamLayout.createSequentialGroup()
-                .addGap(306, 306, 306)
-                .addComponent(pagination2, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pagination1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(286, 286, 286)
+                .addComponent(pagination1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         sanphamLayout.setVerticalGroup(
@@ -931,9 +929,7 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
                 .addGap(36, 36, 36)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 591, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(sanphamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pagination1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pagination2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(pagination1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(17, Short.MAX_VALUE))
             .addGroup(sanphamLayout.createSequentialGroup()
                 .addGap(125, 125, 125)
@@ -983,8 +979,6 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
                     .addComponent(kGradientPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(59, 59, 59))
         );
-
-        pagination2.getAccessibleContext().setAccessibleParent(pagination2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -1368,8 +1362,9 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
 
     private void jLabel5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MousePressed
         // TODO add your handling code here:
-        pagination1.setVisible(false);
-        pagination2.setVisible(true);
+//        pagination1.setVisible(false);
+//        pagination2.setVisible(true);
+        check = 1;
         LocSanPham(1);
 //        String danhMuc = (String) cbbLocDanhMuc.getSelectedItem();
 //        String mauSac = (String) cbbLocMauSac.getSelectedItem();
@@ -1435,7 +1430,7 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
 
 
     }//GEN-LAST:event_jLabel5MousePressed
-        private void LocSanPham(Integer page) {
+    private void LocSanPham(Integer page) {
         String danhMuc = (String) cbbLocDanhMuc.getSelectedItem();
         String mauSac = (String) cbbLocMauSac.getSelectedItem();
         Integer boNho = Integer.parseInt((String) cbbLocBoNho.getSelectedItem());
@@ -1490,7 +1485,7 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
             }
 
         }
-        pagination2.setPagegination(page, toltalPage);
+        pagination1.setPagegination(page, toltalPage);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1527,7 +1522,6 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
     private keeptoo.KGradientPanel kGradientPanel7;
     private javax.swing.JLabel lbAnh;
     private pagination.Pagination pagination1;
-    private pagination.Pagination pagination2;
     private javax.swing.JPanel sanpham;
     private static javax.swing.JTable tbSanPham;
     private javax.swing.JTextArea txtGhiChu;

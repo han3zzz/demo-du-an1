@@ -183,7 +183,7 @@ public class QLThongKePanel extends javax.swing.JPanel {
             for (ThongKeDoanhThuTheoDanhMuc thongKeDoanhThuTheoDanhMuc : thongKeDoanhThuTheoDanhMucs) {
                 pieDataset.setValue(thongKeDoanhThuTheoDanhMuc.getTenDM(),thongKeDoanhThuTheoDanhMuc.getTongTien().subtract(thongKeDoanhThuTheoDanhMuc.getGiamGia()));
             }
-            JFreeChart chart1 = ChartFactory.createPieChart("Doanh thu theo danh muc", pieDataset, false, true, false);
+            JFreeChart chart1 = ChartFactory.createPieChart("Doanh thu theo danh mục", pieDataset, false, true, false);
             PiePlot piePlot = (PiePlot) chart1.getPlot();
             piePlot.setBackgroundPaint(Color.white);
             ChartPanel pieChartPanel = new ChartPanel(chart1);

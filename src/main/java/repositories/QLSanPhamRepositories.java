@@ -111,7 +111,7 @@ public class QLSanPhamRepositories {
     public List<SanPham> phanTrang(Integer limitPage, Integer page) {
         Session s = HibernateConfig.getFACTORY().openSession();
         Transaction transaction = s.beginTransaction();
-        Query query = s.createQuery("From SanPham e where e.trangThai = 0 order by e.ngayTao desc");
+        Query query = s.createQuery("From SanPham e where e.trangThai = 0 Order by e.ngayTao desc");
         query.setFirstResult((limitPage * page) - limitPage);
         query.setMaxResults(limitPage);
         transaction.commit();
