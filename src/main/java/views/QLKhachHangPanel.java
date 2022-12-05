@@ -30,19 +30,18 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
      * Creates new form QLKhachHangPanel
      */
     private IKhachHangService service;
-    
+    private Integer check = 0 ;
     public QLKhachHangPanel() {
         initComponents();
         service = new KhachHangService();
 //        hienThi();
-        pagination2.setVisible(false);
         txtNgaySinh.setMaxSelectableDate(new Date());
         loadMaKH();
         loadData(1);
         phantrang.addEventPagination(new EventPagination() {
             @Override
             public void pageChanged(int page) {
-                if (phantrang.isVisible() == true) {
+                if (check == 0) {
                     loadData(page);
                 } else {
                     timKiem(page);
@@ -180,7 +179,7 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
     }
     
     public void clear() {
-        pagination2.setVisible(false);
+        check = 0 ;
         phantrang.setVisible(true);
         loadData(1);
         loadMaKH();
@@ -238,7 +237,6 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
         txtNgaySinh = new com.toedter.calendar.JDateChooser();
         txtMa = new javax.swing.JLabel();
         phantrang = new pagination.Pagination();
-        pagination2 = new pagination.Pagination();
         txtTimKiem = new javax.swing.JTextField();
         kGradientPanel3 = new keeptoo.KGradientPanel();
         btnTimKiem = new javax.swing.JLabel();
@@ -388,8 +386,6 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
 
         phantrang.setOpaque(false);
 
-        pagination2.setOpaque(false);
-
         btnTimKiem.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnTimKiem.setForeground(new java.awt.Color(255, 255, 255));
         btnTimKiem.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -457,10 +453,8 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
                                 .addGap(18, 18, 18)
                                 .addComponent(kGradientPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(khachhangLayout.createSequentialGroup()
-                        .addGap(229, 229, 229)
-                        .addComponent(phantrang, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(pagination2, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(335, 335, 335)
+                        .addComponent(phantrang, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
         khachhangLayout.setVerticalGroup(
@@ -506,14 +500,11 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(khachhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(phantrang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(pagination2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(phantrang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         phantrang.getAccessibleContext().setAccessibleParent(phantrang);
-        pagination2.getAccessibleContext().setAccessibleParent(pagination2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -537,6 +528,7 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_tbbBangMousePressed
 
     private void btnAddMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMousePressed
+         check = 0 ;
         try {
             if (txtMa.getText().trim().isEmpty() || txtTen.getText().trim().isEmpty() || txtsdt.getText().trim().isEmpty() || txtNgaySinh.getDate() == null || txtQueQuan.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Bạn không được để trống !");
@@ -567,7 +559,7 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnResetMousePressed
 
     private void btnDeleteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMousePressed
-        
+         check = 0 ;
         int index = tbbBang.getSelectedRow();
         if (index == -1) {
             JOptionPane.showMessageDialog(this, "Bạn chưa chọn bản ghi nào !");
@@ -595,7 +587,7 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
 
     private void btnUpdateMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateMousePressed
         // TODO add your handling code here:
-
+         check = 0 ;
         try {
             int index = tbbBang.getSelectedRow();
             if (index == -1) {
@@ -644,7 +636,8 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Không có dữ liệu !");
             return;
         }
-        phantrang.setVisible(false);
+        check = 1 ;
+//        phantrang.setVisible(false);
         timKiem(1);
         //        DefaultTableModel model = (DefaultTableModel) tbNhanVien.getModel();
         //        model.setRowCount(0);
@@ -669,7 +662,7 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(this, "Tìm thành công !");
     }//GEN-LAST:event_btnTimKiemMousePressed
     public void timKiem(Integer page) {
-        pagination2.setVisible(true);
+//        pagination2.setVisible(true);
         DefaultTableModel model = (DefaultTableModel) tbbBang.getModel();
         model.setRowCount(0);
         Integer limit = 10;
@@ -701,7 +694,7 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
                 model.addRow(row);
             }
         }
-        pagination2.setPagegination(page, toltalPage);
+        phantrang.setPagegination(page, toltalPage);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -723,7 +716,6 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
     private keeptoo.KGradientPanel kGradientPanel6;
     private keeptoo.KGradientPanel kGradientPanel7;
     private javax.swing.JPanel khachhang;
-    private pagination.Pagination pagination2;
     private pagination.Pagination phantrang;
     private javax.swing.JTable tbbBang;
     private javax.swing.JLabel txtMa;
