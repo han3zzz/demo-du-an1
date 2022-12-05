@@ -398,6 +398,7 @@ public class QLDanhMuc extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUpdateMouseClicked
 
     private void btnUpdateMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateMousePressed
+        String checkSo = "^[+?0-9]*$";
         try {
 
             // TODO add your handling code here:
@@ -411,16 +412,24 @@ public class QLDanhMuc extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Bạn chỉ được chọn 1 bản ghi !");
                 return;
             }
-            if (txtTen.getText().length() >= 30) {
-                JOptionPane.showMessageDialog(this, "Độ dài tên vượt quá độ dài cho phép!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+//            if (txtTen.getText().length() >= 30) {
+//                JOptionPane.showMessageDialog(this, "Độ dài tên vượt quá độ dài cho phép!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+//                return;
+//            }
+            if (txtMa.getText().length() > 10) {
+                JOptionPane.showMessageDialog(this, "Mã nhỏ hơn hoặc bằng 10 kí tự");
+                return;
+            }
+            if (txtTen.getText().length() > 50) {
+                JOptionPane.showMessageDialog(this, "Tên nhỏ hơn hoặc bằng 50 kí tự");
                 return;
             }
             DanhMuc n = layTTSua();
-//            if (n.getMaDanhMuc().trim().isEmpty() || n.getTenDanhMuc().trim().isEmpty()) {
-//                JOptionPane.showMessageDialog(this, "Không được để trống !");
-//                return;
-//            }
-            int check = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn sửa ?");
+            if (n.getMaDanhMuc().trim().isEmpty() || n.getTenDanhMuc().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Không được để trống !");
+                return;
+            }
+            int check = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn sửa không ?");
             if (check != JOptionPane.YES_OPTION) {
                 return;
             }
