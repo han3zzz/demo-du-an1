@@ -139,4 +139,17 @@ public class NhanVienRepositories {
         return list;
 
     }
+     public List<NhanVien> locPhanTrang(Integer vaitro , Integer limitPage, Integer page) {
+        Session s = HibernateConfig.getFACTORY().openSession();
+        Transaction transaction = s.beginTransaction();
+        Query query = s.createQuery("From NhanVien where VaiTro = :vaiTro and TrangThai = 0");
+        query.setFirstResult((limitPage * page) - limitPage);
+        query.setMaxResults(limitPage);
+        query.setParameter("vaiTro", vaitro);
+        transaction.commit();
+        List<NhanVien> list = query.getResultList();
+        s.close();
+        return list;
+
+    }
 }

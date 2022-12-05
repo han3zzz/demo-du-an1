@@ -77,5 +77,10 @@ public class NhanVienServices implements INhanVienServices{
     public List<NhanVien> timKiemPhanTrang(String ten, Integer limitPage, Integer page) {
         return nvr.timKiemPhanTrang(ten, limitPage, page);
     }
+
+    @Override
+    public List<NhanVien> locPhanTrang(Integer vaitro, Integer limitPage, Integer page) {
+        return nvr.locPhanTrang(vaitro, limitPage, page);
+    }
     
 }

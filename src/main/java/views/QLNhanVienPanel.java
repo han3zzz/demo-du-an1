@@ -238,6 +238,7 @@ public class QLNhanVienPanel extends javax.swing.JPanel {
     }
 
     public void clear() {
+        txtTimKiem.setText("");
         txtMa.setText("");
         txtTen.setText("");
         txtSDT.setText("");
@@ -245,7 +246,7 @@ public class QLNhanVienPanel extends javax.swing.JPanel {
         txtQueQuan.setText("");
         txtMatKhau.setText("");
         cbbVaiTro.setSelectedIndex(0);
-        hienThi();
+        loadData(1);
         lbAnh.setIcon(null);
         pagination2.setVisible(false);
         pagination1.setVisible(true);
@@ -704,8 +705,8 @@ public class QLNhanVienPanel extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Số điện thoại phải là số !");
                 return;
             }
-            if (txtSDT.getText().length() > 11) {
-                JOptionPane.showMessageDialog(this, "Số điện thoại nhỏ hơn hoặc bằng 11 kí tự ");
+            if (txtSDT.getText().length() != 10) {
+                JOptionPane.showMessageDialog(this, "Số điện thoại phải bằng 10 kí tự ");
                 return;
             }
             if (txtEmail.getText().length() > 30) {
@@ -732,7 +733,7 @@ public class QLNhanVienPanel extends javax.swing.JPanel {
             NhanVien nv = layTT();
             if (services.add(nv) == true) {
                 JOptionPane.showMessageDialog(this, "Thêm thành công !");
-                hienThi();
+                loadData(1);
             } else {
                 JOptionPane.showMessageDialog(this, "Thêm thất bại !");
             }
@@ -772,7 +773,7 @@ public class QLNhanVienPanel extends javax.swing.JPanel {
         String ma = tbNhanVien.getValueAt(index, 0).toString();
         if (services.delete(ma) == true) {
             JOptionPane.showMessageDialog(this, "Xóa thành công !");
-            hienThi();
+            loadData(1);
         } else {
             JOptionPane.showMessageDialog(this, "Xóa thất bại !");
         }
@@ -781,7 +782,8 @@ public class QLNhanVienPanel extends javax.swing.JPanel {
 
     private void btnUpdateMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateMousePressed
         // TODO add your handling code here:
-
+        String checkSo = "^[+?0-9]*$";
+        String checkMail = "^([a-zA-Z0-9]+\\.)*[a-zA-Z0-9]+@([a-z]+\\.)+[a-z]{2,4}$";
         try {
             int index = tbNhanVien.getSelectedRow();
             if (index == -1) {
@@ -797,6 +799,38 @@ public class QLNhanVienPanel extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Bạn không được để trống !");
                 return;
             }
+            if (lbAnh == null) {
+                JOptionPane.showMessageDialog(this, "Ảnh không được để trống !");
+                return;
+            }
+            if (txtMa.getText().length() > 10) {
+                JOptionPane.showMessageDialog(this, "Mã nhỏ hơn hoặc bằng 10 kí tự");
+                return;
+            }
+            if (txtTen.getText().length() > 50) {
+                JOptionPane.showMessageDialog(this, "Tên nhỏ hơn hoặc bằng 50 kí tự");
+                return;
+            }
+            if (!txtSDT.getText().matches(checkSo)) {
+                JOptionPane.showMessageDialog(this, "Số điện thoại phải là số !");
+                return;
+            }
+            if (txtSDT.getText().length() != 10) {
+                JOptionPane.showMessageDialog(this, "Số điện thoại phải bằng 10 kí tự ");
+                return;
+            }
+            if (txtEmail.getText().length() > 30) {
+                JOptionPane.showMessageDialog(this, "Email nhỏ hơn hoặc bằng 30 kí tự ");
+                return;
+            }
+            if (!txtEmail.getText().matches(checkMail)) {
+                JOptionPane.showMessageDialog(this, "Email Không dùng định dạng Example@gmail.com :))");
+                return;
+            }
+            if (txtQueQuan.getText().length() > 50) {
+                JOptionPane.showMessageDialog(this, "Quê quán nhỏ hơn hoặc bằng 50 kí tự ");
+                return;
+            }
             int check = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn sửa ?");
             if (check != JOptionPane.YES_OPTION) {
                 return;
@@ -805,7 +839,7 @@ public class QLNhanVienPanel extends javax.swing.JPanel {
             NhanVien nv = layTTSua();
             if (services.update(nv) == true) {
                 JOptionPane.showMessageDialog(this, "Sửa thành công !");
-                hienThi();
+               loadData(1);
             } else {
                 JOptionPane.showMessageDialog(this, "Sửa thất bại !");
             }
@@ -841,36 +875,37 @@ public class QLNhanVienPanel extends javax.swing.JPanel {
 
     private void btnLocMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLocMousePressed
         // TODO add your handling code here:
-        String cbb = (String) cbbLoc.getSelectedItem();
-        Integer vaiTro = 0;
-        if (cbb.equals("Quản Lý")) {
-            vaiTro = 0;
-        } else {
-            vaiTro = 1;
-        }
-        DefaultTableModel model = (DefaultTableModel) tbNhanVien.getModel();
-        model.setRowCount(0);
-        String vaiTro1 = "";
-        List<NhanVien> list = services.getALLbyVaiTro(vaiTro);
-        for (NhanVien nhanVien : list) {
-            if (nhanVien.getTrangThai() == 0) {
-                if (nhanVien.getVaiTro() == 0) {
-                    vaiTro1 = "Quản Lý";
-                } else {
-                    vaiTro1 = "Nhân Viên";
-                }
-                Object[] data = new Object[]{
-                    nhanVien.getMaNV(),
-                    nhanVien.getTenNV(),
-                    nhanVien.getSdt(),
-                    nhanVien.getEmail(),
-                    nhanVien.getQueQuan(),
-                    nhanVien.getMatKhau(),
-                    vaiTro1,};
-                model.addRow(data);
-            }
-
-        }
+//        String cbb = (String) cbbLoc.getSelectedItem();
+//        Integer vaiTro = 0;
+//        if (cbb.equals("Quản Lý")) {
+//            vaiTro = 0;
+//        } else {
+//            vaiTro = 1;
+//        }
+//        DefaultTableModel model = (DefaultTableModel) tbNhanVien.getModel();
+//        model.setRowCount(0);
+//        String vaiTro1 = "";
+//        List<NhanVien> list = services.getALLbyVaiTro(vaiTro);
+//        for (NhanVien nhanVien : list) {
+//            if (nhanVien.getTrangThai() == 0) {
+//                if (nhanVien.getVaiTro() == 0) {
+//                    vaiTro1 = "Quản Lý";
+//                } else {
+//                    vaiTro1 = "Nhân Viên";
+//                }
+//                Object[] data = new Object[]{
+//                    nhanVien.getMaNV(),
+//                    nhanVien.getTenNV(),
+//                    nhanVien.getSdt(),
+//                    nhanVien.getEmail(),
+//                    nhanVien.getQueQuan(),
+//                    nhanVien.getMatKhau(),
+//                    vaiTro1,};
+//                model.addRow(data);
+//            }
+//
+//        }
+        Loc(1);
         JOptionPane.showMessageDialog(this, "Lọc thành công !");
     }//GEN-LAST:event_btnLocMousePressed
 
@@ -889,7 +924,7 @@ public class QLNhanVienPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Không có dữ liệu !");
             return;
         }
-        pagination1.setVisible(false);
+//        pagination1.setVisible(false);
         timKiem(1);
 //        DefaultTableModel model = (DefaultTableModel) tbNhanVien.getModel();
 //        model.setRowCount(0);
@@ -915,7 +950,7 @@ public class QLNhanVienPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnTimKiemMousePressed
     public void timKiem(Integer page) {
-        pagination2.setVisible(true);
+//        pagination2.setVisible(true);
         DefaultTableModel model = (DefaultTableModel) tbNhanVien.getModel();
         model.setRowCount(0);
         Integer limit = 10;
@@ -952,9 +987,55 @@ public class QLNhanVienPanel extends javax.swing.JPanel {
                 model.addRow(data);
             }
         }
-        pagination2.setPagegination(page, toltalPage);
+        pagination1.setPagegination(page, toltalPage);
     }
+public void Loc(Integer page) {
+//        pagination2.setVisible(true);
+        String cbb = (String) cbbLoc.getSelectedItem();
+        Integer vaiTro = 0;
+        if (cbb.equals("Quản Lý")) {
+            vaiTro = 0;
+        } else {
+            vaiTro = 1;
+        }
+        DefaultTableModel model = (DefaultTableModel) tbNhanVien.getModel();
+        model.setRowCount(0);
+        Integer limit = 10;
+        List<NhanVien> nhanViens = services.getALLbyVaiTro(vaiTro);
+        Integer count = nhanViens.size();
+//        Integer soDu = count % 10;
+//        Integer soLamTron = 0;
+//        if (soDu == 0) {
+//            soLamTron = count / 10;
+//        }
+//        if (soDu != 0) {
+//            soLamTron = ((count - soDu) / 10) + 1;
+//        }
+        Integer toltalPage = (int) Math.ceil(count / (float) limit);
 
+        List<NhanVien> kh = services.locPhanTrang(vaiTro, limit, page);
+        String vaiTro1 = "";
+        for (NhanVien nhanVien : kh) {
+            if (nhanVien.getTrangThai() == 0) {
+
+                if (nhanVien.getVaiTro() == 0) {
+                    vaiTro1 = "Quản Lý";
+                } else {
+                    vaiTro1 = "Nhân Viên";
+                }
+                Object[] data = new Object[]{
+                    nhanVien.getMaNV(),
+                    nhanVien.getTenNV(),
+                    nhanVien.getSdt(),
+                    nhanVien.getEmail(),
+                    nhanVien.getQueQuan(),
+                    nhanVien.getMatKhau(),
+                    vaiTro1,};
+                model.addRow(data);
+            }
+        }
+        pagination1.setPagegination(page, toltalPage);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnAdd;
     private javax.swing.JLabel btnDelete;

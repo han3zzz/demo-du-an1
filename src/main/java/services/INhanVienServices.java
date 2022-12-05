@@ -27,5 +27,6 @@ public interface INhanVienServices {
     public List<NhanVien> getALLbyTrangThai(Integer trangThai);
     public List<NhanVien> timKiembyTrangThai(String ten);
     public List<NhanVien> timKiemPhanTrang(String ten , Integer limitPage, Integer page);
+    public List<NhanVien> locPhanTrang(Integer vaitro , Integer limitPage, Integer page);
     
 }
