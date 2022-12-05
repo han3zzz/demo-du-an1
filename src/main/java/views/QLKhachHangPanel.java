@@ -528,10 +528,26 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_tbbBangMousePressed
 
     private void btnAddMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMousePressed
-         check = 0 ;
+         String check = "^[+?0-9]*$";
         try {
             if (txtMa.getText().trim().isEmpty() || txtTen.getText().trim().isEmpty() || txtsdt.getText().trim().isEmpty() || txtNgaySinh.getDate() == null || txtQueQuan.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Bạn không được để trống !");
+                return;
+            }
+            if(txtTen.getText().length() > 30){
+                    JOptionPane.showMessageDialog(this, "Tên phải nhỏ hơn 30 ký tự");
+                    return;
+                }
+            if(!txtsdt.getText().matches(check)){
+                JOptionPane.showMessageDialog(this, "Số điện thoại phải là số");
+                return;
+            }
+            if(txtsdt.getText().length() != 10){
+                JOptionPane.showMessageDialog(this, "Số điện thoại phải bằng 10 ký tự");
+                return;
+            }
+            if(txtQueQuan.getText().length() >50){
+                JOptionPane.showMessageDialog(this, "Quê quán phải nhỏ hơn 50 ký tự");
                 return;
             }
             KhachHang kh = layTTKH();
@@ -559,7 +575,7 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnResetMousePressed
 
     private void btnDeleteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMousePressed
-         check = 0 ;
+
         int index = tbbBang.getSelectedRow();
         if (index == -1) {
             JOptionPane.showMessageDialog(this, "Bạn chưa chọn bản ghi nào !");
@@ -587,7 +603,7 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
 
     private void btnUpdateMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateMousePressed
         // TODO add your handling code here:
-         check = 0 ;
+         String checkSo = "^[+?0-9]*$";
         try {
             int index = tbbBang.getSelectedRow();
             if (index == -1) {
@@ -603,7 +619,23 @@ public class QLKhachHangPanel extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Bạn không được để trống !");
                 return;
             }
-            int check = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn sửa ?");
+            if(txtTen.getText().length() > 30){
+                    JOptionPane.showMessageDialog(this, "Tên phải nhỏ hơn 30 ký tự");
+                    return;
+                }
+            if(!txtsdt.getText().matches(checkSo)){
+                JOptionPane.showMessageDialog(this, "Số điện thoại phải là số");
+                return;
+            }
+            if(txtsdt.getText().length() != 10){
+                JOptionPane.showMessageDialog(this, "Số điện thoại phải bằng 10 ký tự");
+                return;
+            }
+            if(txtQueQuan.getText().length() >50){
+                JOptionPane.showMessageDialog(this, "Quê quán phải nhỏ hơn 50 ký tự");
+                return;
+            }
+            int check = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn sửa không");
             if (check != JOptionPane.YES_OPTION) {
                 return;
             }
