@@ -79,7 +79,13 @@ public class QLSanPhamRepositories {
         }
         return list.get(0);
     }
-
+//    public List<SanPham> timKiembyTrangThai(String ten){
+//        Session session = HibernateConfig.getFACTORY().openSession();
+//        Query q = session.createQuery("From SanPham where TenSP like :ten and TrangThai = 0");
+//        q.setParameter("ten", "%"+ten+"%");
+//        List<SanPham> list = q.getResultList();
+//        return list;
+//    }
     public SanPham layMa() {
         Session session = HibernateConfig.getFACTORY().openSession();
         Query q = session.createQuery("From SanPham where MaSP in (Select 'SP'+ Cast(Max(Cast(SUBSTRING(MaSP,3,Len(MaSP) - 2) as int)) as string) from SanPham)");

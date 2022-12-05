@@ -1155,31 +1155,41 @@ public class QLSanPham extends javax.swing.JFrame {
 
     private void btnSearchMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSearchMousePressed
         // TODO add your handling code here:
-        String ma = txtMa.getText();
-        SanPham n = sanPhamServices.seachbyMa(ma);
-        if (ma.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Nhập mã trước khi tìm kiếm !");
+        String ten = txtTen.getText();
+        SanPham n = sanPhamServices.seachbyMa(ten);
+        if (ten.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nhập Tên trước khi tìm kiếm !");
             load();
             return;
         }
-        if (n == null) {
+        List<SanPham> sanPhams = sanPhamServices.timKiembyTrangThai(ten);
+        if (sanPhams.size() == 0) {
             JOptionPane.showMessageDialog(this, "Không có dữ liệu !");
             return;
         }
 
         DefaultTableModel model = (DefaultTableModel) tbQLSanPham.getModel();
         model.setRowCount(0);
-        if (n.getTrangThai() == 0) {
-            JOptionPane.showMessageDialog(this, "Tìm thành công !");
-            Object[] data = new Object[]{
-                n.getMaSP(),
-                n.getTenSP(),
-                n.getNsx().getTenNSX()
-            };
-            model.addRow(data);
-        } else {
-            JOptionPane.showMessageDialog(this, "Không có dữ liệu !");
-
+        for (SanPham sanPham : sanPhams) {
+            if (sanPham.getTrangThai() == 0) {
+                Object[] data = new Object[]{
+                    sanPham.getMaSP(),
+                    sanPham.getTenSP(),
+                    sanPham.getNsx().getTenNSX(),
+                    sanPham.getDanhmuc().getTenDanhMuc(),
+                    sanPham.getMausac().getTenMauSac(),
+                    sanPham.getBonhotrong().getDungLuong(),
+                    sanPham.getHeDieuHanh(),
+                    sanPham.getCamera(),
+                    sanPham.getRam(),
+                    sanPham.getCpu(),
+                    sanPham.getManHinh(),
+                    sanPham.getPin(),
+                    sanPham.getXuatxu()
+                    
+                };
+                model.addRow(data);
+            }
         }
     }//GEN-LAST:event_btnSearchMousePressed
     public void clear(){
