@@ -49,4 +49,9 @@ public class QLNSXServices implements IQLNSXServices{
     public NSX layMa() {
         return nsxr.layMa();
     }
+
+    @Override
+    public List<NSX> timKiembyTrangThai(String ten) {
+        return nsxr.timKiembyTrangThai(ten);
+    }
 }

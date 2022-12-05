@@ -18,4 +18,5 @@ public interface IQLNSXServices {
     public boolean delete(NSX nsx);
     public NSX seachbyMa(String ma);
     public NSX layMa();
+    public List<NSX> timKiembyTrangThai(String ten);
 }

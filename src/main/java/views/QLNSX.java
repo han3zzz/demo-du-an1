@@ -503,31 +503,28 @@ public class QLNSX extends javax.swing.JFrame {
 
     private void btnSearchMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSearchMousePressed
         // TODO add your handling code here:
-        String ma = txtMa.getText();
-        NSX n = services.seachbyMa(ma);
-        if (ma.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Nhập mã trước khi tìm kiếm !");
+        String ten = txtTen.getText();
+//        NSX n = services.seachbyMa(ma);
+        if (ten.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nhập tên trước khi tìm kiếm !");
             load();
             return;
         }
-        if (n == null) {
+        List<NSX> nsxs = services.timKiembyTrangThai(ten);
+        if (nsxs.size() == 0) {
             JOptionPane.showMessageDialog(this, "Không có dữ liệu !");
             return;
         }
 
         DefaultTableModel model = (DefaultTableModel) tbNSX.getModel();
         model.setRowCount(0);
-        if (n.getTrangThai() == 0) {
-            JOptionPane.showMessageDialog(this, "Tìm thành công !");
-            Object[] data = new Object[]{
-                n.getMaNSX(),
-                n.getTenNSX()
-            };
-            model.addRow(data);
-        }
-        else{
-            JOptionPane.showMessageDialog(this, "Không có dữ liệu !");
-
+        for (NSX nsx : nsxs) {
+            if (nsx.getTrangThai() == 0) {
+                Object[] data = new Object[]{
+                    nsx.getMaNSX(),
+                    nsx.getTenNSX(),};
+                model.addRow(data);
+            }
         }
     }//GEN-LAST:event_btnSearchMousePressed
 
