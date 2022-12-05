@@ -35,7 +35,7 @@ public class QLNhanVienPanel extends javax.swing.JPanel {
      * Creates new form QLNhanVienPanel
      */
     private INhanVienServices services;
-
+    private Integer check = 0 ;
     public QLNhanVienPanel() {
         initComponents();
 
@@ -44,16 +44,18 @@ public class QLNhanVienPanel extends javax.swing.JPanel {
         cbbVaiTro.addItem("Quản Lý");
         cbbVaiTro.addItem("Nhân Viên");
 //        hienThi();
-        pagination2.setVisible(false);
         loadData(1);
         pagination1.addEventPagination(new EventPagination() {
             @Override
             public void pageChanged(int page) {
-                if (pagination1.isVisible() == true) {
+                if (check == 0) {
                     loadData(page);
                 }
-                else{
+                if (check == 1) {
                     timKiem(page);
+                }
+                if(check == 2){
+                    Loc(page);
                 }
                 
             }
@@ -102,6 +104,7 @@ public class QLNhanVienPanel extends javax.swing.JPanel {
             }
         }
         pagination1.setPagegination(page, toltalPage);
+        check = 0;
     }
 
     public void hienThi() {
@@ -238,6 +241,7 @@ public class QLNhanVienPanel extends javax.swing.JPanel {
     }
 
     public void clear() {
+        check = 0;
         txtTimKiem.setText("");
         txtMa.setText("");
         txtTen.setText("");
@@ -248,7 +252,6 @@ public class QLNhanVienPanel extends javax.swing.JPanel {
         cbbVaiTro.setSelectedIndex(0);
         loadData(1);
         lbAnh.setIcon(null);
-        pagination2.setVisible(false);
         pagination1.setVisible(true);
     }
 
@@ -296,7 +299,6 @@ public class QLNhanVienPanel extends javax.swing.JPanel {
         btnTimKiem = new javax.swing.JLabel();
         txtTimKiem = new javax.swing.JTextField();
         pagination1 = new pagination.Pagination();
-        pagination2 = new pagination.Pagination();
 
         nhanvien.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -514,8 +516,6 @@ public class QLNhanVienPanel extends javax.swing.JPanel {
 
         pagination1.setOpaque(false);
 
-        pagination2.setOpaque(false);
-
         javax.swing.GroupLayout nhanvienLayout = new javax.swing.GroupLayout(nhanvien);
         nhanvien.setLayout(nhanvienLayout);
         nhanvienLayout.setHorizontalGroup(
@@ -527,9 +527,7 @@ public class QLNhanVienPanel extends javax.swing.JPanel {
                         .addGroup(nhanvienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(nhanvienLayout.createSequentialGroup()
-                                .addGap(272, 272, 272)
-                                .addComponent(pagination2, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(321, 321, 321)
                                 .addComponent(pagination1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(nhanvienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(nhanvienLayout.createSequentialGroup()
@@ -650,9 +648,7 @@ public class QLNhanVienPanel extends javax.swing.JPanel {
                             .addComponent(kGradientPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(nhanvienLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(nhanvienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(pagination2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(pagination1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(pagination1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(19, 19, 19))
         );
 
@@ -734,6 +730,7 @@ public class QLNhanVienPanel extends javax.swing.JPanel {
             if (services.add(nv) == true) {
                 JOptionPane.showMessageDialog(this, "Thêm thành công !");
                 loadData(1);
+                
             } else {
                 JOptionPane.showMessageDialog(this, "Thêm thất bại !");
             }
@@ -774,6 +771,7 @@ public class QLNhanVienPanel extends javax.swing.JPanel {
         if (services.delete(ma) == true) {
             JOptionPane.showMessageDialog(this, "Xóa thành công !");
             loadData(1);
+            
         } else {
             JOptionPane.showMessageDialog(this, "Xóa thất bại !");
         }
@@ -905,6 +903,7 @@ public class QLNhanVienPanel extends javax.swing.JPanel {
 //            }
 //
 //        }
+        check = 2;
         Loc(1);
         JOptionPane.showMessageDialog(this, "Lọc thành công !");
     }//GEN-LAST:event_btnLocMousePressed
@@ -924,6 +923,7 @@ public class QLNhanVienPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Không có dữ liệu !");
             return;
         }
+        check = 1;
 //        pagination1.setVisible(false);
         timKiem(1);
 //        DefaultTableModel model = (DefaultTableModel) tbNhanVien.getModel();
@@ -1064,7 +1064,6 @@ public void Loc(Integer page) {
     private javax.swing.JLabel lbAnh;
     private javax.swing.JPanel nhanvien;
     private pagination.Pagination pagination1;
-    private pagination.Pagination pagination2;
     private javax.swing.JTable tbNhanVien;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtMa;
