@@ -5,6 +5,7 @@
 package views;
 
 import domainmodels.MauSac;
+import domainmodels.NSX;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
@@ -456,31 +457,27 @@ public class QLMauSac extends javax.swing.JFrame {
 
     private void btnSearchMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSearchMousePressed
         // TODO add your handling code here:
-        String ma = txtMa.getText();
-        MauSac n = services.seachbyMa(ma);
-        if (ma.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Nhập mã trước khi tìm kiếm !");
+        String ten = txtTen.getText();
+        if (ten.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nhập tên trước khi tìm kiếm !");
             load();
             return;
         }
-        if (n == null) {
+        List<MauSac> mas = services.timKiembyTrangThai(ten);
+        if (mas.size() == 0) {
             JOptionPane.showMessageDialog(this, "Không có dữ liệu !");
             return;
         }
 
         DefaultTableModel model = (DefaultTableModel) tbMauSac.getModel();
         model.setRowCount(0);
-        if (n.getTrangThai() == 0) {
-            JOptionPane.showMessageDialog(this, "Tìm thành công !");
-            Object[] data = new Object[]{
-                n.getMaMauSac(),
-                n.getTenMauSac()
-            };
-            model.addRow(data);
-        }
-        else{
-            JOptionPane.showMessageDialog(this, "Không có dữ liệu !");
-
+        for (MauSac ma : mas) {
+            if (ma.getTrangThai() == 0) {
+                Object[] data = new Object[]{
+                    ma.getMaMauSac(),
+                    ma.getTenMauSac(),};
+                model.addRow(data);
+            }
         }
     }//GEN-LAST:event_btnSearchMousePressed
 

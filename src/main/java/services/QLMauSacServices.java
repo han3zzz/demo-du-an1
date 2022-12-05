@@ -48,4 +48,9 @@ public class QLMauSacServices implements IQLMauSacServices{
     public MauSac layMa() {
         return msr.layMa();
     }
+
+    @Override
+    public List<MauSac> timKiembyTrangThai(String ten) {
+        return msr.timKiembyTrangThai(ten);
+    }
 }

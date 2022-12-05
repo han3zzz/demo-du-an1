@@ -5,6 +5,7 @@
 package repositories;
 
 import domainmodels.MauSac;
+import domainmodels.NSX;
 import java.util.List;
 import javax.persistence.Query;
 import org.hibernate.Session;
@@ -72,6 +73,14 @@ public class QLMauSacRepositories {
         }
         return list.get(0);
     }
+      public List<MauSac> timKiembyTrangThai(String ten){
+        Session session = HibernateConfig.getFACTORY().openSession();
+        Query q = session.createQuery("From MauSac where TenMauSac like :ten and TrangThai = 0");
+        q.setParameter("ten", "%"+ten+"%");
+        List<MauSac> list = q.getResultList();
+        return list;
+    }
+    
     public MauSac layMa() {
         Session session = HibernateConfig.getFACTORY().openSession();
         Query q = session.createQuery("From MauSac where MaMauSac in (Select 'MS'+ Cast(Max(Cast(SUBSTRING(MaMauSac,3,Len(MaMauSac) - 2) as int)) as string) from MauSac)");

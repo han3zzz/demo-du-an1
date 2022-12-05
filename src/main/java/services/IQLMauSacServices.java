@@ -18,4 +18,5 @@ public interface IQLMauSacServices {
     public boolean delete(MauSac m);
     public MauSac seachbyMa(String ma);
     public MauSac layMa();
+    public List<MauSac> timKiembyTrangThai(String ten);
 }
