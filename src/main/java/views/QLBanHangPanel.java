@@ -771,8 +771,6 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
         btnThanhToan = new javax.swing.JLabel();
         btnThem2 = new keeptoo.KGradientPanel();
         btnHuy = new javax.swing.JLabel();
-        btnThem3 = new keeptoo.KGradientPanel();
-        btnIn = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         cbbKhachHang = new javax.swing.JComboBox<>();
         kGradientPanel1 = new keeptoo.KGradientPanel();
@@ -1059,30 +1057,6 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
             .addComponent(btnHuy, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
         );
 
-        btnThem3.setkGradientFocus(150);
-
-        btnIn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnIn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_print_30px.png"))); // NOI18N
-        btnIn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnInMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnInMousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout btnThem3Layout = new javax.swing.GroupLayout(btnThem3);
-        btnThem3.setLayout(btnThem3Layout);
-        btnThem3Layout.setHorizontalGroup(
-            btnThem3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnIn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
-        );
-        btnThem3Layout.setVerticalGroup(
-            btnThem3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnIn, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
-        );
-
         jLabel21.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8_users_30px.png"))); // NOI18N
         jLabel21.setText("Khách hàng:");
@@ -1288,15 +1262,6 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
                                     .addComponent(jLabel19)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(txtTienTraLai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(banhangLayout.createSequentialGroup()
-                                .addGap(47, 47, 47)
-                                .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnThem2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnThem3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnThem4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(banhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(banhangLayout.createSequentialGroup()
@@ -1308,7 +1273,14 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
                                     .addGroup(banhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(txtKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(txtNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtMaHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(txtMaHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(banhangLayout.createSequentialGroup()
+                                .addGap(74, 74, 74)
+                                .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnThem2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnThem4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -1318,9 +1290,10 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
             .addGroup(banhangLayout.createSequentialGroup()
                 .addGap(42, 42, 42)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
                 .addGroup(banhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(banhangLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(banhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(banhangLayout.createSequentialGroup()
                                 .addGroup(banhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1423,11 +1396,9 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
                                 .addGroup(banhangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(btnThem2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnThem3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(btnThem4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addContainerGap(44, Short.MAX_VALUE))
                     .addGroup(banhangLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 689, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(44, Short.MAX_VALUE))))
         );
@@ -1945,35 +1916,6 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
         }
     }//GEN-LAST:event_btnHuyMousePressed
 
-    private void btnInMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnInMouseExited
-
-    private void btnInMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInMousePressed
-        try {
-            if (btnIn.isEnabled() == false) {
-                JOptionPane.showMessageDialog(this, "Hóa đơn này chưa thanh toán !");
-                return;
-            }
-            // TODO add your handling code here:
-            int index = tbHoaDon.getSelectedRow();
-            if (index == -1) {
-                JOptionPane.showMessageDialog(this, "Vui lòng chọn hóa đơn cần in !");
-                return;
-            }
-            TaoHoaDonServices taoHoaDonServices = new TaoHoaDonServices();
-            String maHd = tbHoaDon.getValueAt(index, 0).toString();
-            int check = JOptionPane.showConfirmDialog(this, "Bạn có chắc in hóa đơn " + maHd + " !");
-            if (check != JOptionPane.YES_OPTION) {
-                return;
-            }
-            taoHoaDonServices.taoHoaDon(maHd);
-            JOptionPane.showMessageDialog(this, "In thành công !");
-        } catch (IOException ex) {
-            Logger.getLogger(QLBanHang.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnInMousePressed
-
     private void btnTaoHoaDonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTaoHoaDonMousePressed
 
         try {
@@ -2193,12 +2135,10 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
     private javax.swing.JPanel banhang;
     private javax.swing.JLabel btnClear;
     private javax.swing.JLabel btnHuy;
-    private javax.swing.JLabel btnIn;
     private javax.swing.JLabel btnTaoHoaDon;
     private javax.swing.JLabel btnThanhToan;
     private keeptoo.KGradientPanel btnThem;
     private keeptoo.KGradientPanel btnThem2;
-    private keeptoo.KGradientPanel btnThem3;
     private keeptoo.KGradientPanel btnThem4;
     private javax.swing.ButtonGroup buttonGroup1;
     private static javax.swing.JComboBox<String> cbbGiamGia;

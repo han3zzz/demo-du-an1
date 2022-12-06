@@ -175,16 +175,6 @@
                                       <Component id="txtTienTraLai" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
-                                  <Component id="btnThem" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="btnThem2" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="btnThem3" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="btnThem4" min="-2" max="-2" attributes="0"/>
-                              </Group>
                               <Group type="103" alignment="0" groupAlignment="0" attributes="0">
                                   <Component id="jPanel3" alignment="1" min="-2" pref="383" max="-2" attributes="0"/>
                                   <Group type="102" attributes="0">
@@ -201,6 +191,14 @@
                                       </Group>
                                   </Group>
                               </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
+                                  <Component id="btnThem" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="btnThem2" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="btnThem4" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jScrollPane4" min="-2" pref="155" max="-2" attributes="0"/>
@@ -215,9 +213,10 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" pref="24" max="-2" attributes="0"/>
+                  <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace min="6" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -345,7 +344,6 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="btnThem" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="btnThem2" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="btnThem3" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="btnThem4" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -353,7 +351,6 @@
                           <EmptySpace pref="44" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="jScrollPane4" min="-2" pref="689" max="-2" attributes="0"/>
                           <EmptySpace pref="44" max="32767" attributes="0"/>
                       </Group>
@@ -814,38 +811,6 @@
               <Events>
                 <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnHuyMouseExited"/>
                 <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnHuyMousePressed"/>
-              </Events>
-            </Component>
-          </SubComponents>
-        </Container>
-        <Container class="keeptoo.KGradientPanel" name="btnThem3">
-          <Properties>
-            <Property name="kGradientFocus" type="int" value="150"/>
-          </Properties>
-
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="btnIn" alignment="1" pref="67" max="32767" attributes="0"/>
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="btnIn" alignment="0" pref="36" max="32767" attributes="0"/>
-              </Group>
-            </DimensionLayout>
-          </Layout>
-          <SubComponents>
-            <Component class="javax.swing.JLabel" name="btnIn">
-              <Properties>
-                <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/image/icons8_print_30px.png"/>
-                </Property>
-              </Properties>
-              <Events>
-                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnInMouseExited"/>
-                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnInMousePressed"/>
               </Events>
             </Component>
           </SubComponents>
