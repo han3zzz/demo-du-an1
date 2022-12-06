@@ -46,8 +46,13 @@ public class DanhMucServices implements IDanhMucServices {
     }
 
     @Override
+    public List<DanhMuc> timKiembyTrangThai(String ten) {
+        return repo.timKiembyTrangThai(ten);
+    }
+
+    @Override
     public DanhMuc layMa() {
-       return repo.layMa();
+        return repo.layMa();
     }
 
 }

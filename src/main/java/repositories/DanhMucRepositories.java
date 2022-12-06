@@ -77,6 +77,15 @@ public class DanhMucRepositories {
         }
         return list.get(0);
     }
+
+    public List<DanhMuc> timKiembyTrangThai(String ten) {
+        Session session = HibernateConfig.getFACTORY().openSession();
+        Query q = session.createQuery("From DanhMuc where TenDM like :ten and TrangThai = 0");
+        q.setParameter("ten", "%"+ten+"%");
+        List<DanhMuc> list = q.getResultList();
+        return list;
+    }
+
     public DanhMuc layMa() {
         Session session = HibernateConfig.getFACTORY().openSession();
         Query q = session.createQuery("From DanhMuc where MaDM in (Select 'DM'+ Cast(Max(Cast(SUBSTRING(MaDM,3,Len(MaDM) - 2) as int)) as string) from DanhMuc)");

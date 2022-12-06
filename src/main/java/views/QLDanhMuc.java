@@ -531,32 +531,51 @@ public class QLDanhMuc extends javax.swing.JFrame {
 
     private void btnSearchMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSearchMousePressed
         // TODO add your handling code here:
-        String ma = txtMa.getText();
+        String ten = txtTen.getText();
 
-        if (ma.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Nhập mã trước khi tìm kiếm !");
+        if (ten.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nhập tên trước khi tìm kiếm !");
             load();
             return;
         }
-        DanhMuc n = services.seachbyMa(ma);
-        if (n == null) {
-            JOptionPane.showMessageDialog(this, "Không có dữ liệu !");
+////        DanhMuc n = services.seachbyMa(ma);
+//        if (n == null) {
+//            JOptionPane.showMessageDialog(this, "Không có dữ liệu !");
+//            return;
+//        }
+
+        List<DanhMuc> danhMucs = services.timKiembyTrangThai(ten);
+        if (danhMucs.size() == 0) {
+            JOptionPane.showMessageDialog(this, "Không có dữ liệu!");
             return;
         }
+//        DefaultTableModel model = (DefaultTableModel) tbDanhMuc.getModel();
+//        model.setRowCount(0);
+//        if (n.getTrangThai() == 0) {
+//            JOptionPane.showMessageDialog(this, "Tìm thành công !");
+//            Object[] data = new Object[]{
+//                n.getMaDanhMuc(),
+//                n.getTenDanhMuc()
+//            };
+//            model.addRow(data);
+//        } else {
+//            JOptionPane.showMessageDialog(this, "Không có dữ liệu !");
+//
+//        }
 
         DefaultTableModel model = (DefaultTableModel) tbDanhMuc.getModel();
         model.setRowCount(0);
-        if (n.getTrangThai() == 0) {
-            JOptionPane.showMessageDialog(this, "Tìm thành công !");
-            Object[] data = new Object[]{
-                n.getMaDanhMuc(),
-                n.getTenDanhMuc()
-            };
-            model.addRow(data);
-        } else {
-            JOptionPane.showMessageDialog(this, "Không có dữ liệu !");
-
+        for (DanhMuc danhMuc : danhMucs) {
+            if (danhMuc.getTrangThai() == 0) {
+                Object[] data = new Object[]{
+                    danhMuc.getMaDanhMuc(),
+                    danhMuc.getTenDanhMuc(),
+                    
+                };
+                  model.addRow(data);
+            }
         }
+
     }//GEN-LAST:event_btnSearchMousePressed
 
     private void btnClearMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClearMousePressed
