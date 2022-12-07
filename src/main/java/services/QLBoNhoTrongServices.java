@@ -12,9 +12,11 @@ import repositories.QLBoNhoTrongRepositories;
  *
  * @author Tungt
  */
-public class QLBoNhoTrongServices implements IQLBoNhoTrongServices{
-    QLBoNhoTrongRepositories bntr ;
-    public QLBoNhoTrongServices(){
+public class QLBoNhoTrongServices implements IQLBoNhoTrongServices {
+
+    QLBoNhoTrongRepositories bntr;
+
+    public QLBoNhoTrongServices() {
         bntr = new QLBoNhoTrongRepositories();
     }
 
@@ -47,4 +49,10 @@ public class QLBoNhoTrongServices implements IQLBoNhoTrongServices{
     public BoNhoTrong layMa() {
         return bntr.layMa();
     }
+
+    @Override
+    public List<BoNhoTrong> timKiembyTrangThai(Integer dungLuong) {
+        return bntr.timKiembyTrangThai(dungLuong);
+    }
+  
 }

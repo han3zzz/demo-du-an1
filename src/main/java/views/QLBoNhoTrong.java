@@ -42,6 +42,7 @@ public class QLBoNhoTrong extends javax.swing.JFrame {
     private IQLBoNhoTrongServices services;
     private IQLSanPhamServices sanPhamServices;
     private IChiTietSPServices chiTietSPServices;
+
     public QLBoNhoTrong() {
         initComponents();
         services = new QLBoNhoTrongServices();
@@ -49,7 +50,8 @@ public class QLBoNhoTrong extends javax.swing.JFrame {
         chiTietSPServices = new ChiTietSPServices();
         load();
     }
-        public void loadMaBNT() {
+
+    public void loadMaBNT() {
 
         String ma = "";
         List<BoNhoTrong> bnts = services.getALL();
@@ -71,6 +73,7 @@ public class QLBoNhoTrong extends javax.swing.JFrame {
         String maMoi = "BN" + sofinal;
         txtMa.setText(maMoi);
     }
+
     public void load() {
         loadMaBNT();
         DefaultTableModel model = (DefaultTableModel) tbBNT.getModel();
@@ -85,11 +88,11 @@ public class QLBoNhoTrong extends javax.swing.JFrame {
             }
         }
     }
-    public void loadCbbBoNhoTrong(){
+
+    public void loadCbbBoNhoTrong() {
         List<BoNhoTrong> items = services.getALL();
         QLSanPham.loadCbbBoNhoo(items);
     }
-    
 
     public BoNhoTrong layTT() throws ParseException {
         String ma = txtMa.getText();
@@ -410,8 +413,8 @@ public class QLBoNhoTrong extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Bạn chỉ được chọn 1 bản ghi !");
                 return;
             }
-            
-             if (txtMa.getText().trim().isEmpty() || txtTen.getText().trim().isEmpty()) {
+
+            if (txtMa.getText().trim().isEmpty() || txtTen.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Không được để trống !");
                 return;
             }
@@ -423,7 +426,7 @@ public class QLBoNhoTrong extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Dung lượng phải nhỏ hơn hoặc bằng 9999");
                 return;
             }
-            
+
             Integer dungLuong = Integer.parseInt(txtTen.getText());
             if (dungLuong <= 0) {
                 JOptionPane.showMessageDialog(this, "Dung lượng phải lớn hơn 0 !");
@@ -463,7 +466,7 @@ public class QLBoNhoTrong extends javax.swing.JFrame {
             if (txtMa.getText().length() > 10) {
                 JOptionPane.showMessageDialog(this, "Mã nhỏ hơn hoặc bằng 10 kí tự !");
                 return;
-                
+
             }
             if (!txtTen.getText().matches(checkSo)) {
                 JOptionPane.showMessageDialog(this, "Dung lượng phải là số !");
@@ -473,8 +476,9 @@ public class QLBoNhoTrong extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Dung lượng phải nhỏ hơn hoặc bằng 9999");
                 return;
             }
-            
+
             Integer dungLuong = Integer.parseInt(txtTen.getText());
+
             if (dungLuong <= 0) {
                 JOptionPane.showMessageDialog(this, "Dung lượng phải lớn hơn 0 !");
                 return;
@@ -529,31 +533,30 @@ public class QLBoNhoTrong extends javax.swing.JFrame {
 
     private void btnSearchMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSearchMousePressed
         // TODO add your handling code here:
-        String ma = txtMa.getText();
-        BoNhoTrong n = services.seachbyMa(ma);
-        if (ma.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Nhập mã trước khi tìm kiếm !");
+        
+        int ten = Integer.parseInt(txtTen.getText());
+        if (txtTen.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Nhập DUNG LƯỢNG trước khi tìm kiếm !");
             load();
             return;
         }
-        if (n == null) {
+        List<BoNhoTrong> bnt = services.timKiembyTrangThai(ten);
+        if (bnt.size() == 0) {
             JOptionPane.showMessageDialog(this, "Không có dữ liệu !");
             return;
         }
 
         DefaultTableModel model = (DefaultTableModel) tbBNT.getModel();
         model.setRowCount(0);
-        if (n.getTrangThai() == 0) {
-            JOptionPane.showMessageDialog(this, "Tìm thành công !");
-            Object[] data = new Object[]{
-                n.getMaBNT(),
-                n.getDungLuong()
-            };
-            model.addRow(data);
-        }
-        else{
-            JOptionPane.showMessageDialog(this, "Không có dữ liệu !");
-
+        for (BoNhoTrong boNhoTrong : bnt) {
+            if (boNhoTrong.getTrangThai() == 0) {
+                Object[] data = new Object[]{
+                    boNhoTrong.getMaBNT(),
+                    boNhoTrong.getDungLuong()
+                };
+                model.addRow(data);
+            }
+            JOptionPane.showMessageDialog(this, "Tìm kiếm thành công!");
         }
     }//GEN-LAST:event_btnSearchMousePressed
 

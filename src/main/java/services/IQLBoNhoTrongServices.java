@@ -12,10 +12,19 @@ import java.util.List;
  * @author Tungt
  */
 public interface IQLBoNhoTrongServices {
+
     public List<BoNhoTrong> getALL();
+
     public boolean add(BoNhoTrong m);
+
     public boolean update(BoNhoTrong m);
+
     public boolean delete(BoNhoTrong m);
+
     public BoNhoTrong seachbyMa(String ma);
+
     public BoNhoTrong layMa();
+
+    public List<BoNhoTrong> timKiembyTrangThai(Integer dungLuong);
+
 }

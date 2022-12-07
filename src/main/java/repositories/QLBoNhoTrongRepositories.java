@@ -72,6 +72,13 @@ public class QLBoNhoTrongRepositories {
         }
         return list.get(0);
     }
+    public List<BoNhoTrong> timKiembyTrangThai(Integer dungLuong){
+        Session session = HibernateConfig.getFACTORY().openSession();
+        Query q = session.createQuery("From BoNhoTrong where DungLuong = :ten and TrangThai = 0");
+        q.setParameter("ten",+dungLuong);
+        List<BoNhoTrong> list = q.getResultList();
+        return list;
+    }
     public BoNhoTrong layMa() {
         Session session = HibernateConfig.getFACTORY().openSession();
         Query q = session.createQuery("From BoNhoTrong where MaBNT in (Select 'BN'+ Cast(Max(Cast(SUBSTRING(MaBNT,3,Len(MaBNT) - 2) as int)) as string) from BoNhoTrong)");
