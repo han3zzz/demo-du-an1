@@ -206,7 +206,7 @@ public class QLNhanVienPanel extends javax.swing.JPanel {
             nv.setAnh(anh);
         }
         nv.setVaiTro(vaiTro);
-
+        nv.setNgayTao(nv1.getNgayTao());
         nv.setNgaySua(date);
         nv.setTrangThai(0);
         return nv;

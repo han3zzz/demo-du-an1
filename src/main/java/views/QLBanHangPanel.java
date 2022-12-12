@@ -337,7 +337,7 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
         if (hd1.getTrangThai() == 0) {
             btnThanhToan.setEnabled(true);
             btnHuy.setEnabled(true);
-            btnIn.setEnabled(false);
+//            btnIn.setEnabled(false);
             cbbGiamGia.setEnabled(true);
             rbShiphang.setEnabled(true);
             txtGhichu.setEnabled(true);

@@ -154,7 +154,7 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
         String maSP = "";
         Integer tonKho = 0;
         List<SanPham> sanPhams = sanPhamServices.phanTrang(limit, page);
-  
+
         for (SanPham sanPham : sanPhams) {
             maSP = sanPham.getMaSP();
             ChiTietSPViewModels c = chiTietSPServices.load(maSP);
@@ -1003,28 +1003,42 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
 
     private void cbbSanPhammActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbSanPhammActionPerformed
         // TODO add your handling code here:
-        int row = tbSanPham.getRowCount();
-        if (row == 0) {
+        List<ChiTietSP> sanPhams = chiTietSPServices.getImei();
+        if (sanPhams == null) {
             return;
         }
-        if (row == 1) {
-            String cbbSanPham = (String) cbbSanPhamm.getSelectedItem();
-            String tenSP = tbSanPham.getValueAt(0, 0).toString();
-            if (tenSP.equals(cbbSanPham)) {
-                btnAdd.setEnabled(false);
-            } else {
-                btnAdd.setEnabled(true);
-            }
-            return;
-        }
-        String tenSP = "";
+//        int row = tbSanPham.getRowCount();
+//        if (row == 0) {
+//            return;
+//        }
+//        if (row == 1) {
+//            String cbbSanPham = (String) cbbSanPhamm.getSelectedItem();
+//            String tenSP = tbSanPham.getValueAt(0, 0).toString();
+//            if (tenSP.equals(cbbSanPham)) {
+//                btnAdd.setEnabled(false);
+//            } else {
+//                btnAdd.setEnabled(true);
+//            }
+//            return;
+//        }
+//        String tenSP = "";
         String cbbSanPham = (String) cbbSanPhamm.getSelectedItem();
-        if (cbbSanPham == null) {
-            return;
-        }
-        for (int i = 0; i < row; i++) {
-            tenSP = tbSanPham.getValueAt(i, 0).toString();
-            if (cbbSanPham.equals(tenSP)) {
+//        if (cbbSanPham == null) {
+//            return;
+//        }
+//        for (int i = 0; i < row; i++) {
+//            tenSP = tbSanPham.getValueAt(i, 0).toString();
+//            if (cbbSanPham.equals(tenSP)) {
+//                btnAdd.setEnabled(false);
+//                btnUpdate.setEnabled(true);
+//                btnDelete.setEnabled(true);
+//                return;
+//            }
+//            btnUpdate.setEnabled(false);
+//            btnDelete.setEnabled(false);
+//            btnAdd.setEnabled(true);
+        for (ChiTietSP sanPham : sanPhams) {
+            if (sanPham.getSanPham().getTenSP().equalsIgnoreCase(cbbSanPham)) {
                 btnAdd.setEnabled(false);
                 btnUpdate.setEnabled(true);
                 btnDelete.setEnabled(true);
@@ -1033,10 +1047,11 @@ public class QLChiTietSanPhamPanel extends javax.swing.JPanel {
             btnUpdate.setEnabled(false);
             btnDelete.setEnabled(false);
             btnAdd.setEnabled(true);
-            ImeiServices imeiServices = new ImeiServices();
-            imeiServices.setList(null);
-
         }
+        ImeiServices imeiServices = new ImeiServices();
+        imeiServices.setList(null);
+
+//        }
 
     }//GEN-LAST:event_cbbSanPhammActionPerformed
 
