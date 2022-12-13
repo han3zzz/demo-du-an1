@@ -1952,6 +1952,7 @@ public class QLBanHangPanel extends javax.swing.JPanel implements Runnable, Thre
 
     private void btnClearMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClearMousePressed
         // TODO add your handling code here:
+        hienThiHoaDon();
         clear();
     }//GEN-LAST:event_btnClearMousePressed
 
