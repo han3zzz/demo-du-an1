@@ -1074,7 +1074,7 @@ public class QLSanPham extends javax.swing.JFrame {
                 return;
             }
             if (!pin.matches(checkSo)) {
-                JOptionPane.showMessageDialog(this, "Vui lòng nhập pin là số !");
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập pin là số nguyên dương !");
                 return;
             }
             Integer pinS = Integer.parseInt(pin);
